@@ -1,6 +1,6 @@
 package org.example.graph;
 
-import org.example.fieldTypesAndFormats.EdgeWeightFormat;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;

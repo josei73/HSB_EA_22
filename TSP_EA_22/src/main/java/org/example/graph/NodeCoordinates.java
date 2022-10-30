@@ -2,6 +2,7 @@ package org.example.graph;
 
 import org.example.fieldTypesAndFormats.EdgeWeightType;
 import org.example.fieldTypesAndFormats.NodeCoordType;
+import org.example.fieldTypesAndFormats.EdgeWeightFormat;
 
 import java.io.BufferedReader;
 import java.io.IOException;
