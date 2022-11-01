@@ -12,6 +12,9 @@ public enum EdgeWeightType {
     GEO,
     ATT;
 
+
+
+
     public NodeCoordType getNodeCoordType() {
         switch (this) {
             case EUC_2D:

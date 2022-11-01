@@ -24,4 +24,18 @@ public class Edge {
     public void setNode2(int node2) {
         this.node2 = node2;
     }
+
+    public boolean hasEndpoint(int id) {
+        return (id == node1) || (id == node2);
+    }
+
+    public int getOppositeEndpoint(int id) {
+        if (id == node1) return node2;
+        if (id == node2) return node1;
+
+        throw new IllegalArgumentException("Edge has not endpoint " +
+                id);
+
+    }
+
 }

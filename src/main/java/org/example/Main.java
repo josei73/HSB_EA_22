@@ -15,11 +15,10 @@ public class Main {
 
 
     public static void main(String[] args) {
-        System.out.println("Hello world!");
         TSPLibInstance problem = new TSPLibInstance();
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("data/tsp/pr76.tsp"));
+            BufferedReader reader = new BufferedReader(new FileReader("data/tsp/brazil58.tsp"));
             problem.load(reader);
         } catch (IOException var5) {
             throw new RuntimeException(var5);

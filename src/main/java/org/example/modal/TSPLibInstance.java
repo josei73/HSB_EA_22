@@ -33,7 +33,7 @@ public class TSPLibInstance {
         String line = null;
 
         try {
-            while((line = reader.readLine()) != null) {
+            while ((line = reader.readLine()) != null) {
                 line = line.trim();
                 if (line.equals("NODE_COORD_SECTION")) {
                     if (this.nodeCoordinateType == null) {
@@ -48,54 +48,53 @@ public class TSPLibInstance {
                 } else if (line.equals("FIXED_EDGES_SECTION")) {
                     this.fixedEdge = new EdgeData(this.dimension, EdgeDataFormat.EDGE_LIST);
                     this.fixedEdge.buildGraph(reader);
-                } else if (!line.equals("TOUR_SECTION") && !line.equals("-1")) {
-                    if (line.equals("DISPLAY_DATA_SECTION")) {
-                        this.displayData = new NodeCoordinates(this.dimension, NodeCoordType.TWOD_COORDS);
-                        this.displayData.buildGraph(reader);
-                    } else if (line.equals("EDGE_WEIGHT_SECTION")) {
-                        this.distanceSection = new EdgeWeightMatrix(this.dimension, this.edgeWeightFormat);
-                        this.distanceSection.buildGraph(reader);
-                    } else {
-                        if (line.equals("EOF")) {
-                            break;
-                        }
-
-                        if (!line.isEmpty()) {
-                            String[] tokens = line.split(":");
-                            String key = tokens[0].trim();
-                            System.out.println(tokens[0]);
-                            String value = tokens[1].trim();
-                            if (key.equals("NAME")) {
-                                this.name = value;
-                            } else if (key.equals("COMMENT")) {
-                                if (this.comment == null) {
-                                    this.comment = value;
-                                } else {
-                                    this.comment = this.comment + "\n" + value;
-                                }
-                            } else if (key.equals("TYPE")) {
-                                this.dataType = DataType.valueOf(value);
-                            } else if (key.equals("DIMENSION")) {
-                                this.dimension = Integer.parseInt(value);
-                            } else if (key.equals("EDGE_WEIGHT_TYPE")) {
-                                this.edgeWeightType = EdgeWeightType.valueOf(value);
-                            } else if (key.equals("EDGE_WEIGHT_FORMAT")) {
-                                this.edgeWeightFormat = EdgeWeightFormat.valueOf(value);
-                            } else if (key.equals("EDGE_DATA_FORMAT")) {
-                                this.edgeDataFormat = EdgeDataFormat.valueOf(value);
-                            } else if (key.equals("NODE_COORD_FORMAT")) {
-                                this.nodeCoordinateType = NodeCoordType.valueOf(value);
-                            } else if (key.equals("DISPLAY_DATA_TYPE")) {
-                                this.displayDataType = DisplayDataType.valueOf(value);
-                            }
-                        }
-                    }
-                } else {
+                } else if (line.equals("TOUR_SECTION") && line.equals("-1")) {
                     Tour tour = new Tour();
                     tour.load(reader);
-                    this.tours.add(tour);
+                    tours.add(tour);
+                } else if (line.equals("DISPLAY_DATA_SECTION")) {
+                    this.displayData = new NodeCoordinates(this.dimension, NodeCoordType.TWOD_COORDS);
+                    this.displayData.buildGraph(reader);
+                } else if (line.equals("EDGE_WEIGHT_SECTION")) {
+                    this.distanceSection = new EdgeWeightMatrix(this.dimension, this.edgeWeightFormat);
+                    this.distanceSection.buildGraph(reader);
+                } else {
+                    if (line.equals("EOF")) {
+                        break;
+                    }
+
+                    if (!line.isEmpty()) {
+                        String[] tokens = line.split(":");
+                        String key = tokens[0].trim();
+                        System.out.println(tokens[0]);
+                        String value = tokens[1].trim();
+                        if (key.equals("NAME")) {
+                            this.name = value;
+                        } else if (key.equals("COMMENT")) {
+                            if (this.comment == null) {
+                                this.comment = value;
+                            } else {
+                                this.comment = this.comment + "\n" + value;
+                            }
+                        } else if (key.equals("TYPE")) {
+                            this.dataType = DataType.valueOf(value);
+                        } else if (key.equals("DIMENSION")) {
+                            this.dimension = Integer.parseInt(value);
+                        } else if (key.equals("EDGE_WEIGHT_TYPE")) {
+                            this.edgeWeightType = EdgeWeightType.valueOf(value);
+                        } else if (key.equals("EDGE_WEIGHT_FORMAT")) {
+                            this.edgeWeightFormat = EdgeWeightFormat.valueOf(value);
+                        } else if (key.equals("EDGE_DATA_FORMAT")) {
+                            this.edgeDataFormat = EdgeDataFormat.valueOf(value);
+                        } else if (key.equals("NODE_COORD_FORMAT")) {
+                            this.nodeCoordinateType = NodeCoordType.valueOf(value);
+                        } else if (key.equals("DISPLAY_DATA_TYPE")) {
+                            this.displayDataType = DisplayDataType.valueOf(value);
+                        }
+                    }
                 }
             }
+
         } finally {
             if (reader != null) {
                 reader.close();

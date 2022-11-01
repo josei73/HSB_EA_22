@@ -9,8 +9,5 @@
         <module name="TSP_EA_22" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="TSP_EA_22" target="11" />
-    </bytecodeTargetLevel>
   </component>
 </project>

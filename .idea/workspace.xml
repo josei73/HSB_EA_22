@@ -4,30 +4,24 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="132bb43a-ea85-4855-b42b-3ede37259d34" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/TSP_EA_22/src/main/java/org/example/graph/EdgeWeightMatrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/TSP_EA_22/src/main/java/org/example/graph/EdgeWeightMatrix.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSP_EA_22/src/main/java/org/example/graph/NodeCoordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/TSP_EA_22/src/main/java/org/example/graph/NodeCoordinates.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TSP_EA_22/src/main/java/org/example/utils/DistanceFunction.java" beforeDir="false" afterPath="$PROJECT_DIR$/TSP_EA_22/src/main/java/org/example/utils/DistanceFunction.java" afterDir="false" />
-    </list>
+    <list default="true" id="f9e2256b-1dbd-4759-8537-e188a825eb6f" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Enum" />
+        <option value="Class" />
+      </list>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
-  <component name="MavenImportPreferences">
-    <option name="generalSettings">
-      <MavenGeneralSettings>
-        <option name="useMavenConfig" value="true" />
-      </MavenGeneralSettings>
-    </option>
-  </component>
-  <component name="ProjectId" id="2GpOv46LyXQRrggcxx1wOAioGW3" />
+  <component name="ProjectId" id="2Gg80COFEob4eaZxIpCofI9vl0j" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
@@ -37,23 +31,64 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/black/Documents/HochschuleBremen/WS_2022/EA/TSP_EA_22"
+    "last_opened_file_path": "C:/Users/black/Documents/HochschuleBremen/WS_2022/EA/project/test/lib",
+    "settings.editor.selected.configurable": "preferences.general"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\black\Documents\HochschuleBremen\WS_2022\EA\TSP_EA_22\data" />
+      <recent name="C:\Users\black\Documents\HochschuleBremen\WS_2022\EA\TSP_EA_22\src\main\java\org\example" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="org.example.Main" />
+      <module name="TSP_EA_22" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="org.example.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Application.Main" />
+      </list>
+    </recent_temporary>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="132bb43a-ea85-4855-b42b-3ede37259d34" name="Changes" comment="" />
-      <created>1667082286038</created>
+      <changelist id="f9e2256b-1dbd-4759-8537-e188a825eb6f" name="Changes" comment="" />
+      <created>1666798643721</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1667082286038</updated>
-      <workItem from="1667082287304" duration="19000" />
-      <workItem from="1667082313325" duration="670000" />
+      <updated>1666798643721</updated>
+      <workItem from="1666798645085" duration="2263000" />
+      <workItem from="1667082986213" duration="318000" />
+      <workItem from="1667083318315" duration="2891000" />
+      <workItem from="1667144932631" duration="858000" />
+      <workItem from="1667146585756" duration="23000" />
+      <workItem from="1667215621513" duration="2718000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <breakpoint enabled="true" type="java-exception">
+          <properties class="java.lang.NumberFormatException" package="java.lang" />
+          <option name="timeStamp" value="1" />
+        </breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
