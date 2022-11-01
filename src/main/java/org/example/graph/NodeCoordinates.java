@@ -20,9 +20,9 @@ public class NodeCoordinates extends DistanceSection {
         distanceFunction = DistanceFunction.getDistanceFunction(edgeWeightType);
     }
 
-    public NodeCoordinates(int nodesSize, NodeCoordType edgeWeightType) {
-        this.nodesSize = nodesSize;
-        this.edgeWeightType = edgeWeightType;
+    public NodeCoordinates(int dimension, NodeCoordType twodCoords) {
+        this.nodesSize = dimension;
+        this.edgeWeightType = twodCoords;
     }
 
     public void buildGraph(BufferedReader reader) throws IOException {

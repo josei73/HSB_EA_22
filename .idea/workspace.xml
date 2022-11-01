@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f9e2256b-1dbd-4759-8537-e188a825eb6f" name="Changes" comment="" />
+    <list default="true" id="f9e2256b-1dbd-4759-8537-e188a825eb6f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/graph/NodeCoordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/graph/NodeCoordinates.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -18,8 +21,18 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
+  </component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="useMavenConfig" value="true" />
+      </MavenGeneralSettings>
+    </option>
   </component>
   <component name="ProjectId" id="2Gg80COFEob4eaZxIpCofI9vl0j" />
   <component name="ProjectViewState">
@@ -31,7 +44,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/black/Documents/HochschuleBremen/WS_2022/EA/project/test/lib",
+    "last_opened_file_path": "C:/Users/black/OneDrive/Dokumente/GitHub/HSB_KSS_22_AS2",
     "settings.editor.selected.configurable": "preferences.general"
   }
 }]]></component>
@@ -75,11 +88,23 @@
       <workItem from="1667144932631" duration="858000" />
       <workItem from="1667146585756" duration="23000" />
       <workItem from="1667215621513" duration="2718000" />
+      <workItem from="1667304216832" duration="822000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
