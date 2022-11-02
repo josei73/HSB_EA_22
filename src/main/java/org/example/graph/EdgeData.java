@@ -71,6 +71,50 @@ public class EdgeData extends DistanceSection {
 
     }
 
+    public int[] getNeighborsOf(int id) {
+        if ((id < 0) || (id > size-1)) {
+            throw new IllegalArgumentException("no node with identifier " + id);
+        }
+
+        List<Integer> neighbors = new ArrayList<Integer>();
+
+        for (Edge edge : edges) {
+            if (edge.hasEndpoint(id)) {
+                neighbors.add(edge.getOppositeEndpoint(id));
+            }
+        }
+
+        // copy neighbors to an array
+        int[] result = new int[neighbors.size()];
+
+        for (int i = 0; i < neighbors.size(); i++) {
+            result[i] = neighbors.get(i);
+        }
+
+        return result;
+    }
+
+    public boolean isNeighbor(int id1, int id2) {
+        int[] neighbors = getNeighborsOf(id1);
+
+        for (int i = 0; i < neighbors.length; i++) {
+            if (neighbors[i] == id2) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    @Override
+    public double getDistanceBetween(int id1, int id2) {
+        if (isNeighbor(id1, id2)) {
+            return 1.0;
+        } else {
+            return Double.POSITIVE_INFINITY;
+        }
+    }
+
     private void createEdge(Queue<Integer> nodes) {
         Integer nodeX = (Integer)nodes.poll();
 

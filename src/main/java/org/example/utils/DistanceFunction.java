@@ -5,7 +5,7 @@ import org.example.graph.Node;
 
 import java.util.function.BiFunction;
 
-import static org.example.fieldTypesAndFormats.EdgeWeightType.*;
+
 
 public class DistanceFunction {
     static final double PI = 3.141592;
@@ -34,9 +34,7 @@ public class DistanceFunction {
     }
 
     private static BiFunction<Node, Node, Integer> getEuc2dFunction() {
-        return (i, j) -> {
-            return (int)calculateEuc2d(i, j);
-        };
+        return (i, j) ->  (int)calculateEuc2d(i, j);
     }
 
     private static double calculateEuc2d(Node i, Node j) {
@@ -81,9 +79,7 @@ public class DistanceFunction {
     }
 
     private static BiFunction<Node, Node, Integer> getCeil2dFunction() {
-        return (i, j) -> {
-            return (int)Math.ceil(calculateEuc2d(i, j));
-        };
+        return (i, j) -> (int)Math.ceil(calculateEuc2d(i, j));
     }
 
     private static BiFunction<Node, Node, Integer> getAttFunction() {

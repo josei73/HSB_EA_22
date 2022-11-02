@@ -17,6 +17,8 @@ public abstract class DistanceSection {
         this.nodes.put(node.getId(), node);
     }
 
+    public abstract double getDistanceBetween(int id1, int id2);
+
     public Map<Integer, Node> getNodes() {
         return this.nodes;
     }
