@@ -9,6 +9,7 @@ public class MainController {
 
     @GetMapping("")
     public String viewHomePage() {
+        System.out.println("Iuuuu");
         return "index";
     }
 
