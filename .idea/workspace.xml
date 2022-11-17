@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="9703892a-1142-43ac-ab18-ccb8dee94d4f" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/tourData.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/resources/static/test" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/controller/MainController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/test.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/controller/TSPRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/controller/TSPRestController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/service/TSPService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/service/TSPService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -20,8 +22,12 @@
       <list>
         <option value="Class" />
         <option value="HTML File" />
+        <option value="JavaScript File" />
       </list>
     </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -39,21 +45,21 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/black/OneDrive/Dokumente/GitHub/HSB_EA_22/src/main/resources/templates",
-    "spring.configuration.checksum": "902bcfe577b6644c4a7024c28fc3ec94",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/black/OneDrive/Dokumente/GitHub/HSB_EA_22/src/main/resources/templates&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;5abef9cdc0b4c7f37caf0fba8bfe88bd&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\black\OneDrive\Dokumente\GitHub\HSB_EA_22\src\main\resources\templates" />
@@ -110,6 +116,8 @@
       <workItem from="1668242121264" duration="1538000" />
       <workItem from="1668250252300" duration="1332000" />
       <workItem from="1668445362020" duration="3833000" />
+      <workItem from="1668602723064" duration="43000" />
+      <workItem from="1668713603801" duration="364000" />
     </task>
     <servers />
   </component>
