@@ -20,13 +20,11 @@ public class TSPRestController {
     @GetMapping("/api/tour")
     public Tour getTOur() {
         return service.genData();
-
     }
 
-    @GetMapping("/api/tsp/node")
+    @GetMapping("/api/nodes")
     public Map<Integer, Node> getTSP() {
         return service.genNodeCordi();
-
     }
 
 

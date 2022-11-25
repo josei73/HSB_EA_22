@@ -15,7 +15,6 @@ public class MainController {
     @GetMapping("")
     public String viewHomePage(Model model) {
         model.addAttribute("title", "This is a Thymeleaf attribute test");
-        model.addAttribute("data", service.genNodeCordi());
         return "index";
     }
 

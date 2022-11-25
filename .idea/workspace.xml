@@ -4,12 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1383f2e3-46db-4798-895c-4cedf9456ff5" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/resources/static/js/tourData.js" afterDir="false" />
+    <list default="true" id="1383f2e3-46db-4798-895c-4cedf9456ff5" name="Changes" comment="+merge with jessy-branch&#10;+added simple TSP data visualization with D3 (raw)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/controller/MainController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/controller/MainController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/controller/TSPRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/controller/TSPRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/service/TSPService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/service/TSPService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/graph.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/graph.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/templates/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/templates/index.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,22 +47,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "E:/Workspace/MKSS/MKSS-OrderSystemAbstractFactory",
-    "nodejs_package_manager_path": "npm",
-    "spring.configuration.checksum": "902bcfe577b6644c4a7024c28fc3ec94",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;E:/Workspace/MKSS/MKSS-OrderSystemAbstractFactory&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;902bcfe577b6644c4a7024c28fc3ec94&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\black\OneDrive\Dokumente\GitHub\HSB_EA_22\src\main\resources\templates" />
@@ -117,8 +116,18 @@
       <workItem from="1668713603801" duration="364000" />
       <workItem from="1668792767295" duration="4695000" />
       <workItem from="1668937790317" duration="187000" />
-      <workItem from="1669217316657" duration="207000" />
+      <workItem from="1669217316657" duration="677000" />
+      <workItem from="1669218012906" duration="10000" />
+      <workItem from="1669403763519" duration="1891000" />
     </task>
+    <task id="LOCAL-00001" summary="+merge with jessy-branch&#10;+added simple TSP data visualization with D3 (raw)">
+      <created>1669217810418</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1669217810418</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -134,5 +143,9 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="+merge with jessy-branch&#10;+added simple TSP data visualization with D3 (raw)" />
+    <option name="LAST_COMMIT_MESSAGE" value="+merge with jessy-branch&#10;+added simple TSP data visualization with D3 (raw)" />
   </component>
 </project>
