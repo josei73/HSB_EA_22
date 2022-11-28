@@ -2,9 +2,8 @@ let svg;
 
 let attrs = {
     data: null,
-    svgWidth: 960,//document.getElementById('#tsp_graph').clientWidth,
-    svgHeight: 600,//document.getElementById('#tsp_graph').clientHeight,
-    zoomSpeed: 3000,
+    svgWidth: 750,
+    svgHeight: 400,
 };
 
 const loadData = async () => {
@@ -12,7 +11,6 @@ const loadData = async () => {
     attrs.data = await response.json(); //extract JSON from the http response
     renderGraph(attrs.data);
 }
-
 
 function renderGraph(data) {
     let nodeArray = [];
@@ -23,47 +21,47 @@ function renderGraph(data) {
 
     let behaviours = {};
 
-    let svg = d3.select("#tsp_graph").append("svg")
-        .attr("width", attrs.svgWidth)
-        .attr("height", attrs.svgHeight)
-        .style("background", "lightgrey");
+    let svg = d3.select("#tsp_graph").classed("svg-container", true).append("svg")
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("viewBox", `0 0 ${attrs.svgWidth} ${attrs.svgHeight}`)
+        .classed("svg-content-responsive", true);
 
     let svgWrapper = svg.append('g').attr("class", 'svg-wrapper');
     let nodesWrapper = svgWrapper.append('g').attr("class", 'nodes-wrapper');
 
     //########################### BEHAVIORS #########################
     behaviours.zoom = d3.zoom()
-        .scaleExtent([
-            [-attrs.svgWidth,-attrs.svgHeight],
-            [2*attrs.svgWidth,2*attrs.svgHeight]
-        ])
-        .on('zoom', function(event) {
-            svgWrapper.selectAll('.nodes-wrapper')
-                .attr('transform', event.transform);
-        });
-    svg.call(behaviours.zoom);
+        .scaleExtent([0.1, 3])
+        .on("zoom", onZoom);
+    svg.call(behaviours.zoom)//.on("dblclick.zoom", onZoomReset);
 
-    let nodes = nodesWrapper.selectAll(".node-group").data(nodeArray)
-    nodes.enter().append('circle')
+    //########################### GRAPH #########################
+    let nodes = nodesWrapper.selectAll(".node-group").data(nodeArray);
+    let nodesEntering = nodes.enter().append("g")
         .attr("class", "node-group")
-        .attr("cx", d => d.x / 10)
-        .attr("cy", d => d.y / 10)
-        .attr("r", 10)
-        .attr('stroke', 'black')
-        .attr('fill', '#69a3b2');
+
+    nodesEntering.append("circle")
+        .attr("cx", d => d.x)
+        .attr("cy", d => d.y)
+        .attr("r", 20)
+
+    nodesEntering.append("text")
+        .text(d => d.id)
+        .attr("x", d => d.x)
+        .attr("y", d => d.y + 5);
 
     // ######### ZOOM FUNCTIONS ###########
-    function zoomed() {
-        let transform = d3.event.transform;
-
-        // apply transform event props to the wrapper
-        svgWrapper.attr('transform', transform)
-
-        svgWrapper.selectAll('.node-group').attr("transform", function (d)
-        {
-            return `translate(${d.x},${d.y}) scale(${1 / transform.k})`;
-        });
+    function onZoom(event) {
+        const { transform } = event;
+        nodesWrapper.attr("transform", transform);
     }
+
+    function onZoomReset() {
+        // TODO not working as intended -> fix
+        nodesWrapper.transition().duration(500)
+            .call(behaviours.zoom.transform , d3.zoomIdentity);
+    }
+
 }
 
 loadData();

@@ -1,0 +1,24 @@
+.svg-container {
+    display: inline-block;
+    position: relative;
+    width: 80%;
+    padding-bottom: 1%; /* aspect ratio */
+    vertical-align: top;
+    overflow: hidden;
+}
+
+svg.svg-content-responsive {
+    background: lightgrey;
+}
+
+g.node-group circle {
+    stroke: black;
+    fill: cornflowerblue;
+}
+
+g.node-group text {
+    fill: black;
+    font-size: 1em;
+    text-anchor: middle;
+    pointer-events: none;
+}
