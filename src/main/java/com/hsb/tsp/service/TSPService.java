@@ -36,7 +36,7 @@ public class TSPService {
 
     }
 
-    public Map<Integer, Node> genNodeCordi() {
+    public Map<Integer, Node> genNodeCoordinates() {
         TSPLibInstance problem = new TSPLibInstance();
 
         try (BufferedReader reader = new BufferedReader(new FileReader("data/tsp/pr76.tsp"));) {

@@ -24,7 +24,7 @@ public class TSPRestController {
 
     @GetMapping("/api/nodes")
     public Map<Integer, Node> getTSP() {
-        return service.genNodeCordi();
+        return service.genNodeCoordinates();
     }
 
 
