@@ -22,3 +22,8 @@ g.node-group text {
     text-anchor: middle;
     pointer-events: none;
 }
+
+g.link-group line {
+    stroke: red;
+    stroke-width: 10;
+}

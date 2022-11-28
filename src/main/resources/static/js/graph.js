@@ -1,24 +1,41 @@
 let svg;
-
+let data = {};
 let attrs = {
-    data: null,
     svgWidth: 750,
     svgHeight: 400,
 };
 
 const loadData = async () => {
-    const response = await fetch('http://localhost:8080/tsp/api/nodes');
-    attrs.data = await response.json(); //extract JSON from the http response
-    renderGraph(attrs.data);
+    const nodes = await fetch('http://localhost:8080/tsp/api/nodes');
+    const solution = await fetch('http://localhost:8080/tsp/api/tour');
+    data.nodes = await nodes.json(); //extract JSON from the http response
+    data.solution = await solution.json();
+    initGraph(data);
 }
 
-function renderGraph(data) {
+function initGraph({nodes, solution}) {
     let nodeArray = [];
-    for (let id in attrs.data) {
-        nodeArray.push(attrs.data[id]);
+    for (let index in nodes) {
+        nodeArray.push(nodes[index]);
     }
+    let linkArray = [];
+    for (let i = 0; i<solution.length-1; i++) {
+        linkArray.push({
+            source: nodeArray.find(d => d.id === solution[i]),
+            target: nodeArray.find(d => d.id === solution[i+1])
+        });
+    }
+    linkArray.push({
+        source: nodeArray.find(d => d.id === solution[nodeArray.length-1]),
+        target: nodeArray.find(d => d.id === solution[0])
+    });
     console.log(nodeArray);
+    console.log(linkArray);
 
+    renderGraph(nodeArray, linkArray);
+}
+
+function renderGraph(nodeArray, linkArray) {
     let behaviours = {};
 
     let svg = d3.select("#tsp_graph").classed("svg-container", true).append("svg")
@@ -27,11 +44,12 @@ function renderGraph(data) {
         .classed("svg-content-responsive", true);
 
     let svgWrapper = svg.append('g').attr("class", 'svg-wrapper');
+    let linksWrapper = svgWrapper.append('g').attr("class", 'links-wrapper');
     let nodesWrapper = svgWrapper.append('g').attr("class", 'nodes-wrapper');
 
     //########################### BEHAVIORS #########################
     behaviours.zoom = d3.zoom()
-        .scaleExtent([0.1, 3])
+        .scaleExtent([0.025, 2])
         .on("zoom", onZoom);
     svg.call(behaviours.zoom)//.on("dblclick.zoom", onZoomReset);
 
@@ -50,10 +68,21 @@ function renderGraph(data) {
         .attr("x", d => d.x)
         .attr("y", d => d.y + 5);
 
+    let links = linksWrapper.selectAll(".link-group").data(linkArray);
+    let linksEntering = links.enter().append("g")
+        .attr("class", "link-group")
+
+    linksEntering.append("line")
+        .attr("x1", d => d.source.x)
+        .attr("y1", d => d.source.y)
+        .attr("x2", d => d.target.x)
+        .attr("y2", d => d.target.y)
+
+
     // ######### ZOOM FUNCTIONS ###########
     function onZoom(event) {
         const { transform } = event;
-        nodesWrapper.attr("transform", transform);
+        svgWrapper.attr("transform", transform);
     }
 
     function onZoomReset() {
@@ -61,7 +90,6 @@ function renderGraph(data) {
         nodesWrapper.transition().duration(500)
             .call(behaviours.zoom.transform , d3.zoomIdentity);
     }
-
 }
 
 loadData();
