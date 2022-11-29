@@ -4,11 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1383f2e3-46db-4798-895c-4cedf9456ff5" name="Changes" comment="+added IDs to nodes&#10;+split styling to CSS file&#10;+SVG is responsive now">
+    <list default="true" id="1383f2e3-46db-4798-895c-4cedf9456ff5" name="Changes" comment="added links to TSPgraph using the predefined solution&#10;minor refactoring (data initialization &amp; rendering separated)">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/controller/TSPRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/controller/TSPRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/service/TSPService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/service/TSPService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/css/style.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/graph.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/graph.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -119,7 +116,8 @@
       <workItem from="1669217316657" duration="677000" />
       <workItem from="1669218012906" duration="10000" />
       <workItem from="1669403763519" duration="5816000" />
-      <workItem from="1669648853420" duration="14006000" />
+      <workItem from="1669648853420" duration="14319000" />
+      <workItem from="1669671486309" duration="5996000" />
     </task>
     <task id="LOCAL-00001" summary="+merge with jessy-branch&#10;+added simple TSP data visualization with D3 (raw)">
       <created>1669217810418</created>
@@ -149,7 +147,21 @@
       <option name="project" value="LOCAL" />
       <updated>1669654981015</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="RestController returns a list rather than a tour object">
+      <created>1669665981665</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1669665981665</updated>
+    </task>
+    <task id="LOCAL-00006" summary="added links to TSPgraph using the predefined solution&#10;minor refactoring (data initialization &amp; rendering separated)">
+      <created>1669666140899</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1669666140899</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -171,6 +183,8 @@
     <MESSAGE value="+graph rendering now in JS-file using REST&#10;+renamed API-route from &quot;/tsp/api/tsp/node&quot; to &quot;tsp/api/nodes&quot;" />
     <MESSAGE value="+refactor: renaming function" />
     <MESSAGE value="+added IDs to nodes&#10;+split styling to CSS file&#10;+SVG is responsive now" />
-    <option name="LAST_COMMIT_MESSAGE" value="+added IDs to nodes&#10;+split styling to CSS file&#10;+SVG is responsive now" />
+    <MESSAGE value="RestController returns a list rather than a tour object" />
+    <MESSAGE value="added links to TSPgraph using the predefined solution&#10;minor refactoring (data initialization &amp; rendering separated)" />
+    <option name="LAST_COMMIT_MESSAGE" value="added links to TSPgraph using the predefined solution&#10;minor refactoring (data initialization &amp; rendering separated)" />
   </component>
 </project>

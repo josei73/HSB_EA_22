@@ -3,6 +3,9 @@ let data = {};
 let attrs = {
     svgWidth: 750,
     svgHeight: 400,
+    transform: { x: 0, y: 0, k: 1 },
+    scaleMin: 0.033,
+    scaleMax: 2
 };
 
 const loadData = async () => {
@@ -38,7 +41,7 @@ function initGraph({nodes, solution}) {
 function renderGraph(nodeArray, linkArray) {
     let behaviours = {};
 
-    let svg = d3.select("#tsp_graph").classed("svg-container", true).append("svg")
+    svg = d3.select("#tsp_graph").classed("svg-container", true).append("svg")
         .attr("preserveAspectRatio", "xMinYMin meet")
         .attr("viewBox", `0 0 ${attrs.svgWidth} ${attrs.svgHeight}`)
         .classed("svg-content-responsive", true);
@@ -49,9 +52,10 @@ function renderGraph(nodeArray, linkArray) {
 
     //########################### BEHAVIORS #########################
     behaviours.zoom = d3.zoom()
-        .scaleExtent([0.025, 2])
+        .scaleExtent([attrs.scaleMin, attrs.scaleMax])
         .on("zoom", onZoom);
-    svg.call(behaviours.zoom)//.on("dblclick.zoom", onZoomReset);
+    svg.call(behaviours.zoom).on("dblclick.zoom", onZoomReset);
+    onZoomReset() // call zoomReset once on initialization;
 
     //########################### GRAPH #########################
     let nodes = nodesWrapper.selectAll(".node-group").data(nodeArray);
@@ -81,14 +85,13 @@ function renderGraph(nodeArray, linkArray) {
 
     // ######### ZOOM FUNCTIONS ###########
     function onZoom(event) {
-        const { transform } = event;
-        svgWrapper.attr("transform", transform);
+        attrs.transform = event.transform;
+        svgWrapper.attr("transform", attrs.transform);
     }
 
     function onZoomReset() {
-        // TODO not working as intended -> fix
-        nodesWrapper.transition().duration(500)
-            .call(behaviours.zoom.transform , d3.zoomIdentity);
+        svg.transition().duration(500)
+            .call(behaviours.zoom.transform, d3.zoomIdentity.translate(0,0).scale(attrs.scaleMin));
     }
 }
 
