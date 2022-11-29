@@ -34,7 +34,7 @@ public class TSPLibInstance {
     public void load(BufferedReader reader) throws IOException {
         String line = null;
 
-        try {
+        try (reader) {
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
                 if (line.equals("NODE_COORD_SECTION")) {
@@ -68,6 +68,7 @@ public class TSPLibInstance {
                     if (!line.isEmpty()) {
                         String[] tokens = line.split(":");
                         String key = tokens[0].trim();
+                        System.out.println(key);
                         String value = tokens[1].trim();
                         if (key.equals("NAME")) {
                             this.name = value;
@@ -94,11 +95,6 @@ public class TSPLibInstance {
                         }
                     }
                 }
-            }
-
-        } finally {
-            if (reader != null) {
-                reader.close();
             }
 
         }

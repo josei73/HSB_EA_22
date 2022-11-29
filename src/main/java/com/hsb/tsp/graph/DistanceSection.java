@@ -27,7 +27,23 @@ public abstract class DistanceSection {
         this.nodes = nodes;
     }
 
+
+    public abstract int[] getNeighborsOf(int id);
+
     protected Node mapToNode(String[] values) {
         return new Node(Integer.parseInt(values[0]), Double.parseDouble(values[1]), Double.parseDouble(values[2]));
+    }
+
+
+    public boolean isNeighbor(int id1, int id2) {
+        int[] neighbors = getNeighborsOf(id1);
+
+        for (int i = 0; i < neighbors.length; i++) {
+            if (neighbors[i] == id2) {
+                return true;
+            }
+        }
+
+        return false;
     }
 }

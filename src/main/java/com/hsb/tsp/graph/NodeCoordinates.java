@@ -27,14 +27,37 @@ public class NodeCoordinates extends DistanceSection {
         this.edgeWeightType = edgeWeightType;
     }
 
+    @Override
+    public int[] getNeighborsOf(int id) {
+        int index = 0;
+        int[] neighbors = new int[nodesSize-1];
+
+        if (!nodes.containsKey(id)) {
+            throw new IllegalArgumentException("no node with identifier " + id);
+        }
+
+        for (Node node : nodes.values()) {
+            if (node.getId() != id) {
+                neighbors[index++] = node.getId();
+            }
+        }
+
+        return neighbors;
+    }
+
     public void buildGraph(BufferedReader reader) throws IOException {
         for (int i = 0; i < this.nodesSize; ++i) {
             String line = reader.readLine();
             String[] tokens = line.trim().split("\\s+");
+
+
+
             Node node = this.mapToNode(tokens);
             this.addNode(node);
         }
     }
+
+
 
     @Override
     public double getDistanceBetween(int id1, int id2) {
@@ -44,6 +67,6 @@ public class NodeCoordinates extends DistanceSection {
         if( node1 == null) throw new NoSuchElementException("Node1 not found");
         if( node2 == null) throw new NoSuchElementException("Node2 not found");
 
-       return distanceFunction.apply(node1,node2);
+        return distanceFunction.apply(node1,node2);
     }
 }

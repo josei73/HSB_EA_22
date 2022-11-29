@@ -221,4 +221,22 @@ public class EdgeWeightMatrix extends DistanceSection {
         }
     }
 
+    @Override
+    public int[] getNeighborsOf(int id) {
+        int index = 0;
+        int[] neighbors = new int[size-1];
+
+        if ((id < 0) || (id > size-1)) {
+            throw new IllegalArgumentException("no node with identifier " + id);
+        }
+
+        for (int i = 0; i < size; i++) {
+            if (i != id) {
+                neighbors[index++] = i;
+            }
+        }
+
+        return neighbors;
+    }
+
 }

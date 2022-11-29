@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9703892a-1142-43ac-ab18-ccb8dee94d4f" name="Changes" comment="" />
+    <list default="true" id="9703892a-1142-43ac-ab18-ccb8dee94d4f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/graph/DistanceSection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/graph/DistanceSection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/graph/EdgeWeightMatrix.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/graph/EdgeWeightMatrix.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/graph/NodeCoordinates.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/graph/NodeCoordinates.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/modal/TSPLibInstance.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/modal/TSPLibInstance.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,7 +54,8 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/black/OneDrive/Dokumente/GitHub/HSB_EA_22/src/main/resources/templates&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/black/Documents/HochschuleBremen/WS_2022/EA/TSP_EA_22&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;advanced.settings&quot;,
     &quot;spring.configuration.checksum&quot;: &quot;5abef9cdc0b4c7f37caf0fba8bfe88bd&quot;,
     &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
@@ -111,6 +118,14 @@
       <workItem from="1668445362020" duration="3833000" />
       <workItem from="1668602723064" duration="43000" />
       <workItem from="1668713603801" duration="364000" />
+      <workItem from="1668714236950" duration="312000" />
+      <workItem from="1668716918654" duration="182000" />
+      <workItem from="1668800050114" duration="22000" />
+      <workItem from="1668857505327" duration="361000" />
+      <workItem from="1668861291560" duration="416000" />
+      <workItem from="1669061877976" duration="16000" />
+      <workItem from="1669213771688" duration="144000" />
+      <workItem from="1669470163544" duration="179000" />
     </task>
     <servers />
   </component>
@@ -127,5 +142,16 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/hsb/tsp/graph/DistanceSection.java</url>
+          <line>7</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
