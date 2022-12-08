@@ -1,8 +1,8 @@
 package com.hsb.tsp.graph;
 
-
-
 import com.hsb.tsp.fieldTypesAndFormats.EdgeWeightFormat;
+import com.hsb.tsp.modal.TSPLibInstance;
+
 
 import java.io.BufferedReader;
 import java.io.EOFException;
@@ -48,6 +48,8 @@ public class EdgeWeightMatrix extends DistanceSection {
                     id1);
         }
 
+        System.out.println(size);
+
         if ((id2 < 0) || (id2 > size-1)) {
             throw new IllegalArgumentException("no node with identifier " +
                     id2);
@@ -55,6 +57,7 @@ public class EdgeWeightMatrix extends DistanceSection {
 
         return matrix[id1][id2];
     }
+
 
     public void buildGraph(BufferedReader reader) throws IOException {
 
@@ -237,6 +240,13 @@ public class EdgeWeightMatrix extends DistanceSection {
         }
 
         return neighbors;
+    }
+
+
+
+    @Override
+    public double[][] getAdjMatrix(TSPLibInstance problem) {
+        return matrix;
     }
 
 }

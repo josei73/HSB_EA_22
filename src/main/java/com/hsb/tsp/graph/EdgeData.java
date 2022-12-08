@@ -1,6 +1,6 @@
 package com.hsb.tsp.graph;
-
 import com.hsb.tsp.fieldTypesAndFormats.EdgeDataFormat;
+import com.hsb.tsp.modal.TSPLibInstance;
 
 
 import java.io.BufferedReader;
@@ -95,17 +95,13 @@ public class EdgeData extends DistanceSection {
         return result;
     }
 
-    public boolean isNeighbor(int id1, int id2) {
-        int[] neighbors = getNeighborsOf(id1);
 
-        for (int i = 0; i < neighbors.length; i++) {
-            if (neighbors[i] == id2) {
-                return true;
-            }
-        }
 
-        return false;
+    @Override
+    public double[][] getAdjMatrix(TSPLibInstance problem) {
+        return new double[0][];
     }
+
 
     @Override
     public double getDistanceBetween(int id1, int id2) {

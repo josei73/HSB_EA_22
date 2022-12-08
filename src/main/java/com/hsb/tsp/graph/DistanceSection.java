@@ -1,5 +1,9 @@
 package com.hsb.tsp.graph;
 
+
+
+import com.hsb.tsp.modal.TSPLibInstance;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.HashMap;
@@ -7,6 +11,8 @@ import java.util.Map;
 
 public abstract class DistanceSection {
     protected Map<Integer, Node> nodes = new HashMap();
+
+
 
     public DistanceSection() {
     }
@@ -29,6 +35,9 @@ public abstract class DistanceSection {
 
 
     public abstract int[] getNeighborsOf(int id);
+
+
+    public abstract double[][] getAdjMatrix(TSPLibInstance problem);
 
     protected Node mapToNode(String[] values) {
         return new Node(Integer.parseInt(values[0]), Double.parseDouble(values[1]), Double.parseDouble(values[2]));
