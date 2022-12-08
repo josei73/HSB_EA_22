@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -18,16 +19,13 @@ public class TSPRestController {
     private TSPService service;
 
     @GetMapping("/api/tour")
-    public Tour getTOur() {
+    public List<Integer> getTOur() {
         return service.genData();
-
     }
 
-
-    @GetMapping("/api/tsp/node")
+    @GetMapping("/api/nodes")
     public Map<Integer, Node> getTSP() {
-        return service.genNodeCordi();
-
+        return service.genNodeCoordinates();
     }
 
 

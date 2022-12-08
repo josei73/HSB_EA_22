@@ -10,13 +10,14 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
 
 @Service
 public class TSPService {
 
 
-    public Tour genData() {
+    public List<Integer> genData() {
         TSPLibInstance problem = new TSPLibInstance();
 
         try {
@@ -32,11 +33,11 @@ public class TSPService {
         Map<Integer, Node> nodes = problem.getDistanceSection().getNodes();
         Iterator it = nodes.entrySet().iterator();
 
-        return problem.getTours().get(0);
+        return problem.getTours().get(0).getNodes();
 
     }
 
-    public Map<Integer, Node> genNodeCordi() {
+    public Map<Integer, Node> genNodeCoordinates() {
         TSPLibInstance problem = new TSPLibInstance();
 
         try (BufferedReader reader = new BufferedReader(new FileReader("data/tsp/pr76.tsp"));) {
