@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="1383f2e3-46db-4798-895c-4cedf9456ff5" name="Changes" comment="added links to TSPgraph using the predefined solution&#10;minor refactoring (data initialization &amp; rendering separated)">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/graph.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/graph.js" afterDir="false" />
-    </list>
+    <list default="true" id="322cf801-c699-4399-8846-b4c457b98b8e" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
