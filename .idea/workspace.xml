@@ -78,7 +78,14 @@
       </set>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Spring Boot.TspApplication">
+    <configuration name="TspApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
+      <module name="TSP_EA_22" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.hsb.tsp.TspApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="TspApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <module name="tsp" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.hsb.tsp.TspApplication" />
