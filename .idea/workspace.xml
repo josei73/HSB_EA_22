@@ -41,24 +41,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
-    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
-    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
-    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;E:/Workspace/MKSS/MKSS-OrderSystemAbstractFactory&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;spring.configuration.checksum&quot;: &quot;902bcfe577b6644c4a7024c28fc3ec94&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "DefaultHtmlFileTemplate": "HTML File",
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/black/OneDrive/Dokumente/GitHub/HSB_EA_22/src/main/java/com/hsb/tsp/graph",
+    "nodejs_package_manager_path": "npm",
+    "spring.configuration.checksum": "902bcfe577b6644c4a7024c28fc3ec94",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\black\OneDrive\Dokumente\GitHub\HSB_EA_22\src\main\java\com\hsb\tsp\graph" />
       <recent name="C:\Users\black\OneDrive\Dokumente\GitHub\HSB_EA_22\src\main\resources\templates" />
       <recent name="C:\Users\black\Documents\HochschuleBremen\WS_2022\EA\tsp" />
       <recent name="C:\Users\black\Documents\HochschuleBremen\WS_2022\EA\tsp\src\main\java\com\hsb\tsp" />
@@ -66,6 +67,9 @@
     <key name="MoveFile.RECENT_KEYS">
       <recent name="C:\Users\black\Documents\HochschuleBremen\WS_2022\EA\tsp" />
       <recent name="C:\Users\black\Documents\HochschuleBremen\WS_2022\EA\tsp\src\main" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="com.hsb.tsp.utils" />
     </key>
   </component>
   <component name="RunDashboard">
