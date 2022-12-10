@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="322cf801-c699-4399-8846-b4c457b98b8e" name="Changes" comment="" />
+    <list default="true" id="322cf801-c699-4399-8846-b4c457b98b8e" name="Changes" comment="added links to TSPgraph using the predefined solution&#10;minor refactoring (data initialization &amp; rendering separated)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -41,22 +43,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "DefaultHtmlFileTemplate": "HTML File",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "C:/Users/black/OneDrive/Dokumente/GitHub/HSB_EA_22/src/main/java/com/hsb/tsp/graph",
-    "nodejs_package_manager_path": "npm",
-    "spring.configuration.checksum": "902bcfe577b6644c4a7024c28fc3ec94",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/black/OneDrive/Dokumente/GitHub/HSB_EA_22/src/main/java/com/hsb/tsp/graph&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;spring.configuration.checksum&quot;: &quot;902bcfe577b6644c4a7024c28fc3ec94&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="C:\Users\black\OneDrive\Dokumente\GitHub\HSB_EA_22\src\main\java\com\hsb\tsp\graph" />
@@ -79,7 +81,7 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Spring Boot.TspApplication">
+  <component name="RunManager" selected="Spring Boot.TspApplication (1)">
     <configuration name="TspApplication (1)" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot">
       <module name="TSP_EA_22" />
       <option name="SPRING_BOOT_MAIN_CLASS" value="com.hsb.tsp.TspApplication" />
@@ -109,7 +111,7 @@
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="1383f2e3-46db-4798-895c-4cedf9456ff5" name="Changes" comment="" />
+      <changelist id="322cf801-c699-4399-8846-b4c457b98b8e" name="Changes" comment="" />
       <created>1668242117464</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
@@ -126,6 +128,7 @@
       <workItem from="1669403763519" duration="5816000" />
       <workItem from="1669648853420" duration="14319000" />
       <workItem from="1669671486309" duration="5996000" />
+      <workItem from="1670508428297" duration="861000" />
     </task>
     <task id="LOCAL-00001" summary="+merge with jessy-branch&#10;+added simple TSP data visualization with D3 (raw)">
       <created>1669217810418</created>
@@ -194,5 +197,16 @@
     <MESSAGE value="RestController returns a list rather than a tour object" />
     <MESSAGE value="added links to TSPgraph using the predefined solution&#10;minor refactoring (data initialization &amp; rendering separated)" />
     <option name="LAST_COMMIT_MESSAGE" value="added links to TSPgraph using the predefined solution&#10;minor refactoring (data initialization &amp; rendering separated)" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/com/hsb/tsp/TspApplication.java</url>
+          <line>6</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>
