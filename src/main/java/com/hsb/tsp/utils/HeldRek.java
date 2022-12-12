@@ -104,7 +104,7 @@ public class HeldRek {
         prev[i][state] = index;
         return memo[i][state] = minCost;
     }
-    /*
+
     public static void main(String[] args) {
 
         // Create adjacency matrix
@@ -129,5 +129,5 @@ public class HeldRek {
 
     }
 
-     */
+
 }
