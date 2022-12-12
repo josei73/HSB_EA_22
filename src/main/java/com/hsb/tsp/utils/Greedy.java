@@ -1,6 +1,9 @@
 package com.hsb.tsp.utils;
 
+import com.hsb.tsp.graph.Edge;
+
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class Greedy {
@@ -23,8 +26,7 @@ public class Greedy {
         visited = greedyTSP(edges, visited, 0);
         visited.add(0);
 
-        // Create greedy graph based on results of TSP
-        double[][] greedyMatrix = generateGreedyMatrix(visited, adjMatrix);
+
 
         // Gather edges that are used for tour and add up distance
         for (int i = 0; i < edges.size(); i++) {
@@ -38,13 +40,8 @@ public class Greedy {
                 }
             }
         }
-        for (int i = 0; i < greedyMatrix.length; i++) {
-            System.out.print("\n\n" + i + "   ");
-            for (int j = 0; j < greedyMatrix[i].length; j++) {
-                System.out.print(greedyMatrix[i][j]+" ");
-            }
-            System.out.println();
-        }
+
+
 
         List<Integer> solver = new ArrayList<>();
 
@@ -56,22 +53,7 @@ public class Greedy {
         return solver;
     }
 
-    public static double[][] generateGreedyMatrix(ArrayList<Integer> visited, double[][] oldMatrix) {
-        int n = visited.size() - 1;
-        double[][] newMatrix = new double[n][n];
-        // row, column coordinates
-        int r, c = 0;
 
-        // add to the greedy matrix if and only if an edge is in the greedy path
-        for (int i = 0; i < visited.size() - 1; i++) {
-            r = visited.get(i);
-            c = visited.get(i + 1);
-            newMatrix[r][c] = oldMatrix[r][c];
-            newMatrix[c][r] = oldMatrix[c][r];
-        }
-
-        return newMatrix;
-    }
 
     public static ArrayList<Integer> greedyTSP(ArrayList<Edge> edges, ArrayList<Integer> visited, int current) {
 
@@ -100,6 +82,8 @@ public class Greedy {
                 edges.add(new Edge(i, j, matrix[i][j]));
             }
         }
+
+        //edges.sort(Comparator.comparing(Edge::getDist));
 
         return edges;
     }
