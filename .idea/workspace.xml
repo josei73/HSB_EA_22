@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="322cf801-c699-4399-8846-b4c457b98b8e" name="Changes" comment="added links to TSPgraph using the predefined solution&#10;minor refactoring (data initialization &amp; rendering separated)" />
+    <list default="true" id="322cf801-c699-4399-8846-b4c457b98b8e" name="Changes" comment="added links to TSPgraph using the predefined solution&#10;minor refactoring (data initialization &amp; rendering separated)">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -79,9 +81,22 @@
       </set>
     </option>
   </component>
-  <component name="RunManager" selected="Application.Greedy">
+  <component name="RunManager" selected="Application.GreedyTSP">
     <configuration name="Greedy" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.hsb.tsp.utils.Greedy" />
+      <module name="TSP_EA_22" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.hsb.tsp.utils.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="GreedyTSP" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.hsb.tsp.utils.GreedyTSP" />
       <module name="TSP_EA_22" />
       <extension name="coverage">
         <pattern>
@@ -115,6 +130,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.GreedyTSP" />
         <item itemvalue="Application.Greedy" />
         <item itemvalue="Spring Boot.TspApplication" />
       </list>
@@ -196,7 +212,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="jessy" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
