@@ -4,13 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="322cf801-c699-4399-8846-b4c457b98b8e" name="Changes" comment="added links to TSPgraph using the predefined solution&#10;minor refactoring (data initialization &amp; rendering separated)">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/graph/Edge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/graph/Edge.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/graph/EdgeData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/graph/EdgeData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/utils/Edge.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/utils/Greedy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/utils/Greedy.java" afterDir="false" />
-    </list>
+    <list default="true" id="322cf801-c699-4399-8846-b4c457b98b8e" name="Changes" comment="added links to TSPgraph using the predefined solution&#10;minor refactoring (data initialization &amp; rendering separated)" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
