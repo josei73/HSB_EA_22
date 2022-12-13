@@ -1,7 +1,7 @@
 package com.hsb.tsp.graph;
 
 import com.hsb.tsp.fieldTypesAndFormats.EdgeWeightFormat;
-import com.hsb.tsp.modal.TSPLibInstance;
+import com.hsb.tsp.parser.TSPLibInstance;
 
 
 import java.io.BufferedReader;

@@ -1,4 +1,4 @@
-package com.hsb.tsp.modal;
+package com.hsb.tsp.parser;
 
 
 import com.hsb.tsp.fieldTypesAndFormats.*;
@@ -11,6 +11,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
 
 
 public class TSPLibInstance {
@@ -68,7 +69,6 @@ public class TSPLibInstance {
                     if (!line.isEmpty()) {
                         String[] tokens = line.split(":");
                         String key = tokens[0].trim();
-                        System.out.println(key);
                         String value = tokens[1].trim();
                         if (key.equals("NAME")) {
                             this.name = value;

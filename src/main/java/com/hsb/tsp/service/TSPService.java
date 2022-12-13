@@ -2,8 +2,7 @@ package com.hsb.tsp.service;
 
 
 import com.hsb.tsp.graph.Node;
-import com.hsb.tsp.modal.TSPLibInstance;
-import com.hsb.tsp.modal.Tour;
+import com.hsb.tsp.parser.TSPLibInstance;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
