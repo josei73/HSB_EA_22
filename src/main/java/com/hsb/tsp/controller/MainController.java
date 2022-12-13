@@ -14,7 +14,7 @@ public class MainController {
 
     @GetMapping("")
     public String viewHomePage(Model model) {
-        model.addAttribute("title", "This is a Thymeleaf attribute test");
+        model.addAttribute("title", "Travelling Salesperson Problem");
         return "index";
     }
 
