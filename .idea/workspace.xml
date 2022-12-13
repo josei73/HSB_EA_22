@@ -4,11 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="9703892a-1142-43ac-ab18-ccb8dee94d4f" name="Changes" comment="added links to TSPgraph using the predefined solution&#10;minor refactoring (data initialization &amp; rendering separated)">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/utils/GreedyTSP.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/utils/HeldRek.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/hsb/tsp/utils/HeldRek.java" afterDir="false" />
-    </list>
+    <list default="true" id="9703892a-1142-43ac-ab18-ccb8dee94d4f" name="Changes" comment="added links to TSPgraph using the predefined solution&#10;minor refactoring (data initialization &amp; rendering separated)" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -230,7 +226,19 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="origin/tsabbagh" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
           </value>
         </entry>
       </map>
