@@ -3,7 +3,7 @@ package com.hsb.tsp.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class HeldRek {
+public class HeldRek extends Algo {
 
     private final int N;
     private final int START_NODE;

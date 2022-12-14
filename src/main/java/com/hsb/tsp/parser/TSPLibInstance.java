@@ -1,4 +1,4 @@
-package com.hsb.tsp.modal;
+package com.hsb.tsp.parser;
 
 
 import com.hsb.tsp.fieldTypesAndFormats.*;
@@ -66,6 +66,7 @@ public class TSPLibInstance {
                     //do nothing
                 } else {
                     if (!line.isEmpty()) {
+
                         String[] tokens = line.split(":");
                         String key = tokens[0].trim();
                         System.out.println(key);

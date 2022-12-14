@@ -3,7 +3,7 @@ package com.hsb.tsp.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GreedyTSP {
+public class GreedyTSP extends Algo {
 
 
     public GreedyTSP(double[][] matrix) {
@@ -15,9 +15,10 @@ public class GreedyTSP {
         start = startNode;
     }
 
-    static double[][] distance;
-    static List<Integer> visited = new ArrayList<>();
-    static double sum = 0;
+
+    private double[][] distance;
+    private List<Integer> visited = new ArrayList<>();
+    private double sum = 0;
 
     private final int start;
 
@@ -96,27 +97,5 @@ public class GreedyTSP {
         System.out.println("greedy");
         return sum;
     }
-
-    public static void main(String[] args) {
-
-        int n = 6;
-        double[][] distanceMatrix = new double[n][n];
-        for (double[] row : distanceMatrix) java.util.Arrays.fill(row, 10000);
-        distanceMatrix[1][4] = distanceMatrix[4][1] = 2;
-        distanceMatrix[4][2] = distanceMatrix[2][4] = 4;
-        distanceMatrix[2][3] = distanceMatrix[3][2] = 6;
-        distanceMatrix[3][0] = distanceMatrix[0][3] = 8;
-        distanceMatrix[0][5] = distanceMatrix[5][0] = 10;
-        distanceMatrix[5][1] = distanceMatrix[1][5] = 12;
-
-        long startTime = System.currentTimeMillis();
-
-        int startNode = 0;
-        GreedyTSP solver = new GreedyTSP(distanceMatrix);
-        solver.solve();
-        System.out.println(solver.getTour());
-        long endTime = System.currentTimeMillis();
-
-        System.out.println("\nRuntime for GreedyTSP   : " + (endTime - startTime) + " milliseconds");
-    }
+    
 }
