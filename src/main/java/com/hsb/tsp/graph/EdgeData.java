@@ -97,9 +97,17 @@ public class EdgeData extends DistanceSection {
 
 
 
+
+
     @Override
     public double[][] getAdjMatrix(TSPLibInstance problem) {
-        return new double[0][];
+        double[][] matrix = new double[problem.getDimension()][problem.getDimension()];
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                matrix[i][j] = problem.getDistanceSection().getDistanceBetween(i + 1, j + 1);
+            }
+        }
+        return matrix;
     }
 
 

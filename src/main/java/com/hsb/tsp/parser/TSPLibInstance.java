@@ -67,6 +67,7 @@ public class TSPLibInstance {
                     //do nothing
                 } else {
                     if (!line.isEmpty()) {
+
                         String[] tokens = line.split(":");
                         String key = tokens[0].trim();
                         String value = tokens[1].trim();
