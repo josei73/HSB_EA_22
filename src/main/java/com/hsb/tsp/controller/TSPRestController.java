@@ -4,7 +4,7 @@ package com.hsb.tsp.controller;
 import com.hsb.tsp.graph.Node;
 import com.hsb.tsp.parser.TSPLibInstance;
 import com.hsb.tsp.service.TSPService;
-import com.hsb.tsp.utils.Algo;
+import com.hsb.tsp.utils.Algorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -45,28 +45,20 @@ public class TSPRestController {
 
     @GetMapping("api/algorithm")
     public List<String> getAlg() {
-        List<String> alg = new ArrayList<>();
+        List<String> algorithmName = new ArrayList<>();
 
-        alg.add("Held-Karp");
-        alg.add("Greedy");
-        alg.add("Christofides");
-        alg.add("Arora");
-        alg.add("LP");
-        return alg;
+        algorithmName.add("Held-Karp");
+        algorithmName.add("Greedy");
+        algorithmName.add("Christofides");
+        algorithmName.add("Arora");
+        algorithmName.add("LP");
+        return algorithmName;
     }
 
     @GetMapping("api/algorithm/{algoName}/nodes/{nodeName}")
     public List<Integer> getAlg(@PathVariable String algoName, @PathVariable String nodeName) {
         TSPLibInstance problem = service.getTSP(nodeName);
-        Algo algo = service.getAlgo(algoName, problem);
-        return algo.getTour();
+        Algorithm solution = service.getAlgo(algoName, problem);
+        return solution.getTour();
     }
-
-
-
-
-
-
-
-
 }

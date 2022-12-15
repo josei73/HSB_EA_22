@@ -3,7 +3,7 @@ package com.hsb.tsp.service;
 
 import com.hsb.tsp.graph.Node;
 import com.hsb.tsp.parser.TSPLibInstance;
-import com.hsb.tsp.utils.Algo;
+import com.hsb.tsp.utils.Algorithm;
 import com.hsb.tsp.utils.GreedyTSP;
 import com.hsb.tsp.utils.HeldRek;
 import org.springframework.stereotype.Service;
@@ -105,7 +105,7 @@ public class TSPService {
         return files;
     }
 
-    public Algo getAlgo(String name, TSPLibInstance tspLibInstance) {
+    public Algorithm getAlgo(String name, TSPLibInstance tspLibInstance) {
         double[][] adjMatrix = tspLibInstance.getDistanceSection().getAdjMatrix(tspLibInstance);
 
         switch (name) {
