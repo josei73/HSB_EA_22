@@ -3,7 +3,7 @@ package com.hsb.tsp.utils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GreedyTSP extends Algo {
+public class GreedyTSP extends Algorithm {
 
 
     public GreedyTSP(double[][] matrix) {
