@@ -4,7 +4,7 @@ package com.hsb.tsp.graph;
 
 import com.hsb.tsp.fieldTypesAndFormats.EdgeWeightType;
 import com.hsb.tsp.fieldTypesAndFormats.NodeCoordType;
-import com.hsb.tsp.modal.TSPLibInstance;
+import com.hsb.tsp.parser.TSPLibInstance;
 import com.hsb.tsp.utils.DistanceFunction;
 
 import java.io.BufferedReader;

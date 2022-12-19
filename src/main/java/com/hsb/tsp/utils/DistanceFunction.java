@@ -51,17 +51,19 @@ public class DistanceFunction {
             double longitudeI = convertToRadians(i.getX());
             double latitudeJ = convertToRadians(j.getY());
             double longitudeJ = convertToRadians(j.getX());
-            double q1 = Math.cos(longitudeI - longitudeJ);
-            double q2 = Math.cos(latitudeI - latitudeJ);
-            double q3 = Math.cos(latitudeI + latitudeJ);
-            return (int)(6378.388 * Math.acos(0.5 * ((1.0 + q1) * q2 - (1.0 - q1) * q3)) + 1.0);
+            double q1 = Math.cos(latitudeI - latitudeJ);
+            double q2 = Math.cos(longitudeI - longitudeJ);
+            double q3 = Math.cos(longitudeI + longitudeJ);
+            return (int) (6378.388 * Math.acos(0.5 * ((1.0 + q1) * q2 - (1.0 - q1) * q3)) + 1.0);
         };
+
+
     }
 
-    private static double convertToRadians(Double v) {
-        int deg = v.intValue();
-        double min = v - (double)deg;
-        return 3.141592 * ((double)deg + 0.5 * min / 3.0) / 180.0;
+    private static double convertToRadians(double x) {
+        int deg = (int) x;
+        double min = x - deg;
+        return 3.141592 * ((double) deg + 5.0 * min / 3.0) / 180.0;
     }
 
     private static BiFunction<Node, Node, Integer> getMan2dFunction() {
