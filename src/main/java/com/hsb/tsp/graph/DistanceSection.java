@@ -47,8 +47,8 @@ public abstract class DistanceSection {
     public boolean isNeighbor(int id1, int id2) {
         int[] neighbors = getNeighborsOf(id1);
 
-        for (int i = 0; i < neighbors.length; i++) {
-            if (neighbors[i] == id2) {
+        for (int neighbor : neighbors) {
+            if (neighbor == id2) {
                 return true;
             }
         }

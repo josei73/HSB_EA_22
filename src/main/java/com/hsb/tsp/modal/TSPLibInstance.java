@@ -41,7 +41,6 @@ public class TSPLibInstance {
                     if (this.nodeCoordinateType == null) {
                         this.nodeCoordinateType = this.edgeWeightType.getNodeCoordType();
                     }
-
                     this.distanceSection = new NodeCoordinates(this.dimension, this.edgeWeightType);
                     this.distanceSection.buildGraph(reader);
                 } else if (line.equals("EDGE_DATA_SECTION")) {
@@ -75,8 +74,10 @@ public class TSPLibInstance {
                         } else if (key.equals("COMMENT")) {
                             if (this.comment == null) {
                                 this.comment = value;
+                                System.out.println(this.comment);
                             } else {
                                 this.comment = this.comment + "\n" + value;
+                                System.out.println(this.comment);
                             }
                         } else if (key.equals("TYPE")) {
                             this.dataType = DataType.valueOf(value);
