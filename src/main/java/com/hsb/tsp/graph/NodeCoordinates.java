@@ -1,11 +1,10 @@
 package com.hsb.tsp.graph;
 
-
-
 import com.hsb.tsp.fieldTypesAndFormats.EdgeWeightType;
 import com.hsb.tsp.fieldTypesAndFormats.NodeCoordType;
 import com.hsb.tsp.parser.TSPLibInstance;
 import com.hsb.tsp.utils.DistanceFunction;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -46,11 +45,11 @@ public class NodeCoordinates extends DistanceSection {
     }
 
     @Override
-    public double[][] getAdjMatrix(TSPLibInstance problem) {
-        double[][] matrix = new double[problem.getDimension()][problem.getDimension()];
+    public int[][] getAdjMatrix(TSPLibInstance problem) {
+        int[][] matrix = new int[problem.getDimension()][problem.getDimension()];
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {
-                matrix[i][j] = problem.getDistanceSection().getDistanceBetween(i + 1, j + 1);
+                matrix[i][j] =(int) problem.getDistanceSection().getDistanceBetween(i + 1, j + 1);
             }
         }
         return matrix;
@@ -74,8 +73,8 @@ public class NodeCoordinates extends DistanceSection {
         Node node1 = nodes.get(id1);
         Node node2 = nodes.get(id2);
 
-        if (node1 == null) throw new NoSuchElementException("Node1 not found");
-        if (node2 == null) throw new NoSuchElementException("Node2 not found");
+        if (node1 == null) throw new NoSuchElementException("Node1 not found "+id1);
+        if (node2 == null) throw new NoSuchElementException("Node2 not found "+id2);
 
         if(node1.getId() == node2.getId())
             return 0;

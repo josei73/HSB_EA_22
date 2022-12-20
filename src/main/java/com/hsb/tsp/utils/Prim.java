@@ -1,7 +1,10 @@
 package com.hsb.tsp.utils;
 
+import com.hsb.tsp.graph.Edge;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 public class Prim {
@@ -27,7 +30,7 @@ public class Prim {
     }
 
     // Function to find the minimum spanning tree of the given graph
-    public static List<Integer>  primMST() {
+    public static List<Edge>  primMST() {
         // Set of vertices not yet included in MST
         mstSet = new boolean[N];
 
@@ -67,7 +70,7 @@ public class Prim {
             }
         }
 
-       return printMST();
+        return printMST();
     }
 
     // A utility function to find the vertex with minimum key value
@@ -87,18 +90,17 @@ public class Prim {
     }
 
     // A utility function to print the constructed MST
-    private static List<Integer>  printMST() {
-        System.out.println("Edge   Weight");
-        List<Integer> nodes = new ArrayList<>();
+    private static List<Edge>  printMST() {
+        //  System.out.println("Edge   Weight");
+        List<Edge> nodes = new ArrayList<>();
         for (int i = 1; i < N; i++) {
-            System.out.println(parent[i] + " - " + i + "    " + adjMatrix[i][parent[i]]);
-            nodes.add(parent[i]);
+            //     System.out.println(parent[i] + " - " + i + "    " + adjMatrix[i][parent[i]]);
+            nodes.add(new Edge(parent[i],i, adjMatrix[i][parent[i]]));
         }
+        nodes.sort(Comparator.comparing(Edge::getDist));
 
-        System.out.println(nodes);
         return nodes;
     }
 
-    public static void main(String[] args) {
-    }
+
 }

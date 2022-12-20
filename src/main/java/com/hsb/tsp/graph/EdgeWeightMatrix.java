@@ -1,8 +1,8 @@
 package com.hsb.tsp.graph;
 
+
 import com.hsb.tsp.fieldTypesAndFormats.EdgeWeightFormat;
 import com.hsb.tsp.parser.TSPLibInstance;
-
 
 import java.io.BufferedReader;
 import java.io.EOFException;
@@ -14,15 +14,15 @@ public class EdgeWeightMatrix extends DistanceSection {
     private int size;
     private EdgeWeightFormat edgeWeightFormat;
 
-    private double[][] matrix;
+    private int[][] matrix;
 
     public EdgeWeightMatrix(int size, EdgeWeightFormat edgeWeightFormat) {
         this.size = size;
         this.edgeWeightFormat = edgeWeightFormat;
-        matrix = new double[size][size];
+        matrix = new int[size][size];
     }
 
-    private void readNextLine(BufferedReader reader, Queue<Double> entries)
+    private void readNextLine(BufferedReader reader, Queue<Integer> entries)
             throws IOException {
         String line = null;
 
@@ -37,18 +37,18 @@ public class EdgeWeightMatrix extends DistanceSection {
         String[] tokens = line.split("\\s+");
 
         for (int i = 0; i < tokens.length; i++) {
-            entries.offer(Double.parseDouble(tokens[i]));
+            entries.offer(Integer.parseInt(tokens[i]));
         }
     }
 
     @Override
     public double getDistanceBetween(int id1, int id2) {
+
         if ((id1 < 0) || (id1 > size-1)) {
             throw new IllegalArgumentException("no node with identifier " +
                     id1);
         }
 
-        System.out.println(size);
 
         if ((id2 < 0) || (id2 > size-1)) {
             throw new IllegalArgumentException("no node with identifier " +
@@ -61,7 +61,7 @@ public class EdgeWeightMatrix extends DistanceSection {
 
     public void buildGraph(BufferedReader reader) throws IOException {
 
-        Queue<Double> entries = new LinkedList<Double>();
+        Queue<Integer> entries = new LinkedList<Integer>();
 
         switch (edgeWeightFormat) {
             case FULL_MATRIX:
@@ -108,7 +108,7 @@ public class EdgeWeightMatrix extends DistanceSection {
         }
     }
 
-    private void lowerRow(BufferedReader reader, Queue<Double> entries) throws IOException {
+    private void lowerRow(BufferedReader reader, Queue<Integer> entries) throws IOException {
         for (int i = 1; i < size; i++) {
             for (int j = 0; j < i; j++) {
                 if (entries.isEmpty()) {
@@ -121,7 +121,7 @@ public class EdgeWeightMatrix extends DistanceSection {
         }
     }
 
-    private void UpperDiagRow(BufferedReader reader, Queue<Double> entries) throws IOException {
+    private void UpperDiagRow(BufferedReader reader, Queue<Integer> entries) throws IOException {
         for (int i = 0; i < size; i++) {
             for (int j = i; j < size; j++) {
                 if (entries.isEmpty()) {
@@ -134,7 +134,7 @@ public class EdgeWeightMatrix extends DistanceSection {
         }
     }
 
-    private void upperRow(BufferedReader reader, Queue<Double> entries) throws IOException {
+    private void upperRow(BufferedReader reader, Queue<Integer> entries) throws IOException {
         for (int i = 0; i < size - 1; i++) {
             for (int j = i + 1; j < size; j++) {
                 if (entries.isEmpty()) {
@@ -147,7 +147,7 @@ public class EdgeWeightMatrix extends DistanceSection {
         }
     }
 
-    private void putDataFullMatrix(BufferedReader reader, Queue<Double> entries) throws IOException {
+    private void putDataFullMatrix(BufferedReader reader, Queue<Integer> entries) throws IOException {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 if (entries.isEmpty()) {
@@ -159,7 +159,7 @@ public class EdgeWeightMatrix extends DistanceSection {
         }
     }
 
-    private void putEdgeDataLowerDiagRow(BufferedReader reader, Queue<Double> entries) throws IOException {
+    private void putEdgeDataLowerDiagRow(BufferedReader reader, Queue<Integer> entries) throws IOException {
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < i + 1; j++) {
                 if (entries.isEmpty()) {
@@ -172,7 +172,7 @@ public class EdgeWeightMatrix extends DistanceSection {
         }
     }
 
-    private void UpperCol(BufferedReader reader, Queue<Double> entries) throws IOException {
+    private void UpperCol(BufferedReader reader, Queue<Integer> entries) throws IOException {
         for (int j = 1; j < size; j++) {
             for (int i = 0; i < j; i++) {
                 if (entries.isEmpty()) {
@@ -185,7 +185,7 @@ public class EdgeWeightMatrix extends DistanceSection {
         }
     }
 
-    private void putEdgeDataForUpperDiagCol(BufferedReader reader, Queue<Double> entries) throws IOException {
+    private void putEdgeDataForUpperDiagCol(BufferedReader reader, Queue<Integer> entries) throws IOException {
         for (int j = 0; j < size; j++) {
             for (int i = 0; i < j + 1; i++) {
                 if (entries.isEmpty()) {
@@ -198,7 +198,7 @@ public class EdgeWeightMatrix extends DistanceSection {
         }
     }
 
-    private void putEdgeDataForLowerCol(BufferedReader reader, Queue<Double> entries) throws IOException {
+    private void putEdgeDataForLowerCol(BufferedReader reader, Queue<Integer> entries) throws IOException {
         for (int j = 0; j < size - 1; j++) {
             for (int i = j + 1; i < size; i++) {
                 if (entries.isEmpty()) {
@@ -211,7 +211,7 @@ public class EdgeWeightMatrix extends DistanceSection {
         }
     }
 
-    private void putEdgeDataForLowerDiagCol(BufferedReader reader, Queue<Double> entries) throws IOException {
+    private void putEdgeDataForLowerDiagCol(BufferedReader reader, Queue<Integer> entries) throws IOException {
         for (int j = 0; j < size; j++) {
             for (int i = j; i < size; i++) {
                 if (entries.isEmpty()) {
@@ -242,10 +242,8 @@ public class EdgeWeightMatrix extends DistanceSection {
         return neighbors;
     }
 
-
-
     @Override
-    public double[][] getAdjMatrix(TSPLibInstance problem) {
+    public int[][] getAdjMatrix(TSPLibInstance problem) {
         return matrix;
     }
 

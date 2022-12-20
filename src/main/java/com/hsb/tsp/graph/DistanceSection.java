@@ -37,11 +37,12 @@ public abstract class DistanceSection {
     public abstract int[] getNeighborsOf(int id);
 
 
-    public abstract double[][] getAdjMatrix(TSPLibInstance problem);
+    public abstract int[][] getAdjMatrix(TSPLibInstance problem);
 
     protected Node mapToNode(String[] values) {
         return new Node(Integer.parseInt(values[0]), Double.parseDouble(values[1]), Double.parseDouble(values[2]));
     }
+
 
 
     public boolean isNeighbor(int id1, int id2) {
@@ -55,4 +56,5 @@ public abstract class DistanceSection {
 
         return false;
     }
+
 }

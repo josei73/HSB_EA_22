@@ -106,7 +106,7 @@ public class TSPService {
     }
 
     public Algorithm getAlgo(String name, TSPLibInstance tspLibInstance) {
-        double[][] adjMatrix = tspLibInstance.getDistanceSection().getAdjMatrix(tspLibInstance);
+        int[][] adjMatrix = tspLibInstance.getDistanceSection().getAdjMatrix(tspLibInstance);
 
         switch (name) {
             case "Held-Karp":

@@ -6,17 +6,16 @@ import java.util.List;
 public class GreedyTSP extends Algorithm {
 
 
-    public GreedyTSP(double[][] matrix) {
+    public GreedyTSP(int[][] matrix) {
         this(0, matrix);
     }
 
-    public GreedyTSP(int startNode, double[][] matrix) {
+    public GreedyTSP(int startNode, int[][] matrix) {
         distance = matrix;
         start = startNode;
     }
 
-
-    private double[][] distance;
+    private int[][] distance;
     private List<Integer> visited = new ArrayList<>();
     private double sum = 0;
 
@@ -60,13 +59,15 @@ public class GreedyTSP extends Algorithm {
 
         i = route[count - 1] - 1;
 
-        for (j = 0; j < distance.length; j++) {
+        /*for (j = 0; j < distance.length; j++) {
 
             if ((i != j) && distance[i][j] < min) {
                 min = distance[i][j];
                 route[count] = j + 1;
             }
         }
+
+         */
         sum += min;
 
         visited.add(start);
@@ -94,8 +95,7 @@ public class GreedyTSP extends Algorithm {
 
     public double getTourCost() {
         if (!ranSolver) solve();
-        System.out.println("greedy");
         return sum;
     }
-    
+
 }

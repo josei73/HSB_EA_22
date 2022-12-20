@@ -11,10 +11,17 @@ public class Edge {
         this.node2 = node2;
     }
 
-    public Edge(int node1, int node2, double weight) {
+    public Edge(int node1, int node2, double nodeWeight) {
         this.node1 = node1;
         this.node2 = node2;
-       this.weight = weight;
+        weight = nodeWeight;
+    }
+
+    public double getDist() {
+        return weight;
+    }
+    public void setDist(double nodeWeight) {
+        weight = nodeWeight;
     }
 
     public int getNode1() {
@@ -46,10 +53,6 @@ public class Edge {
 
     }
 
-    public double getDist() {
-        return weight;
-    }
-    public void setDist(double weight) {
-        this.weight = weight;
-    }
+
+
 }
