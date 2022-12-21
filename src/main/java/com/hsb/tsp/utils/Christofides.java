@@ -45,7 +45,7 @@ public class Christofides extends Algorithm {
             visit.put(value, true);
         }
         while (!vertices.isEmpty()) {
-            Integer integer = vertices.stream().findFirst().get();
+            Integer integer = vertices.iterator().next();
             int length = Integer.MAX_VALUE;
             int node2 = 1;
             vertices.remove(integer);
@@ -108,7 +108,7 @@ public class Christofides extends Algorithm {
     }
 
     @Override
-    public List<Integer> getTour() {
+    public ArrayList<Integer> getTour() {
         return null;
     }
 

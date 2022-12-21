@@ -91,10 +91,8 @@ public class Prim {
 
     // A utility function to print the constructed MST
     private static List<Edge>  printMST() {
-        //  System.out.println("Edge   Weight");
         List<Edge> nodes = new ArrayList<>();
         for (int i = 1; i < N; i++) {
-            //     System.out.println(parent[i] + " - " + i + "    " + adjMatrix[i][parent[i]]);
             nodes.add(new Edge(parent[i],i, adjMatrix[i][parent[i]]));
         }
         nodes.sort(Comparator.comparing(Edge::getDist));

@@ -13,10 +13,13 @@ public class GreedyTSP extends Algorithm {
     public GreedyTSP(int startNode, int[][] matrix) {
         distance = matrix;
         start = startNode;
+        visitedNodes = new boolean[matrix.length];
     }
 
     private int[][] distance;
-    private List<Integer> visited = new ArrayList<>();
+    private ArrayList<Integer> visited = new ArrayList<>();
+
+    private boolean[] visitedNodes;
     private double sum = 0;
 
     private final int start;
@@ -32,6 +35,7 @@ public class GreedyTSP extends Algorithm {
 
         visited.add(start);
         int[] route = new int[distance.length];
+        visitedNodes[0]=true;
 
         while (i < distance.length && j < distance[i].length) {
 
@@ -39,7 +43,7 @@ public class GreedyTSP extends Algorithm {
                 break;
             }
 
-            if (j != i && !(visited.contains(j))) {
+            if (j != i && !(visitedNodes[j])) {
                 if (distance[i][j] < min) {
                     min = distance[i][j];
                     route[count] = j + 1;
@@ -51,6 +55,8 @@ public class GreedyTSP extends Algorithm {
                 sum += min;
                 min = Integer.MAX_VALUE;
                 visited.add(route[count] - 1);
+                visitedNodes[route[count]-1]=true;
+
                 j = 0;
                 i = route[count] - 1;
                 count++;
@@ -59,31 +65,17 @@ public class GreedyTSP extends Algorithm {
 
         i = route[count - 1] - 1;
 
-        /*for (j = 0; j < distance.length; j++) {
-
-            if ((i != j) && distance[i][j] < min) {
-                min = distance[i][j];
-                route[count] = j + 1;
-            }
-        }
-
-         */
         sum += min;
 
         visited.add(start);
         ranSolver = true;
 
-        // System.out.print(" Cost is : ");
-        // System.out.println(sum);
-        // System.out.println(visited.toString());
-
 
     }
 
-    public List<Integer> getTour() {
+    public ArrayList<Integer> getTour() {
         if (!ranSolver) solve();
-        System.out.println("greedy");
-        List<Integer> solver = new ArrayList<>();
+        ArrayList<Integer> solver = new ArrayList<>();
 
 
         for (int i = 0; i < visited.size(); i++)

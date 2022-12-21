@@ -19,7 +19,7 @@ public class Main {
         TSPLibInstance problem = new TSPLibInstance();
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("data/tsp/ulysses22.tsp"));
+            BufferedReader reader = new BufferedReader(new FileReader("data/tsp/ulysses16.tsp"));
             problem.load(reader);
             // problem.addTour(new BufferedReader(new FileReader("./data/tsp/ali535.opt.tour")));
 
@@ -81,8 +81,11 @@ public class Main {
 
 
 
-        PTAS ptas = new PTAS();
-        System.out.println(ptas.solveTSP(matrix));
+
+
+       // PTAS ptas = new PTAS();
+       // System.out.println(ptas.solveTSP(matrix));
+
 
     /*
 

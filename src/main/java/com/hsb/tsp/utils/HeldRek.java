@@ -13,7 +13,7 @@ public class HeldRek extends Algorithm {
     private int[][] distance;
     private double minTourCost = Double.POSITIVE_INFINITY;
 
-    private List<Integer> tour = new ArrayList<>();
+    private ArrayList<Integer> tour = new ArrayList<>();
     private boolean ranSolver = false;
 
     public HeldRek(int[][] distance) {
@@ -42,7 +42,7 @@ public class HeldRek extends Algorithm {
     }
 
 
-    public List<Integer> getTour() {
+    public ArrayList<Integer> getTour() {
         if (!ranSolver) solve();
         return tour;
     }

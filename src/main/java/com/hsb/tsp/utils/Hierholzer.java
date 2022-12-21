@@ -12,11 +12,11 @@ public class Hierholzer {
     // adjacency list representation of the graph
     private List<List<Integer>> adj;
     // array to store the state of each vertex (visited or unvisited)
-    private int[] visited;
+    private boolean[] visited;
 
     public Hierholzer(List<List<Integer>> adj) {
         this.adj = adj;
-        this.visited = new int[adj.size()];
+        this.visited = new boolean[adj.size()];
     }
 
     public List<Integer> findEulerianPath() {
@@ -29,9 +29,9 @@ public class Hierholzer {
     }
 
     private void dfs(int u, List<Integer> path) {
-        visited[u] = VISITED;
+        visited[u] = true;
         for (int v : adj.get(u)) {
-            if (visited[v] == UNVISITED) {
+            if (!visited[v]) {
                 dfs(v, path);
             }
         }
