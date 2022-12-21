@@ -3,6 +3,7 @@ package com.hsb.tsp.service;
 
 import com.hsb.tsp.graph.Node;
 import com.hsb.tsp.parser.TSPLibInstance;
+import com.hsb.tsp.parser.TSPParser;
 import com.hsb.tsp.utils.Algorithm;
 import com.hsb.tsp.utils.GreedyTSP;
 import com.hsb.tsp.utils.HeldRek;
@@ -83,24 +84,18 @@ public class TSPService {
 
     }
 
-
     public Set<String> getProblemNames() {
+        TSPParser parser = new TSPParser();
 
+        return parser.loadAllNames();
+    }
+
+    public Set<String> getAlgorithmNames() {
 
         File folder = new File("data/tsp/");
         File[] listOfFiles = folder.listFiles();
 
         Set<String> files = new HashSet<>();
-
-        for (int i = 0; i < listOfFiles.length; i++) {
-            if (listOfFiles[i].isFile()) {
-                //System.out.println("File " + listOfFiles[i].getName().subSequence(0,listOfFiles[i].getName().indexOf(".")));
-                files.add((String) listOfFiles[i].getName().subSequence(0, listOfFiles[i].getName().indexOf(".")));
-            }
-        }
-
-        System.out.println(files);
-
 
         return files;
     }

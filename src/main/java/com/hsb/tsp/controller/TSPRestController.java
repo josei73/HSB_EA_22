@@ -23,7 +23,7 @@ public class TSPRestController {
     private TSPService service;
 
     @GetMapping("/api/tour")
-    public List<Integer> getTOur() {
+    public List<Integer> getTour() {
         return service.genData();
     }
 
@@ -44,7 +44,7 @@ public class TSPRestController {
     }
 
     @GetMapping("api/algorithm")
-    public List<String> getAlg() {
+    public List<String> getAlgorithms() {
         List<String> algorithmName = new ArrayList<>();
 
         algorithmName.add("Held-Karp");

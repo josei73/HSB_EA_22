@@ -27,22 +27,30 @@
       <div class="position-sticky pt-3 sidebar-sticky">
         <ul class="nav flex-column">
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">
+            <a>
               <span class="align-text-bottom"></span>
               Select Problem
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <select class="form-control" th:field="${problems}"  id="dropProblems">
+              <option th:each="problem : ${problems}" th:value="${problem}" th:text="${problem}"></option>
+            </select>
+          </li>
+          <li class="nav-item">
+            <a>
               <span class="align-text-bottom"></span>
               Select Algorithm
             </a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="#">
-              <span class="align-text-bottom"></span>
-              Run Algorithm
-            </a>
+            <select class="form-control" th:field="${algorithms}"  id="dropAlgorithms">
+              <option th:each="algorithm : ${algorithms}" th:value="${algorithm}" th:text="${algorithm}"></option>
+            </select>
+          </li>
+          <li class="nav-item">
+            <button class="loadButton">Load</button>
+            <button class="runButton">Run</button>
           </li>
         </ul>
       </div>

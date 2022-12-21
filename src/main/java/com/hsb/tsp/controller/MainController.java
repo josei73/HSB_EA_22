@@ -15,6 +15,8 @@ public class MainController {
     @GetMapping("")
     public String viewHomePage(Model model) {
         model.addAttribute("title", "Travelling Salesperson Problem");
+        model.addAttribute("problems", service.getProblemNames());
+        model.addAttribute("algorithms", service.getAlgorithmNames());
         return "index";
     }
 
