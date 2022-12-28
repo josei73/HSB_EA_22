@@ -3,6 +3,7 @@ package com.hsb.tsp.controller;
 
 import com.hsb.tsp.graph.Node;
 import com.hsb.tsp.parser.TSPLibInstance;
+import com.hsb.tsp.parser.TSPParser;
 import com.hsb.tsp.service.TSPService;
 import com.hsb.tsp.utils.Algorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,15 +32,14 @@ public class TSPRestController {
     public Map<Integer, Node> getTSP() {
         return service.genNodeCoordinates();
     }
-
-
+    
     @GetMapping("/api/nodes/{name}")
     public Map<Integer, Node> getTSPNodes(@PathVariable String name) {
         return service.genProblemNode(name);
     }
 
     @GetMapping("api/problems")
-    public Set<String> getProblemsData() {
+    public List<String> getProblemsData() {
         return service.getProblemNames();
     }
 

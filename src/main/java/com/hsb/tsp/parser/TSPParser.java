@@ -49,6 +49,8 @@ public class TSPParser {
         String line = "";
         while (!line.equals("EOF")) {
             line = reader.readLine();
+            if(line == null)    // only pr76 has a line==null
+                break;
             line = line.trim();
             if(line.contains(":")) {
                 parseFileSpecification(line);

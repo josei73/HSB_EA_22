@@ -18,6 +18,7 @@ import java.util.*;
 @Service
 public class TSPService {
 
+    private List<TSPParser> instances;
 
     public List<Integer> genData() {
         TSPLibInstance problem = new TSPLibInstance();
@@ -84,10 +85,11 @@ public class TSPService {
 
     }
 
-    public Set<String> getProblemNames() {
-        TSPParser parser = new TSPParser();
+    public TSPParser getTSPInstance(String filename) throws IOException {
+        TSPParser instance = new TSPParser();
 
-        return parser.loadAllNames();
+        instance.loadInstance(filename);
+        return instance;
     }
 
     public Set<String> getAlgorithmNames() {
@@ -112,5 +114,33 @@ public class TSPService {
             default:
                 throw new IllegalArgumentException("No Algo exist");
         }
+    }
+
+    //TODO bugs with linhp318 and pr76 have to be resolved
+    public void loadAllInstances() {
+        File[] listOfFiles = new File("data/tsp/").listFiles((dir, name) -> name.toLowerCase().endsWith(".tsp"));
+        List<TSPParser> instances = new ArrayList<>();
+        for (File file : listOfFiles) {
+            try {
+                TSPParser instance = new TSPParser();
+                if(!file.getName().equals("linhp318.tsp"))  //parsing error
+                    instance.loadInstance(file.getName());
+                System.out.println(file.getName());
+                instances.add(instance);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        this.instances = instances;
+    }
+
+    public List<String> getProblemNames() {
+        loadAllInstances();
+        List<String> problemNames = new ArrayList<>();
+        for(TSPParser instance : this.instances) {
+            problemNames.add(instance.getName() + ": " + instance.getComment());
+        }
+
+        return problemNames;
     }
 }
