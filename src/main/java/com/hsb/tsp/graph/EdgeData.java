@@ -22,13 +22,11 @@ public class EdgeData extends DistanceSection {
     }
 
     public void buildGraph(BufferedReader reader) throws IOException {
-        String line = null;
         if (EdgeDataFormat.EDGE_LIST.equals(this.edgeDataFormat)) {
-            this.buildForEdgeList(reader);
+            buildForEdgeList(reader);
         } else if (EdgeDataFormat.ADJ_LIST.equals(this.edgeDataFormat)) {
-            this.buildForAdjList(reader);
+            buildForAdjList(reader);
         }
-
     }
 
     private void buildForAdjList(BufferedReader reader) throws IOException {
@@ -43,7 +41,7 @@ public class EdgeData extends DistanceSection {
             String[] tokens = line.split("\\s+");
             int node1 = Integer.parseInt(tokens[0]);
             int node2 = Integer.parseInt(tokens[1]);
-            this.addEdge(node1, node2);
+            addEdge(node1, node2);
         }
 
     }
@@ -61,13 +59,17 @@ public class EdgeData extends DistanceSection {
         Queue<Integer> nodes = new LinkedList();
 
         while((line = reader.readLine()) != null) {
-            String[] tokens = line.split("\\s+");
+            line = line.trim();
+            if (line.equals("-1")) {
+                return;
+            }
 
+            String[] tokens = line.split("\\s+");
             for(int i = 0; i < tokens.length; ++i) {
                 nodes.add(Integer.parseInt(tokens[i]));
             }
 
-            this.createEdge(nodes);
+            createEdge(nodes);
         }
 
     }
@@ -122,13 +124,9 @@ public class EdgeData extends DistanceSection {
 
     private void createEdge(Queue<Integer> nodes) {
         Integer nodeX = (Integer)nodes.poll();
-
-        while((Integer)nodes.peek() != -1) {
+        while(!nodes.isEmpty()) {
             Integer adjacent = (Integer)nodes.poll();
-            if (adjacent != null && adjacent != -1) {
-                this.addEdge(nodeX, adjacent);
-            }
+            addEdge(nodeX, adjacent);
         }
-
     }
 }
