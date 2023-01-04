@@ -1,7 +1,7 @@
 package com.hsb.tsp.graph;
 
 import com.hsb.tsp.fieldTypesAndFormats.EdgeWeightFormat;
-import com.hsb.tsp.parser.TSPLibInstance;
+import com.hsb.tsp.model.TSPInstance;
 
 
 import java.io.BufferedReader;
@@ -245,7 +245,7 @@ public class EdgeWeightMatrix extends DistanceSection {
 
 
     @Override
-    public double[][] getAdjMatrix(TSPLibInstance problem) {
+    public double[][] getAdjMatrix(TSPInstance problem) {
         return matrix;
     }
 

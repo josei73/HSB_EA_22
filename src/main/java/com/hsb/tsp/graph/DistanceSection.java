@@ -2,7 +2,7 @@ package com.hsb.tsp.graph;
 
 
 
-import com.hsb.tsp.parser.TSPLibInstance;
+import com.hsb.tsp.model.TSPInstance;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -37,7 +37,7 @@ public abstract class DistanceSection {
     public abstract int[] getNeighborsOf(int id);
 
 
-    public abstract double[][] getAdjMatrix(TSPLibInstance problem);
+    public abstract double[][] getAdjMatrix(TSPInstance problem);
 
     protected Node mapToNode(String[] values) {
         return new Node(Integer.parseInt(values[0]), Double.parseDouble(values[1]), Double.parseDouble(values[2]));

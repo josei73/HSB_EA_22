@@ -2,8 +2,8 @@ package com.hsb.tsp.controller;
 
 
 import com.hsb.tsp.graph.Node;
-import com.hsb.tsp.parser.TSPLibInstance;
-import com.hsb.tsp.parser.TSPParser;
+import com.hsb.tsp.model.TSPInstance;
+import com.hsb.tsp.model.TSPModel;
 import com.hsb.tsp.service.TSPService;
 import com.hsb.tsp.utils.Algorithm;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 @RestController
 public class TSPRestController {
@@ -32,19 +31,25 @@ public class TSPRestController {
     public Map<Integer, Node> getTSP() {
         return service.genNodeCoordinates();
     }
-    
-    @GetMapping("/api/nodes/{name}")
-    public Map<Integer, Node> getTSPNodes(@PathVariable String name) {
-        return service.genProblemNode(name);
-    }
 
     @GetMapping("api/problems")
-    public List<String> getProblemsData() {
-        return service.getProblemNames();
+    public List<TSPInstance> getProblems() { return service.getAllTSPInstances(); }
+
+    @GetMapping("api/problems/{name}")
+    public TSPInstance getProblem(@PathVariable String name) { return service.getTSPInstance(name); }
+
+    @GetMapping("/api/problems/{name}/nodes")
+    public Map<Integer, Node> getTSPNodes(@PathVariable String name) {
+        return service.getTSPInstanceNodes(name);
+    }
+
+    @GetMapping("api/problems/models")
+    public List<TSPModel> getAllTSPModels() {
+        return service.getAllTSPModels();
     }
 
     @GetMapping("api/algorithm")
-    public List<String> getAlgorithms() {
+    public List<String> populateAlgorithms() {
         List<String> algorithmName = new ArrayList<>();
 
         algorithmName.add("Held-Karp");
@@ -57,7 +62,7 @@ public class TSPRestController {
 
     @GetMapping("api/algorithm/{algoName}/nodes/{nodeName}")
     public List<Integer> getAlg(@PathVariable String algoName, @PathVariable String nodeName) {
-        TSPLibInstance problem = service.getTSP(nodeName);
+        TSPInstance problem = service.getTSPInstance(nodeName);
         Algorithm solution = service.getAlgo(algoName, problem);
         return solution.getTour();
     }

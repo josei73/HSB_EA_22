@@ -1,6 +1,6 @@
 package com.hsb.tsp.graph;
 import com.hsb.tsp.fieldTypesAndFormats.EdgeDataFormat;
-import com.hsb.tsp.parser.TSPLibInstance;
+import com.hsb.tsp.model.TSPInstance;
 
 
 import java.io.BufferedReader;
@@ -102,7 +102,7 @@ public class EdgeData extends DistanceSection {
 
 
     @Override
-    public double[][] getAdjMatrix(TSPLibInstance problem) {
+    public double[][] getAdjMatrix(TSPInstance problem) {
         double[][] matrix = new double[problem.getDimension()][problem.getDimension()];
         for (int i = 0; i < matrix.length; i++) {
             for (int j = 0; j < matrix[i].length; j++) {

@@ -1,239 +1,123 @@
 package com.hsb.tsp.parser;
 
 import com.hsb.tsp.fieldTypesAndFormats.*;
-import com.hsb.tsp.graph.DistanceSection;
 import com.hsb.tsp.graph.EdgeData;
 import com.hsb.tsp.graph.EdgeWeightMatrix;
 import com.hsb.tsp.graph.NodeCoordinates;
+import com.hsb.tsp.model.TSPInstance;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.*;
 
 public class TSPParser {
     final String PATH = "data/tsp/";
 
-    // fields for simple file parsing
-    private String name;
-    private DataType dataType;
-    private String comment;
-    private int dimension;
-    private EdgeWeightType edgeWeightType;
-    private EdgeWeightFormat edgeWeightFormat;
-    private EdgeDataFormat edgeDataFormat;
-    private NodeCoordType nodeCoordinateType;
-    private DisplayDataType displayDataType;
-
-    // fields for parsing depending on previous fields
-    private DistanceSection distanceSection;
-    private DistanceSection fixedEdge;
-    private DistanceSection displayData;
-    private List<Tour> tours = new ArrayList();
     private BufferedReader reader;
     public TSPParser() {}
 
-    public static void main(String[] args) throws IOException {
-        TSPParser problem = new TSPParser();
-        //problem.loadInstance("a280.tsp");
-    }
-
-    public void loadInstance(String filename) throws IOException {
+    public TSPInstance loadInstance(String filename) throws IOException {
+        TSPInstance instance = new TSPInstance();
         try {
             reader = new BufferedReader(new FileReader(PATH + filename));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        String line = "";
-        while (!line.equals("EOF")) {
-            line = reader.readLine();
-            if(line == null)    // only pr76 has a line==null
-                break;
+        String line = null;
+        while ((line = reader.readLine()) != null && !line.equals("EOF")) {
             line = line.trim();
             if(line.contains(":")) {
-                parseFileSpecification(line);
+                parseFileSpecification(instance, line);
             } else {
-                parseFileData(line, reader);
+                parseFileData(instance, line, reader);
             }
         }
+        return instance;
     }
 
+    // TODO how a tour is added to a model should be re-evaluated
     public void addOptimalTour(String filename) throws IOException {
-        TSPParser problem = new TSPParser();
-        problem.loadInstance(filename);
+        TSPInstance problem = loadInstance(filename);
         if (problem.getDataType().equals(DataType.TOUR)) {
-            this.tours.addAll(problem.getTours());
+            problem.setTours(problem.getTours());
         } else {
             throw new IllegalArgumentException("not a tour file");
         }
     }
 
-    public Set<String> loadAllNames() {
-        File[] listOfFiles = new File(PATH).listFiles((dir, name) -> name.toLowerCase().endsWith(".tsp"));
-        Set<String> problemNames = new HashSet<>();
-        for (File file : listOfFiles) {
-            try {
-                reader = new BufferedReader(new FileReader(file));
-                problemNames.add(parseProblemName(reader));
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-        return problemNames;
-    }
-
-    private void parseFileSpecification(String line) {
+    private void parseFileSpecification(TSPInstance instance, String line) {
         if(line.isEmpty()) { return; }
         String[] tokens = line.split(":");
         String key = tokens[0].trim();
         String value = tokens[1].trim();
         switch (key) {
             case "NAME":
-                this.name = value;
+                instance.setName(value);
                 break;
             case "COMMENT":
-                if (this.comment == null) {
-                    this.comment = value;
+                if (instance.getComment() == null) {
+                    instance.setComment(value);
                 } else {
-                    this.comment = this.comment + "\n" + value;
+                    instance.setComment(instance.getComment() + "\n" + value);
                 }
                 break;
             case "TYPE":
-                this.dataType = DataType.valueOf(value);
+                instance.setDataType(DataType.valueOf(value));
                 break;
             case "DIMENSION":
-                this.dimension = Integer.parseInt(value);
+                instance.setDimension(Integer.parseInt(value));
                 break;
             case "EDGE_WEIGHT_TYPE":
-                this.edgeWeightType = EdgeWeightType.valueOf(value);
+                instance.setEdgeWeightType(EdgeWeightType.valueOf(value));
                 break;
             case "EDGE_WEIGHT_FORMAT":
-                this.edgeWeightFormat = EdgeWeightFormat.valueOf(value);
+                instance.setEdgeWeightFormat(EdgeWeightFormat.valueOf(value));
                 break;
             case "EDGE_DATA_FORMAT":
-                this.edgeDataFormat = EdgeDataFormat.valueOf(value);
+                instance.setEdgeDataFormat(EdgeDataFormat.valueOf(value));
                 break;
             case "NODE_COORD_FORMAT":
-                this.nodeCoordinateType = NodeCoordType.valueOf(value);
+                instance.setNodeCoordinateType(NodeCoordType.valueOf(value));
                 break;
             case "DISPLAY_DATA_TYPE":
-                this.displayDataType = DisplayDataType.valueOf(value);
+                instance.setDisplayDataType(DisplayDataType.valueOf(value));
                 break;
         }
     }
 
-    private void parseFileData(String line, BufferedReader reader) throws IOException {
+    private void parseFileData(TSPInstance instance, String line, BufferedReader reader) throws IOException {
         if(line.isEmpty()) { return; }
         switch (line) {
             case "NODE_COORD_SECTION":
-                if (this.nodeCoordinateType == null) {
-                    this.nodeCoordinateType = this.edgeWeightType.getNodeCoordType();
+                if (instance.getNodeCoordinateType() == null) {
+                    instance.setNodeCoordinateType(instance.getEdgeWeightType().getNodeCoordType());
                 }
-                this.distanceSection = new NodeCoordinates(this.dimension, this.edgeWeightType);
-                this.distanceSection.buildGraph(reader);
+                instance.setDistanceSection(new NodeCoordinates(instance.getDimension(), instance.getEdgeWeightType()));
+                instance.getDistanceSection().buildGraph(reader);
                 break;
             case "EDGE_DATA_SECTION":
-                this.distanceSection = new EdgeData(this.dimension, this.edgeDataFormat);
-                this.distanceSection.buildGraph(reader);
+                instance.setDistanceSection(new EdgeData(instance.getDimension(), instance.getEdgeDataFormat()));
+                instance.getDistanceSection().buildGraph(reader);
                 break;
             case "EDGE_WEIGHT_SECTION":
-                this.distanceSection = new EdgeWeightMatrix(this.dimension, this.edgeWeightFormat);
-                this.distanceSection.buildGraph(reader);
+                instance.setDistanceSection(new EdgeWeightMatrix(instance.getDimension(), instance.getEdgeWeightFormat()));
+                instance.getDistanceSection().buildGraph(reader);
                 break;
             case "FIXED_EDGES_SECTION":
-                this.fixedEdge = new EdgeData(this.dimension, EdgeDataFormat.EDGE_LIST);
-                this.fixedEdge.buildGraph(reader);
+                instance.setFixedEdge(new EdgeData(instance.getDimension(), EdgeDataFormat.EDGE_LIST));
+                instance.getFixedEdge().buildGraph(reader);
                 break;
             case "TOUR_SECTION":
             case "-1":
-                Tour tour = new Tour();
+                TSPTour tour = new TSPTour();
                 tour.load(reader);
-                tours.add(tour);
+                instance.getTours().add(tour);
                 break;
             case "DISPLAY_DATA_SECTION":
-                this.displayData = new NodeCoordinates(this.dimension, NodeCoordType.TWOD_COORDS);
-                this.displayData.buildGraph(reader);
+                instance.setDisplayData(new NodeCoordinates(instance.getDimension(), NodeCoordType.TWOD_COORDS));
+                instance.getDisplayData().buildGraph(reader);
                 break;
         }
-    }
-
-    private String parseProblemName(BufferedReader reader) throws IOException {
-        String name = null;
-        String comment = null;
-        String line = "";
-
-        while (!line.equals("EOF")) {
-            line = reader.readLine();
-            line = line.trim();
-            if (!line.contains(":")) {
-                break;
-            }
-
-            String[] tokens = line.split(":");
-            String key = tokens[0].trim();
-            String value = tokens[1].trim();
-
-            if (key.equals("NAME")) {
-                name = value;
-            }
-            if (key.equals("COMMENT")) {
-                comment = value;
-            }
-        }
-        return name + ": " +comment;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public DataType getDataType() {
-        return dataType;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public int getDimension() {
-        return dimension;
-    }
-
-    public EdgeWeightType getEdgeWeightType() {
-        return edgeWeightType;
-    }
-
-    public EdgeWeightFormat getEdgeWeightFormat() {
-        return edgeWeightFormat;
-    }
-
-    public EdgeDataFormat getEdgeDataFormat() {
-        return edgeDataFormat;
-    }
-
-    public NodeCoordType getNodeCoordinateType() {
-        return nodeCoordinateType;
-    }
-
-    public DisplayDataType getDisplayDataType() {
-        return displayDataType;
-    }
-
-    public DistanceSection getDistanceSection() {
-        return distanceSection;
-    }
-
-    public DistanceSection getFixedEdge() {
-        return fixedEdge;
-    }
-
-    public DistanceSection getDisplayData() {
-        return displayData;
-    }
-
-    public List<Tour> getTours() {
-        return tours;
     }
 }

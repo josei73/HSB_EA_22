@@ -3,6 +3,7 @@ package com.hsb.tsp.parser;
 
 
 import com.hsb.tsp.graph.DistanceSection;
+import com.hsb.tsp.model.TSPInstance;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -11,12 +12,12 @@ import java.util.List;
 
 
 
-public class Tour {
+public class TSPTour {
 
 
     private final List<Integer> nodes = new ArrayList();
 
-    public Tour() {
+    public TSPTour() {
     }
 
     public void load(BufferedReader reader) throws IOException {
@@ -49,7 +50,7 @@ public class Tour {
      * @param problem the TSPLIB problem instance this tour is a solution for
      * @return the total distance of this tour
      */
-    public double distance(TSPLibInstance problem) {
+    public double distance(TSPInstance problem) {
         DistanceSection distanceSection = problem.getDistanceSection();
         double result = 0.0;
 

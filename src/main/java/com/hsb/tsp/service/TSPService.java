@@ -2,33 +2,33 @@ package com.hsb.tsp.service;
 
 
 import com.hsb.tsp.graph.Node;
-import com.hsb.tsp.parser.TSPLibInstance;
+import com.hsb.tsp.model.TSPInstance;
+import com.hsb.tsp.model.TSPModel;
 import com.hsb.tsp.parser.TSPParser;
 import com.hsb.tsp.utils.Algorithm;
 import com.hsb.tsp.utils.GreedyTSP;
 import com.hsb.tsp.utils.HeldRek;
 import org.springframework.stereotype.Service;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
 
 @Service
 public class TSPService {
+    TSPParser parser;
 
-    private List<TSPParser> instances;
+    public TSPService() {
+        this.parser = new TSPParser();
+    }
 
     public List<Integer> genData() {
-        TSPLibInstance problem = new TSPLibInstance();
-
+        TSPInstance problem = null;
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("data/tsp/pr76.tsp"));
-            problem.load(reader);
-            problem.addTour(new BufferedReader(new FileReader("./data/tsp/pr76.opt.tour")));
-        } catch (IOException var5) {
-            throw new RuntimeException(var5);
+            problem = this.parser.loadInstance("pr76.tsp");
+            //problem.setTours(this.parser.addOptimalTour("./data/tsp/pr76.opt.tour"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
 
@@ -37,59 +37,20 @@ public class TSPService {
         Iterator it = nodes.entrySet().iterator();
 
         return problem.getTours().get(0).getNodes();
-
     }
 
     public Map<Integer, Node> genNodeCoordinates() {
-        TSPLibInstance problem = new TSPLibInstance();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader("data/tsp/pr76.tsp"));) {
-            problem.load(reader);
-            problem.addTour(new BufferedReader(new FileReader("./data/tsp/pr76.opt.tour")));
-        } catch (IOException var5) {
-            throw new RuntimeException(var5);
+        TSPInstance problem = null;
+        try {
+            problem = this.parser.loadInstance("pr76.tsp");
+            //problem.setTours(this.parser.addOptimalTour("./data/tsp/pr76.opt.tour"));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
 
         return problem.getDistanceSection().getNodes();
 
-    }
-
-    public Map<Integer, Node> genProblemNode(String name) {
-        TSPLibInstance problem = new TSPLibInstance();
-
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("data/tsp/" + name+".tsp"));
-            problem.load(reader);
-        } catch (IOException var5) {
-            throw new RuntimeException(var5);
-        }
-
-
-        return problem.getDistanceSection().getNodes();
-
-    }
-
-    public TSPLibInstance getTSP(String name) {
-        TSPLibInstance problem = new TSPLibInstance();
-
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader("data/tsp/" + name+".tsp"));
-            problem.load(reader);
-        } catch (IOException var5) {
-            throw new RuntimeException(var5);
-        }
-
-
-        return problem;
-
-    }
-
-    public TSPParser getTSPInstance(String filename) throws IOException {
-        TSPParser instance = new TSPParser();
-
-        instance.loadInstance(filename);
-        return instance;
     }
 
     public Set<String> getAlgorithmNames() {
@@ -102,8 +63,8 @@ public class TSPService {
         return files;
     }
 
-    public Algorithm getAlgo(String name, TSPLibInstance tspLibInstance) {
-        double[][] adjMatrix = tspLibInstance.getDistanceSection().getAdjMatrix(tspLibInstance);
+    public Algorithm getAlgo(String name, TSPInstance instance) {
+        double[][] adjMatrix = instance.getDistanceSection().getAdjMatrix(instance);
 
         switch (name) {
             case "Held-Karp":
@@ -116,31 +77,64 @@ public class TSPService {
         }
     }
 
-    //TODO bugs with linhp318 and pr76 have to be resolved
-    public void loadAllInstances() {
+    /**
+     * loads an TSP instance
+     * @param name problem name
+     * @return TSPInstance object
+     */
+    public TSPInstance getTSPInstance(String name) {
+        try {
+            return this.parser.loadInstance(name + ".tsp");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
+     * loads an TSP instance
+     * @param name problem name
+     * @return a map of <index, node>
+     */
+    public Map<Integer, Node> getTSPInstanceNodes(String name) {
+        TSPInstance problem = null;
+        try {
+            problem = this.parser.loadInstance(name + ".tsp");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+
+        return problem.getDistanceSection().getNodes();
+    }
+
+    /**
+     * loads all TSP instances
+     * @return a List of TSPInstance objects
+     */
+    public List<TSPInstance> getAllTSPInstances() {
         File[] listOfFiles = new File("data/tsp/").listFiles((dir, name) -> name.toLowerCase().endsWith(".tsp"));
-        List<TSPParser> instances = new ArrayList<>();
+        List<TSPInstance> instances = new ArrayList<>();
         for (File file : listOfFiles) {
             try {
-                TSPParser instance = new TSPParser();
-                if(!file.getName().equals("linhp318.tsp"))  //parsing error
-                    instance.loadInstance(file.getName());
-                System.out.println(file.getName());
-                instances.add(instance);
+                instances.add(this.parser.loadInstance(file.getName()));
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
-        this.instances = instances;
+        return instances;
     }
 
-    public List<String> getProblemNames() {
-        loadAllInstances();
-        List<String> problemNames = new ArrayList<>();
-        for(TSPParser instance : this.instances) {
-            problemNames.add(instance.getName() + ": " + instance.getComment());
+    /**
+     * loads all TSP instances
+     * @return a List of Strings containing problem name and comment
+     */
+    public List<TSPModel> getAllTSPModels() {
+        List<TSPInstance> instances = getAllTSPInstances();
+        List<TSPModel> models = new ArrayList<>();
+        for(TSPInstance instance : instances) {
+            String lines[] = instance.getComment().split("\\r?\\n");
+            String name = instance.getName() + ": " + lines[0];
+            models.add(new TSPModel(name, instance.getDistanceSection().getNodes()));
         }
-
-        return problemNames;
+        return models;
     }
 }
