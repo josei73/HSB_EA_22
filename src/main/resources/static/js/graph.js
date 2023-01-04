@@ -9,12 +9,31 @@ let attrs = {
 };
 
 const loadData = async () => {
-    const nodes = await fetch('http://localhost:8080/tsp/api/nodes');
-    const solution = await fetch('http://localhost:8080/tsp/api/tour');
-    data.nodes = await nodes.json(); //extract JSON from the http response
-    data.solution = await solution.json();
+    const instance = "pr76"
+    const url = `http://localhost:8080/tsp/api/problems/${ instance }`
+    data.nodes = await fetch(url + "/nodes")   //data.nodes
+        .then(response => response.json());
+    data.solution = await fetch(url + "/tour") //data.solution
+        .then(response => response.json());
+    //data.nodes = await nodes.json(); //extract JSON from the http response
+    //data.solution = await solution.json();
+    //InitDropdown(data);
     initGraph(data);
 }
+
+//TODO populate dropdown menu via d3.js and update the graph on change
+/*
+function InitDropdown({}) {
+    menu = d3.select("#dropProblems").selectAll("options").data(d => d)
+    menuEnter = menu.enter().append("option")
+        .text(d => d.name + ": " + d.comment)
+        .attr("value", (d) => d)
+        .on("change", (d) => {
+            let nodes = d3.select(this).property("value")
+            renderGraph(nodes);
+        });
+}
+ */
 
 function initGraph({nodes, solution}) {
     let nodeArray = [];
