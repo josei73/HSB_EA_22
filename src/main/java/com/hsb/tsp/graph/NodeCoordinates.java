@@ -2,6 +2,7 @@ package com.hsb.tsp.graph;
 
 import com.hsb.tsp.fieldTypesAndFormats.EdgeWeightType;
 import com.hsb.tsp.fieldTypesAndFormats.NodeCoordType;
+import com.hsb.tsp.graph.Node;
 import com.hsb.tsp.parser.TSPLibInstance;
 import com.hsb.tsp.utils.DistanceFunction;
 
@@ -37,7 +38,7 @@ public class NodeCoordinates extends DistanceSection {
         }
 
         for (Node node : nodes.values()) {
-                neighbors[index++] = node.getId();
+            neighbors[index++] = node.getId();
 
         }
 

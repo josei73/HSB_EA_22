@@ -1,8 +1,8 @@
 package com.hsb.tsp.parser;
 
-
 import com.hsb.tsp.graph.DistanceSection;
 import com.hsb.tsp.graph.EdgeWeightMatrix;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;

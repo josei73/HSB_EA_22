@@ -1,8 +1,9 @@
 package com.hsb.tsp.graph;
 
-
 import com.hsb.tsp.fieldTypesAndFormats.EdgeWeightFormat;
+import com.hsb.tsp.graph.DistanceSection;
 import com.hsb.tsp.parser.TSPLibInstance;
+
 
 import java.io.BufferedReader;
 import java.io.EOFException;

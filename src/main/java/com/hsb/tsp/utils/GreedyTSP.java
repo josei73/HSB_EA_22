@@ -1,7 +1,7 @@
 package com.hsb.tsp.utils;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class GreedyTSP extends Algorithm {
 
@@ -18,7 +18,6 @@ public class GreedyTSP extends Algorithm {
 
     private int[][] distance;
     private ArrayList<Integer> visited = new ArrayList<>();
-
     private boolean[] visitedNodes;
     private double sum = 0;
 
@@ -76,6 +75,9 @@ public class GreedyTSP extends Algorithm {
     public ArrayList<Integer> getTour() {
         if (!ranSolver) solve();
         ArrayList<Integer> solver = new ArrayList<>();
+        sum=0;
+        for (int i = 0; i < visited.size()-1; i++)
+            sum+=distance[visited.get(i)][visited.get(i+1)];
 
 
         for (int i = 0; i < visited.size(); i++)
@@ -87,6 +89,7 @@ public class GreedyTSP extends Algorithm {
 
     public double getTourCost() {
         if (!ranSolver) solve();
+
         return sum;
     }
 

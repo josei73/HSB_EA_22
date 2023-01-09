@@ -29,37 +29,47 @@ public class Main {
         }
 
 
+        int[][] matrix = problem.getDistanceSection().getAdjMatrix(problem);
+        System.out.println("===================================================================== Random");
+        RandomTour randomTour = new RandomTour(matrix.length);
+        long randomStart = System.nanoTime();
+        randomTour.solve();
+        long randomEnd = System.nanoTime() -randomStart;
+        System.out.println(randomTour.getTour());
+        Tour tour = new Tour();
+        tour.setNodes(randomTour.getTour());
+        System.out.println(tour.distance(problem));
+        System.out.println(printTime(randomEnd));
 
-      int[][] matrix = problem.getDistanceSection().getAdjMatrix(problem);
+        System.out.println("===================================================================== Nearest");
+        NearestNeighbour neighbour = new NearestNeighbour(matrix);
+        long nearestStart = System.nanoTime();
+        List<Integer> list = neighbour.solve();
+        long nearestEnd = System.nanoTime()-nearestStart;
 
+        System.out.println(list);
+
+        tour.setNodes(list);
+        System.out.println(tour.distance(problem));
+        System.out.println(printTime(nearestEnd));
+
+        System.out.println("===================================================================== Christofides");
 
         long start3 = System.nanoTime();
         Christofides christofides = new Christofides();
-        List<Integer> tour = christofides.applyChristofides(matrix);
+        List<Integer> chrisTour = christofides.applyChristofides(matrix);
         long end3 = System.nanoTime() - start3;
 
 
         Tour tour1 =new Tour();
-        tour1.setNodes(tour);
+        tour1.setNodes(chrisTour);
 
 
-        System.out.println(tour);
+        System.out.println("Christofides "+chrisTour);
         System.out.println("Cost "+tour1.distance(problem));
         System.out.println(
 
                 printTime(end3));
-        System.out.println("=====================================================================");
-
-        GreedyTSP greedyTSP = new GreedyTSP(matrix);
-
-        long start = System.nanoTime();
-        List<Integer> tour2 = greedyTSP.getTour();
-        long end = System.nanoTime() - start;
-
-        System.out.println(
-
-                printTime(end));
-        System.out.println(tour2);
 
         System.out.println("===================================================================== Held");
         int startNode = 0;
@@ -70,10 +80,9 @@ public class Main {
         long start1 = System.nanoTime();
 
 
-        System.out.println("Tour: "+solverr.getTour());
+        System.out.println("Tour Held: "+solverr.getTour());
         long end2 = System.nanoTime() - start1;
-        System.out.println("Tour cost: " + solverr.getTourCost());
-
+        System.out.println("Cost "+solverr.getTourCost());
         System.out.println(
 
                 printTime(end2));
@@ -81,179 +90,35 @@ public class Main {
 
 
 
+        System.out.println("===================================================================== PTAS");
+
+        PTAS ptas = new PTAS(matrix);
+        Tour checkTour = new Tour();
+        long start5 = System.nanoTime();
+        checkTour.setNodes(ptas.getTour());
+        long end5 = System.nanoTime() - start5;
+        System.out.println("Tour Arora   "+checkTour.getNodes());
+        System.out.println(" Cost "+checkTour.distance(problem));
+        System.out.println(printTime(end5));
+
+        System.out.println("===================================================================== Greedy");
+
+        GreedyTSP greedyTSP = new GreedyTSP(matrix);
 
 
-       // PTAS ptas = new PTAS();
-       // System.out.println(ptas.solveTSP(matrix));
-
-
-    /*
-
-    GreedyTSP greedyTSP = new GreedyTSP(adjMatrix);
-
-    long start = System.nanoTime();
-    List<Integer> tour1 = greedyTSP.getTour();
-    long end = System.nanoTime() - start;
-
-        System.out.println(
-
-    printTime(end));
-        System.out.println(tour1);
-
-
-        System.out.println("Check =============================================================");
-
-
-    Kruskal kruskal = new Kruskal(matrix);
-
-        kruskal.kruskalMST(matrix);
-        System.out.println("kruksal");
-
-
-        System.out.println("Maximum matching for the given graph is: "
-                +
-
-    maxMatching(matrix));
-
-
-    Graph g = new Graph(matrix);
-    int matching = g.maxMatching();
-
-
-    // Print the maximum matching
-        System.out.println("Maximum matching: "+matching);
-    Hungarian hbm = new Hungarian(adjMatrix);
-    int[] result = hbm.execute();
-        System.out.println("Bipartite Matching: "+Arrays.toString(result));
-
-
-    int startNode = 0;
-    HeldRek solverr =
-            new HeldRek(startNode, adjMatrix);
-
-
-    long start1 = System.nanoTime();
-
-
-        System.out.println("Tour: "+solverr.getTour());
-    long end2 = System.nanoTime() - start1;
-        System.out.println(
-
-    printTime(end2));
-
-
-        System.out.println("Tour cost: "+solverr.getTourCost());
-
-
-       /*
-
-
-
-
-        Node node1 = new Node(1,38.24, 20.42);
-        Node node2 = new Node(15,35.49,14.32);
-
-        int geoFunction = getGeoFunction(node1, node2);
-        System.out.println(geoFunction+"    geooooooooooooooooo");
-
-
-        double distanceBetween1 = problem.getDistanceSection().getDistanceBetween(node1.getId(), node2.getId());
-
-        System.out.println(distanceBetween1+"---------------");
-
-
-        Integer[] arr = {1,
-                14,
-                13,
-                12,
-                7,
-                6,
-                15,
-                5,
-                11,
-                9,
-                10,
-                19,
-                20,
-                21,
-                16,
-                3,
-                2,
-                17,
-                22,
-                4,
-                18,
-                8,1};
-
-
-
-
-        int startNode = 0;
-        HeldRek solverr =
-                new HeldRek(startNode, adjMatrix);
-
-
-        long start1 = System.nanoTime();
-
-
-        System.out.println("Tour: " + solverr.getTour());
-        long end2 = System.nanoTime() - start1;
-        System.out.println(printTime(end2));
-
-
-        System.out.println("Tour cost: " + solverr.getTourCost());
-
-
-
-
-
-        // Prepare maps and objects for the calculation
-     //   HeldKarp calc = new HeldKarp(matrix, 0);
-
-        // Time calculation
-      /*
         long start = System.nanoTime();
-        List<Integer> result = calc.calculateHeldKarp();
+        List<Integer> tour2 = greedyTSP.getTour();
         long end = System.nanoTime() - start;
 
 
+        System.out.println("Greedy "+ tour2);
+        System.out.println(" Cost "+greedyTSP.getTourCost());
+        System.out.println(
 
-        Tour tour = new Tour();
-        tour.setNodes(result);
+                printTime(end));
 
-
-        System.out.println(result);
-
-        System.out.println(tour.distance(problem));
-
-        System.out.println(printTime(end));
-
-
-        Tour tour1 = new Tour();
-
-
-
-        
-        List<Integer> to = new ArrayList<>();
-        to.addAll(Arrays.asList(arr));
-
-        tour1.setNodes(to);
 
         System.out.println("Check =============================================================");
-
-        System.out.println( tour1.distance(problem));
-
-
-       /*
-     GreedyTSP greedyTSP = new GreedyTSP(adjMatrix);
-
-        long start = System.nanoTime();
-        List<Integer> tour1 = greedyTSP.getTour();
-        long end = System.nanoTime() - start;
-
-        System.out.println(printTime(end));
-
-        */
 
 
     }
