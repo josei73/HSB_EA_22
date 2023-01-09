@@ -19,7 +19,7 @@ public class Main {
         TSPLibInstance problem = new TSPLibInstance();
 
         try {
-            BufferedReader reader = new BufferedReader(new FileReader("data/tsp/ulysses16.tsp"));
+            BufferedReader reader = new BufferedReader(new FileReader("data/tsp/bays29.tsp"));
             problem.load(reader);
             // problem.addTour(new BufferedReader(new FileReader("./data/tsp/ali535.opt.tour")));
 
