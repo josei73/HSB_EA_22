@@ -126,6 +126,7 @@ public class TSPService {
     /**
      * loads all TSP instances
      * @return a List of Strings containing problem name and comment
+     * TODO some instances have nodes saved in a different variable
      */
     public List<TSPModel> getAllTSPModels() {
         List<TSPInstance> instances = getAllTSPInstances();
@@ -133,7 +134,8 @@ public class TSPService {
         for(TSPInstance instance : instances) {
             String lines[] = instance.getComment().split("\\r?\\n");
             String name = instance.getName() + ": " + lines[0];
-            models.add(new TSPModel(name, instance.getDistanceSection().getNodes()));
+            Map<Integer, Node> nodes = instance.getDistanceSection().getNodes();
+            models.add(new TSPModel(name, nodes));
         }
         return models;
     }

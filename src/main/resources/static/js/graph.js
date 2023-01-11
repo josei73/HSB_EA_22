@@ -1,5 +1,6 @@
-let svg;
+let svg, svgWrapper, linksWrapper, nodesWrapper;
 let data = {};
+let behaviours = {}
 let attrs = {
     svgWidth: 750,
     svgHeight: 400,
@@ -9,65 +10,30 @@ let attrs = {
 };
 
 const loadData = async () => {
-    const instance = "pr76"
-    const url = `http://localhost:8080/tsp/api/problems/${ instance }`
-    data.nodes = await fetch(url + "/nodes")   //data.nodes
-        .then(response => response.json());
-    data.solution = await fetch(url + "/tour") //data.solution
-        .then(response => response.json());
-    //data.nodes = await nodes.json(); //extract JSON from the http response
-    //data.solution = await solution.json();
-    //InitDropdown(data);
-    initGraph(data);
+    const url = `http://localhost:8080/tsp/api/problems/models`
+    data = await fetch(url).then(response => response.json());
+    InitDropdown(data);
 }
 
-//TODO populate dropdown menu via d3.js and update the graph on change
-/*
-function InitDropdown({}) {
-    menu = d3.select("#dropProblems").selectAll("options").data(d => d)
-    menuEnter = menu.enter().append("option")
-        .text(d => d.name + ": " + d.comment)
-        .attr("value", (d) => d)
-        .on("change", (d) => {
-            let nodes = d3.select(this).property("value")
-            renderGraph(nodes);
-        });
-}
- */
-
-function initGraph({nodes, solution}) {
-    let nodeArray = [];
-    for (let index in nodes) {
-        nodeArray.push(nodes[index]);
-    }
-    let linkArray = [];
-    for (let i = 0; i<solution.length-1; i++) {
-        linkArray.push({
-            source: nodeArray.find(d => d.id === solution[i]),
-            target: nodeArray.find(d => d.id === solution[i+1])
-        });
-    }
-    linkArray.push({
-        source: nodeArray.find(d => d.id === solution[nodeArray.length-1]),
-        target: nodeArray.find(d => d.id === solution[0])
-    });
-    console.log(nodeArray);
-    console.log(linkArray);
-
-    renderGraph(nodeArray, linkArray);
+function InitDropdown() {
+    console.log(data)
+    const menu = d3.select("#dropProblems").selectAll("options").data(data)
+    let menuEnter = menu.enter().append("option")
+        .text(d => d.name)
+        .on("click", function (event, d) { renderGraph(d); });
 }
 
-function renderGraph(nodeArray, linkArray) {
-    let behaviours = {};
-
+function initGraph() {
+    console.log("init graph!")
+    //########################### WRAPPERS #########################
     svg = d3.select("#tsp_graph").classed("svg-container", true).append("svg")
         .attr("preserveAspectRatio", "xMinYMin meet")
         .attr("viewBox", `0 0 ${attrs.svgWidth} ${attrs.svgHeight}`)
         .classed("svg-content-responsive", true);
 
-    let svgWrapper = svg.append('g').attr("class", 'svg-wrapper');
-    let linksWrapper = svgWrapper.append('g').attr("class", 'links-wrapper');
-    let nodesWrapper = svgWrapper.append('g').attr("class", 'nodes-wrapper');
+    svgWrapper = svg.append('g').attr("class", 'svg-wrapper');
+    linksWrapper = svgWrapper.append('g').attr("class", 'links-wrapper');
+    nodesWrapper = svgWrapper.append('g').attr("class", 'nodes-wrapper');
 
     //########################### BEHAVIORS #########################
     behaviours.zoom = d3.zoom()
@@ -76,8 +42,44 @@ function renderGraph(nodeArray, linkArray) {
     svg.call(behaviours.zoom).on("dblclick.zoom", onZoomReset);
     onZoomReset() // call zoomReset once on initialization;
 
+    renderGraph( {} );
+}
+
+//TODO rescale nodes with mix-max normalization
+function renderGraph( model ) {
+    let nodes = {}
+    let tour = {}
+
+    if(!jQuery.isEmptyObject(model)) {
+        nodes = model.nodes;
+        //tour = model.tour;
+    }
+
+    let linkArray = [];
+    let nodeArray = [];
+    for (let index in nodes) {
+        nodeArray.push(nodes[index]);
+    }
+
+    // for (let i = 0; i<tour.length-1; i++) {
+    //     linkArray.push({
+    //         source: nodeArray.find(d => d.id === tour[i]),
+    //         target: nodeArray.find(d => d.id === tour[i+1])
+    //     });
+    // }
+    // linkArray.push({
+    //     source: nodeArray.find(d => d.id === tour[nodeArray.length-1]),
+    //     target: nodeArray.find(d => d.id === tour[0])
+    // });
+    updateGraph(nodeArray, linkArray);
+}
+
+function updateGraph(nodeArray, linkArray) {
+    console.log(nodeArray);
+    console.log(linkArray);
     //########################### GRAPH #########################
     let nodes = nodesWrapper.selectAll(".node-group").data(nodeArray);
+    nodes.exit().remove();
     let nodesEntering = nodes.enter().append("g")
         .attr("class", "node-group")
 
@@ -92,6 +94,7 @@ function renderGraph(nodeArray, linkArray) {
         .attr("y", d => d.y + 5);
 
     let links = linksWrapper.selectAll(".link-group").data(linkArray);
+    links.exit().remove();
     let linksEntering = links.enter().append("g")
         .attr("class", "link-group")
 
@@ -100,18 +103,18 @@ function renderGraph(nodeArray, linkArray) {
         .attr("y1", d => d.source.y)
         .attr("x2", d => d.target.x)
         .attr("y2", d => d.target.y)
+}
 
+// ######### ZOOM FUNCTIONS ###########
+function onZoom(event) {
+    attrs.transform = event.transform;
+    svgWrapper.attr("transform", attrs.transform);
+}
 
-    // ######### ZOOM FUNCTIONS ###########
-    function onZoom(event) {
-        attrs.transform = event.transform;
-        svgWrapper.attr("transform", attrs.transform);
-    }
-
-    function onZoomReset() {
-        svg.transition().duration(500)
-            .call(behaviours.zoom.transform, d3.zoomIdentity.translate(0,0).scale(attrs.scaleMin));
-    }
+function onZoomReset() {
+    svg.transition().duration(500)
+        .call(behaviours.zoom.transform, d3.zoomIdentity.translate(0,0).scale(attrs.scaleMin));
 }
 
 loadData();
+initGraph();
