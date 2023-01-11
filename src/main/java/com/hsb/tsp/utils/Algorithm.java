@@ -1,10 +1,11 @@
 package com.hsb.tsp.utils;
 
-import java.util.List;
+import java.util.ArrayList;
+
 
 public abstract class Algorithm {
 
-    public abstract List<Integer> getTour();
+    public abstract ArrayList<Integer> getTour();
     public abstract void solve();
 
 }

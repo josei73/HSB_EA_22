@@ -1,25 +1,25 @@
 package com.hsb.tsp.utils;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class HeldRek extends Algorithm {
+
 
     private final int N;
     private final int START_NODE;
     private final int FINISHED_STATE;
 
-    private double[][] distance;
+    private int[][] distance;
     private double minTourCost = Double.POSITIVE_INFINITY;
 
-    private List<Integer> tour = new ArrayList<>();
+    private ArrayList<Integer> tour = new ArrayList<>();
     private boolean ranSolver = false;
 
-    public HeldRek(double[][] distance) {
+    public HeldRek(int[][] distance) {
         this(0, distance);
     }
 
-    public HeldRek(int startNode, double[][] distance) {
+    public HeldRek(int startNode, int[][] distance) {
 
         this.distance = distance;
         N = distance.length;
@@ -41,7 +41,7 @@ public class HeldRek extends Algorithm {
     }
 
 
-    public List<Integer> getTour() {
+    public ArrayList<Integer> getTour() {
         if (!ranSolver) solve();
         return tour;
     }
@@ -56,7 +56,7 @@ public class HeldRek extends Algorithm {
 
         // Run the solver
         int state = 1 << START_NODE;
-        Double[][] memo = new Double[N][1 << N];
+        Integer[][] memo = new Integer[N][1 << N];
         Integer[][] prev = new Integer[N][1 << N];
         minTourCost = tsp(START_NODE, state, memo, prev);
 
@@ -73,12 +73,11 @@ public class HeldRek extends Algorithm {
         tour.add(START_NODE + 1);
 
 
-
         ranSolver = true;
     }
 
 
-    private double tsp(int i, int state, Double[][] memo, Integer[][] prev) {
+    private int tsp(int i, int state, Integer[][] memo, Integer[][] prev) {
 
 
         if (state == FINISHED_STATE) return distance[i][START_NODE];
@@ -86,7 +85,7 @@ public class HeldRek extends Algorithm {
 
         if (memo[i][state] != null) return memo[i][state];
 
-        double minCost = Double.POSITIVE_INFINITY;
+        int minCost = Integer.MAX_VALUE;
         int index = -1;
         for (int next = 0; next < N; next++) {
 
@@ -94,7 +93,7 @@ public class HeldRek extends Algorithm {
             if ((state & (1 << next)) != 0) continue;
 
             int nextState = state | (1 << next);
-            double newCost = distance[i][next] + tsp(next, nextState, memo, prev);
+            int newCost = distance[i][next] + tsp(next, nextState, memo, prev);
             if (newCost < minCost) {
                 minCost = newCost;
                 index = next;
@@ -104,30 +103,7 @@ public class HeldRek extends Algorithm {
         prev[i][state] = index;
         return memo[i][state] = minCost;
     }
-    /*
-    public static void main(String[] args) {
-
-        // Create adjacency matrix
-        int n = 6;
-        double[][] distanceMatrix = new double[n][n];
-        for (double[] row : distanceMatrix) java.util.Arrays.fill(row, 10000);
-        distanceMatrix[1][4] = distanceMatrix[4][1] = 2;
-        distanceMatrix[4][2] = distanceMatrix[2][4] = 4;
-        distanceMatrix[2][3] = distanceMatrix[3][2] = 6;
-        distanceMatrix[3][0] = distanceMatrix[0][3] = 8;
-        distanceMatrix[0][5] = distanceMatrix[5][0] = 10;
-        distanceMatrix[5][1] = distanceMatrix[1][5] = 12;
-
-        // Run the solver
-        HeldRek solver = new HeldRek(distanceMatrix);
-
-        // Prints: [0, 3, 2, 4, 1, 5, 0]
-        System.out.println("Tour: " + solver.getTour());
-
-        // Print: 42.0
-        System.out.println("Tour cost: " + solver.getTourCost());
-
-    }
-
-     */
 }
+
+
+

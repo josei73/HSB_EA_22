@@ -1,12 +1,10 @@
 package com.hsb.tsp.utils;
 
 
-
 import com.hsb.tsp.fieldTypesAndFormats.EdgeWeightType;
 import com.hsb.tsp.graph.Node;
 
 import java.util.function.BiFunction;
-
 
 
 public class DistanceFunction {
@@ -36,7 +34,7 @@ public class DistanceFunction {
     }
 
     private static BiFunction<Node, Node, Integer> getEuc2dFunction() {
-        return (i, j) ->  (int)calculateEuc2d(i, j);
+        return (i, j) -> (int) calculateEuc2d(i, j);
     }
 
     private static double calculateEuc2d(Node i, Node j) {
@@ -70,7 +68,7 @@ public class DistanceFunction {
         return (i, j) -> {
             double xd = Math.abs(i.getX() - j.getX());
             double yd = Math.abs(i.getY() - j.getY());
-            return (int)(xd + yd);
+            return (int) (xd + yd);
         };
     }
 
@@ -78,12 +76,12 @@ public class DistanceFunction {
         return (i, j) -> {
             double xd = Math.abs(i.getX() - j.getX());
             double yd = Math.abs(i.getY() - j.getY());
-            return (int)Math.max(xd, yd);
+            return (int) Math.max(xd, yd);
         };
     }
 
     private static BiFunction<Node, Node, Integer> getCeil2dFunction() {
-        return (i, j) -> (int)Math.ceil(calculateEuc2d(i, j));
+        return (i, j) -> (int) Math.ceil(calculateEuc2d(i, j));
     }
 
     private static BiFunction<Node, Node, Integer> getAttFunction() {
@@ -92,11 +90,11 @@ public class DistanceFunction {
             double yd = i.getY() - j.getY();
             double rij = Math.sqrt((xd * xd + yd * yd) / 10.0);
             double tij = cutDecimal(rij);
-            return (int)(tij < rij ? tij + 1.0 : tij);
+            return (int) (tij < rij ? tij + 1.0 : tij);
         };
     }
 
     private static double cutDecimal(double x) {
-        return (double)((int)x);
+        return (double) ((int) x);
     }
 }

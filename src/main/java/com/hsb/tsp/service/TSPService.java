@@ -5,9 +5,7 @@ import com.hsb.tsp.graph.Node;
 import com.hsb.tsp.model.TSPInstance;
 import com.hsb.tsp.model.TSPModel;
 import com.hsb.tsp.parser.TSPParser;
-import com.hsb.tsp.utils.Algorithm;
-import com.hsb.tsp.utils.GreedyTSP;
-import com.hsb.tsp.utils.HeldRek;
+import com.hsb.tsp.utils.*;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -64,13 +62,20 @@ public class TSPService {
     }
 
     public Algorithm getAlgo(String name, TSPInstance instance) {
-        double[][] adjMatrix = instance.getDistanceSection().getAdjMatrix(instance);
+        int[][] adjMatrix = instance.getDistanceSection().getAdjMatrix(instance);
 
         switch (name) {
             case "Held-Karp":
                 return new HeldRek(adjMatrix);
             case "Greedy":
                 return new GreedyTSP(adjMatrix);
+            case "Christofides":
+                return new HeldRek(adjMatrix);
+            case "Random":
+                return new RandomTour(adjMatrix.length);
+            case "Arora":
+                return new PTAS(adjMatrix);
+
 
             default:
                 throw new IllegalArgumentException("No Algo exist");

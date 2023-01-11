@@ -1,21 +1,18 @@
 package com.hsb.tsp.parser;
 
-
-
 import com.hsb.tsp.graph.DistanceSection;
 import com.hsb.tsp.model.TSPInstance;
+import com.hsb.tsp.graph.EdgeWeightMatrix;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
 public class TSPTour {
 
 
-    private final List<Integer> nodes = new ArrayList();
+    private List<Integer> nodes = new ArrayList();
 
     public TSPTour() {
     }
@@ -23,10 +20,11 @@ public class TSPTour {
     public void load(BufferedReader reader) throws IOException {
         String line = null;
 
-        outer: while((line = reader.readLine()) != null) {
+        outer:
+        while ((line = reader.readLine()) != null) {
             String[] tokens = line.trim().split("\\s+");
 
-            for(int i = 0; i < tokens.length; ++i) {
+            for (int i = 0; i < tokens.length; ++i) {
                 int id = Integer.parseInt(tokens[i]);
                 if (id == -1) {
                     break outer;
@@ -38,8 +36,18 @@ public class TSPTour {
 
     }
 
+    public List<Integer> getNodes() {
+        return nodes;
+    }
 
+    public void setNodes(List<Integer> nodes) {
+        this.nodes = nodes;
+    }
 
+    @Override
+    public String toString() {
+        return nodes.toString();
+    }
 
 
     /**
@@ -50,26 +58,27 @@ public class TSPTour {
      * @param problem the TSPLIB problem instance this tour is a solution for
      * @return the total distance of this tour
      */
-    public double distance(TSPInstance problem) {
+    public int distance(TSPInstance problem) {
         DistanceSection distanceSection = problem.getDistanceSection();
-        double result = 0.0;
+        if(distanceSection instanceof EdgeWeightMatrix){
+            return distanceForMatrix(distanceSection);
+        }
+        int result = 0;
 
-        for (int i = 0; i < nodes.size(); i++) {
-            result += distanceSection.getDistanceBetween(nodes.get(i), nodes.get(i+1));
+        for (int i = 0; i < nodes.size()-1; i++) {
+            result += distanceSection.getDistanceBetween(nodes.get(i), nodes.get(i + 1));
         }
 
         return result;
     }
 
-    @Override
-    public String toString() {
-        return "Tour{" +
-                "nodes=" + nodes +
-                '}';
-    }
+    public int distanceForMatrix(DistanceSection distanceSection){
+        int result = 0;
 
+        for (int i = 0; i < nodes.size()-1; i++) {
+            result += distanceSection.getDistanceBetween(nodes.get(i)-1, nodes.get(i + 1)-1);
+        }
 
-    public List<Integer> getNodes() {
-        return nodes;
+        return result;
     }
 }

@@ -57,6 +57,7 @@ public class TSPRestController {
         algorithmName.add("Christofides");
         algorithmName.add("Arora");
         algorithmName.add("LP");
+        algorithmName.add("Random");
         return algorithmName;
     }
 

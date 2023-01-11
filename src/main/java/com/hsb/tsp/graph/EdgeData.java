@@ -23,9 +23,9 @@ public class EdgeData extends DistanceSection {
 
     public void buildGraph(BufferedReader reader) throws IOException {
         if (EdgeDataFormat.EDGE_LIST.equals(this.edgeDataFormat)) {
-            buildForEdgeList(reader);
+            this.buildForEdgeList(reader);
         } else if (EdgeDataFormat.ADJ_LIST.equals(this.edgeDataFormat)) {
-            buildForAdjList(reader);
+            this.buildForAdjList(reader);
         }
     }
 
@@ -41,7 +41,7 @@ public class EdgeData extends DistanceSection {
             String[] tokens = line.split("\\s+");
             int node1 = Integer.parseInt(tokens[0]);
             int node2 = Integer.parseInt(tokens[1]);
-            addEdge(node1, node2);
+            this.addEdge(node1, node2);
         }
 
     }
@@ -69,7 +69,7 @@ public class EdgeData extends DistanceSection {
                 nodes.add(Integer.parseInt(tokens[i]));
             }
 
-            createEdge(nodes);
+            this.createEdge(nodes);
         }
 
     }
@@ -97,18 +97,15 @@ public class EdgeData extends DistanceSection {
         return result;
     }
 
-
-
-
-
     @Override
-    public double[][] getAdjMatrix(TSPInstance problem) {
-        double[][] matrix = new double[problem.getDimension()][problem.getDimension()];
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = 0; j < matrix[i].length; j++) {
-                matrix[i][j] = problem.getDistanceSection().getDistanceBetween(i + 1, j + 1);
-            }
-        }
+    public int[][] getAdjMatrix(TSPInstance problem) {
+       int matrix [][]=new int[size][size];
+        edges.forEach(edge -> {
+            int node1=edge.getNode1();
+            int node2=edge.getNode2();
+            matrix[node1][node2]=(int)problem.getDistanceSection().getDistanceBetween(node1,node2);
+        });
+
         return matrix;
     }
 
