@@ -101,7 +101,7 @@ public class TSPService {
      * @return a map of <index, node>
      */
     public Map<Integer, Node> getTSPInstanceNodes(String name) {
-        TSPInstance problem = null;
+        TSPInstance problem;
         try {
             problem = this.parser.loadInstance(name + ".tsp");
         } catch (IOException e) {
