@@ -17,7 +17,7 @@ public class TSPInstance {
     private EdgeWeightFormat edgeWeightFormat;
     private EdgeDataFormat edgeDataFormat;
     private NodeCoordType nodeCoordinateType;
-    private DisplayDataType displayDataType;
+    public DisplayDataType displayDataType; //TODO change back to private if files without DisplayDataType are handled
 
     // fields for parsing depending on previous fields
     private DistanceSection distanceSection;

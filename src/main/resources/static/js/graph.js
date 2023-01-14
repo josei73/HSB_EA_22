@@ -5,7 +5,7 @@ let attrs = {
     svgWidth: 750,
     svgHeight: 400,
     transform: { x: 0, y: 0, k: 1 },
-    scaleMin: 0.033,
+    scaleMin: 0.5,
     scaleMax: 2
 };
 
@@ -45,8 +45,9 @@ function initGraph() {
     renderGraph( {} );
 }
 
-//TODO rescale nodes with mix-max normalization
-function renderGraph( model ) {
+//TODO render a graph with adjacency matrix
+//TODO draw a geo map if an instance has GEO data
+function renderGraph(model) {
     let nodes = {}
     let tour = {}
 
@@ -60,6 +61,7 @@ function renderGraph( model ) {
     for (let index in nodes) {
         nodeArray.push(nodes[index]);
     }
+    nodeArray = normalizeNodes(nodeArray);
 
     // for (let i = 0; i<tour.length-1; i++) {
     //     linkArray.push({
@@ -71,6 +73,8 @@ function renderGraph( model ) {
     //     source: nodeArray.find(d => d.id === tour[nodeArray.length-1]),
     //     target: nodeArray.find(d => d.id === tour[0])
     // });
+    nodesWrapper.selectAll(".node-group").remove();
+    linksWrapper.selectAll(".link-group").remove();
     updateGraph(nodeArray, linkArray);
 }
 
@@ -79,22 +83,22 @@ function updateGraph(nodeArray, linkArray) {
     console.log(linkArray);
     //########################### GRAPH #########################
     let nodes = nodesWrapper.selectAll(".node-group").data(nodeArray);
-    nodes.exit().remove();
     let nodesEntering = nodes.enter().append("g")
         .attr("class", "node-group")
 
+    let radius = rescaleNodeSize(nodeArray);
     nodesEntering.append("circle")
         .attr("cx", d => d.x)
         .attr("cy", d => d.y)
-        .attr("r", 20)
+        .attr("r", radius)
 
     nodesEntering.append("text")
         .text(d => d.id)
+        .attr("opacity", nodeArray.length < 100 ? 1:0)
         .attr("x", d => d.x)
         .attr("y", d => d.y + 5);
 
     let links = linksWrapper.selectAll(".link-group").data(linkArray);
-    links.exit().remove();
     let linksEntering = links.enter().append("g")
         .attr("class", "link-group")
 
@@ -103,6 +107,8 @@ function updateGraph(nodeArray, linkArray) {
         .attr("y1", d => d.source.y)
         .attr("x2", d => d.target.x)
         .attr("y2", d => d.target.y)
+
+    onZoomReset();
 }
 
 // ######### ZOOM FUNCTIONS ###########
@@ -113,7 +119,39 @@ function onZoom(event) {
 
 function onZoomReset() {
     svg.transition().duration(500)
-        .call(behaviours.zoom.transform, d3.zoomIdentity.translate(0,0).scale(attrs.scaleMin));
+        .call(behaviours.zoom.transform, d3.zoomIdentity.translate(30,15).scale(0.9));
+}
+
+/**
+ * find highest x & y values
+ * normalize all nodes to [0,1] values
+ * rescale to SVG size
+ * @param nodeArray
+ * @returns nodeArray
+ */
+function normalizeNodes( nodeArray ) {
+    let xMax = d3.max(nodeArray, d => d.x);
+    let yMax = d3.max(nodeArray, d => d.y);
+    let xMin = d3.min(nodeArray, d => d.x);
+    let yMin = d3.min(nodeArray, d => d.y);
+    nodeArray.forEach(function (d) {
+        d.x = (d.x - xMin) / (xMax - xMin) * attrs.svgWidth;
+        d.y = (d.y - yMin) / (yMax - yMin) * attrs.svgHeight;
+    })
+
+    return nodeArray
+}
+
+//TODO reiterate rescaling for aesthetic reasons
+function rescaleNodeSize( nodeArray ) {
+    let radius = 10;
+    if(nodeArray.length > 100) {
+        radius = 3;
+    }
+    if(nodeArray.length > 1000) {
+        radius = 1;
+    }
+    return radius;
 }
 
 loadData();

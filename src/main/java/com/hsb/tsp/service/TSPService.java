@@ -1,6 +1,7 @@
 package com.hsb.tsp.service;
 
 
+import com.hsb.tsp.fieldTypesAndFormats.EdgeWeightType;
 import com.hsb.tsp.graph.Node;
 import com.hsb.tsp.model.TSPInstance;
 import com.hsb.tsp.model.TSPModel;
@@ -131,7 +132,6 @@ public class TSPService {
     /**
      * loads all TSP instances
      * @return a List of Strings containing problem name and comment
-     * TODO some instances have nodes saved in a different variable
      */
     public List<TSPModel> getAllTSPModels() {
         List<TSPInstance> instances = getAllTSPInstances();
@@ -139,8 +139,20 @@ public class TSPService {
         for(TSPInstance instance : instances) {
             String lines[] = instance.getComment().split("\\r?\\n");
             String name = instance.getName() + ": " + lines[0];
-            Map<Integer, Node> nodes = instance.getDistanceSection().getNodes();
-            models.add(new TSPModel(name, nodes));
+            Map<Integer, Node> nodes;
+            EdgeWeightType type = instance.getEdgeWeightType();
+            //TODO some instances have nodes saved in a different variable
+            if (instance.getEdgeWeightType() == EdgeWeightType.EXPLICIT) {
+                if (instance.displayDataType == null) {
+                    nodes = new HashMap<>();
+                } else {
+                    nodes = instance.getDisplayData().getNodes();
+                }
+            } else {
+                nodes = instance.getDistanceSection().getNodes();
+            }
+
+            models.add(new TSPModel(name, nodes, type));
         }
         return models;
     }
