@@ -1,4 +1,4 @@
-package com.hsb.tsp.utils;
+package com.hsb.tsp.algorithms;
 
 import java.util.ArrayList;
 
@@ -11,6 +11,7 @@ public class GreedyTSP extends Algorithm {
     }
 
     public GreedyTSP(int startNode, int[][] matrix) {
+        super("Greedy");
         distance = matrix;
         start = startNode;
         visitedNodes = new boolean[matrix.length];
@@ -25,6 +26,7 @@ public class GreedyTSP extends Algorithm {
 
     private boolean ranSolver = false;
 
+    @Override
     public void solve() {
 
         int count = 0;

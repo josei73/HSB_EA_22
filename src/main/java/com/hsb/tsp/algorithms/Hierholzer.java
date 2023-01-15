@@ -1,4 +1,4 @@
-package com.hsb.tsp.utils;
+package com.hsb.tsp.algorithms;
 
 
 import java.util.ArrayList;

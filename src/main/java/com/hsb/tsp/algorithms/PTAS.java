@@ -1,4 +1,4 @@
-package com.hsb.tsp.utils;
+package com.hsb.tsp.algorithms;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,6 +11,7 @@ public class PTAS extends Algorithm {
     private boolean ranSolver = false;
 
     public PTAS(int[][] distances) {
+        super("PTAS (Polynomial-Time Approx. Scheme)");
         this.distances = distances;
     }
 

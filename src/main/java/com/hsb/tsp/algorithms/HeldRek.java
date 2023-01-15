@@ -1,4 +1,4 @@
-package com.hsb.tsp.utils;
+package com.hsb.tsp.algorithms;
 
 import java.util.ArrayList;
 
@@ -20,7 +20,7 @@ public class HeldRek extends Algorithm {
     }
 
     public HeldRek(int startNode, int[][] distance) {
-
+        super("Held-Karp");
         this.distance = distance;
         N = distance.length;
         START_NODE = startNode;
@@ -52,6 +52,7 @@ public class HeldRek extends Algorithm {
         return minTourCost;
     }
 
+    @Override
     public void solve() {
 
         // Run the solver

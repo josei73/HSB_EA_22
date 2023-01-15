@@ -1,4 +1,4 @@
-package com.hsb.tsp.utils;
+package com.hsb.tsp.algorithms;
 
 
 
@@ -7,6 +7,9 @@ import com.hsb.tsp.graph.Edge;
 import java.util.*;
 
 public class Christofides extends Algorithm {
+    public Christofides() {
+        super("Christofides");
+    }
 
     private List<Edge> computeMST(int[][] adj) {
         Prim primAlgo = new Prim(adj);

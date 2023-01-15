@@ -1,4 +1,4 @@
-package com.hsb.tsp.utils;
+package com.hsb.tsp.algorithms;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -11,8 +11,9 @@ public class RandomTour extends Algorithm {
     private ArrayList<Integer> tour = new ArrayList<>();
     private boolean ranSolver = false;
 
-    public RandomTour(int sitze){
-        this.size=sitze;
+    public RandomTour(int size){
+        super("Random Tour");
+        this.size=size;
     }
 
 
