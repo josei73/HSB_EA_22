@@ -1,6 +1,7 @@
 package com.hsb.tsp.controller;
 
 
+import com.hsb.tsp.model.TSPTour;
 import com.hsb.tsp.service.TSPService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,7 +16,8 @@ public class MainController {
     @GetMapping("")
     public String viewHomePage(Model model) {
         model.addAttribute("title", "Travelling Salesperson Problem");
-        //model.addAttribute("problems", service.getProblemNames());
+        model.addAttribute("tour", new TSPTour());
+        model.addAttribute("instances", service.getAllTSPInstances());
         model.addAttribute("algorithms", service.getAlgorithmNames());
         return "index";
     }

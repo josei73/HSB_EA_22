@@ -5,8 +5,7 @@ import com.hsb.tsp.fieldTypesAndFormats.EdgeWeightType;
 import com.hsb.tsp.graph.Node;
 import com.hsb.tsp.model.TSPInstance;
 import com.hsb.tsp.model.TSPModel;
-import com.hsb.tsp.parser.TSPParser;
-import com.hsb.tsp.utils.*;
+import com.hsb.tsp.utils.TSPParser;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -35,7 +34,7 @@ public class TSPService {
         Map<Integer, Node> nodes = problem.getDistanceSection().getNodes();
         Iterator it = nodes.entrySet().iterator();
 
-        return problem.getTours().get(0).getNodes();
+        return problem.getTour().getNodes();
     }
 
     public Map<Integer, Node> genNodeCoordinates() {
@@ -53,13 +52,15 @@ public class TSPService {
     }
 
     public Set<String> getAlgorithmNames() {
+        Set<String> algorithmNames = new HashSet<>();
+        algorithmNames.add("Random Tour");
+        algorithmNames.add("Greedy");
+        algorithmNames.add("Nearest Neighbour");
+        algorithmNames.add("Christofides");
+        algorithmNames.add("Held-Karp");
+        algorithmNames.add("PTAS (Polynomial-Time Approx. Scheme)");
 
-        File folder = new File("data/tsp/");
-        File[] listOfFiles = folder.listFiles();
-
-        Set<String> files = new HashSet<>();
-
-        return files;
+        return algorithmNames;
     }
 
     public Algorithm getAlgo(String name, TSPInstance instance) {
@@ -129,6 +130,12 @@ public class TSPService {
         return instances;
     }
 
+    public TSPModel getTSPModel(TSPInstance instance) {
+        EdgeWeightType type = instance.getEdgeWeightType();
+
+        return new TSPModel(instance.getProblemName(), instance.getNodes(), type);
+    }
+
     /**
      * loads all TSP instances
      * @return a List of Strings containing problem name and comment
@@ -137,22 +144,7 @@ public class TSPService {
         List<TSPInstance> instances = getAllTSPInstances();
         List<TSPModel> models = new ArrayList<>();
         for(TSPInstance instance : instances) {
-            String lines[] = instance.getComment().split("\\r?\\n");
-            String name = instance.getName() + ": " + lines[0];
-            Map<Integer, Node> nodes;
-            EdgeWeightType type = instance.getEdgeWeightType();
-            //TODO some instances have nodes saved in a different variable
-            if (instance.getEdgeWeightType() == EdgeWeightType.EXPLICIT) {
-                if (instance.displayDataType == null) {
-                    nodes = new HashMap<>();
-                } else {
-                    nodes = instance.getDisplayData().getNodes();
-                }
-            } else {
-                nodes = instance.getDistanceSection().getNodes();
-            }
-
-            models.add(new TSPModel(name, nodes, type));
+            models.add(getTSPModel(instance));
         }
         return models;
     }

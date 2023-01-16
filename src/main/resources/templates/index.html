@@ -26,32 +26,56 @@
     <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
       <div class="position-sticky pt-3 sidebar-sticky">
         <ul class="nav flex-column">
-          <li class="nav-item">
+          <form action="#" th:action="@{/}" th:object="${tour}" method="post">
+            <li class="nav-item">
             <a>
               <span class="align-text-bottom"></span>
               Select Problem
             </a>
           </li>
-          <li class="nav-item">
-            <select class="form-control" id="dropProblems"> <!--th:field="${problems}"-->
-              <!--<option th:each="problem : ${problems}" th:value="${problem}" th:text="${problem}"></option>-->
-            </select>
-          </li>
-          <li class="nav-item">
+<!--            <li class="nav-item">-->
+<!--              <select class="form-control" id="dropProblems"> &lt;!&ndash;th:field="${problems}"&ndash;&gt;-->
+<!--                &lt;!&ndash;<option th:each="problem : ${problems}" th:value="${problem}" th:text="${problem}"></option>&ndash;&gt;-->
+<!--              </select>-->
+<!--            </li>-->
+            <li class="nav-item">
+              <select class="form-control"
+                      th:field="${instances}"
+                      id="dropInstances"
+                      onchange="renderGraph(this.value)">
+<!--                      th:attr="onchange=|renderGraph('${instance}')|">-->
+                <option th:each="instance : ${instances}"
+                        th:value="${instance.getProblemName()}"
+                        th:text="${instance.getProblemName()}">
+                </option>
+              </select>
+            </li>
+            <li class="nav-item">
             <a>
               <span class="align-text-bottom"></span>
               Select Algorithm
             </a>
           </li>
-          <li class="nav-item">
-            <select class="form-control" th:field="${algorithms}"  id="dropAlgorithms">
-              <option th:each="algorithm : ${algorithms}" th:value="${algorithm}" th:text="${algorithm}"></option>
-            </select>
-          </li>
-          <li class="nav-item">
-            <!--<button class="loadButton">Load</button>-->
-            <button class="runButton">Run</button>
-          </li>
+            <li class="nav-item">
+              <select class="form-control"
+                      th:field="${algorithms}"
+                      id="dropAlgorithms">
+                <option th:each="algorithm : ${algorithms}"
+                        th:value="${algorithm}"
+                        th:text="${algorithm}">
+                </option>
+              </select>
+            </li>
+            <li class="nav-item">
+              <button type="button"
+                      value="Submit"
+                      class="runButton">
+<!--                      th:attr="onclick=|renderGraph('${model}')|">-->
+                Run Algorithm
+              </button>
+              <!--<button class="runButton" th:attr="onclick=|runAlgorithm('${instance}')|" >Run</button>-->
+            </li>
+          </form>
         </ul>
       </div>
     </nav>

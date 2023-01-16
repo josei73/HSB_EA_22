@@ -1,4 +1,4 @@
-package com.hsb.tsp.parser;
+package com.hsb.tsp.model;
 
 import com.hsb.tsp.graph.DistanceSection;
 import com.hsb.tsp.model.TSPInstance;
@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TSPTour {
-
-
     private List<Integer> nodes = new ArrayList();
 
     public TSPTour() {

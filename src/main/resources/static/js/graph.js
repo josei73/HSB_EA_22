@@ -12,7 +12,7 @@ let attrs = {
 const loadData = async () => {
     const url = `http://localhost:8080/tsp/api/problems/models`
     data = await fetch(url).then(response => response.json());
-    InitDropdown(data);
+    //InitDropdown(data);
 }
 
 function InitDropdown() {
@@ -47,13 +47,15 @@ function initGraph() {
 
 //TODO render a graph with adjacency matrix
 //TODO draw a geo map if an instance has GEO data
-function renderGraph(model) {
+function renderGraph(selection) {
+    console.log("renderGraph function called")
     let nodes = {}
     let tour = {}
 
-    if(!jQuery.isEmptyObject(model)) {
+    if(!jQuery.isEmptyObject(selection)) {
+        let model = data.find(d => d.name === selection);
         nodes = model.nodes;
-        //tour = model.tour;
+        tour = model.tour;
     }
 
     let linkArray = [];
@@ -63,16 +65,19 @@ function renderGraph(model) {
     }
     nodeArray = normalizeNodes(nodeArray);
 
-    // for (let i = 0; i<tour.length-1; i++) {
-    //     linkArray.push({
-    //         source: nodeArray.find(d => d.id === tour[i]),
-    //         target: nodeArray.find(d => d.id === tour[i+1])
-    //     });
-    // }
-    // linkArray.push({
-    //     source: nodeArray.find(d => d.id === tour[nodeArray.length-1]),
-    //     target: nodeArray.find(d => d.id === tour[0])
-    // });
+    if(tour != null) {
+        for (let i = 0; i<tour.length-1; i++) {
+            linkArray.push({
+                source: nodeArray.find(d => d.id === tour[i]),
+                target: nodeArray.find(d => d.id === tour[i+1])
+            });
+        }
+        linkArray.push({
+            source: nodeArray.find(d => d.id === tour[nodeArray.length-1]),
+            target: nodeArray.find(d => d.id === tour[0])
+        });
+    }
+
     nodesWrapper.selectAll(".node-group").remove();
     linksWrapper.selectAll(".link-group").remove();
     updateGraph(nodeArray, linkArray);

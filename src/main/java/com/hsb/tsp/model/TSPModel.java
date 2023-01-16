@@ -2,7 +2,6 @@ package com.hsb.tsp.model;
 
 import com.hsb.tsp.fieldTypesAndFormats.EdgeWeightType;
 import com.hsb.tsp.graph.Node;
-import com.hsb.tsp.parser.TSPTour;
 
 import java.util.Map;
 

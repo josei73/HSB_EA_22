@@ -1,10 +1,11 @@
-package com.hsb.tsp.parser;
+package com.hsb.tsp.utils;
 
 import com.hsb.tsp.fieldTypesAndFormats.*;
 import com.hsb.tsp.graph.EdgeData;
 import com.hsb.tsp.graph.EdgeWeightMatrix;
 import com.hsb.tsp.graph.NodeCoordinates;
 import com.hsb.tsp.model.TSPInstance;
+import com.hsb.tsp.model.TSPTour;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -112,7 +113,7 @@ public class TSPParser {
             case "-1":
                 TSPTour tour = new TSPTour();
                 tour.load(reader);
-                instance.getTours().add(tour);
+                instance.setTour(tour);
                 break;
             case "DISPLAY_DATA_SECTION":
                 instance.setDisplayData(new NodeCoordinates(instance.getDimension(), NodeCoordType.TWOD_COORDS));

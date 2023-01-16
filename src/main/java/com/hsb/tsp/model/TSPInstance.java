@@ -2,10 +2,10 @@ package com.hsb.tsp.model;
 
 import com.hsb.tsp.fieldTypesAndFormats.*;
 import com.hsb.tsp.graph.DistanceSection;
-import com.hsb.tsp.parser.TSPTour;
+import com.hsb.tsp.graph.Node;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 public class TSPInstance {
     // fields for simple file parsing
@@ -17,19 +17,17 @@ public class TSPInstance {
     private EdgeWeightFormat edgeWeightFormat;
     private EdgeDataFormat edgeDataFormat;
     private NodeCoordType nodeCoordinateType;
-    public DisplayDataType displayDataType; //TODO change back to private if files without DisplayDataType are handled
+    private DisplayDataType displayDataType;
 
     // fields for parsing depending on previous fields
     private DistanceSection distanceSection;
     private DistanceSection fixedEdge;
     private DistanceSection displayData;
 
-    // tour list: read from data or calculated
-    private List<TSPTour> tours;
+    // fields for view
+    private TSPTour tour;
 
-    public TSPInstance() {
-         tours = new ArrayList();
-    }
+    public TSPInstance() {}
 
     public String getName() {
         return name;
@@ -115,10 +113,32 @@ public class TSPInstance {
         this.displayData = displayData;
     }
 
-    public List<TSPTour> getTours() {
-        return tours;
+    public TSPTour getTour() {
+        return tour;
     }
-    public void setTours(List<TSPTour> tours) {
-        this.tours = tours;
+    public void setTour(TSPTour tour) {
+        this.tour = tour;
+    }
+
+    public String getProblemName() {
+        try {
+            String lines[] = this.getComment().split("\\r?\\n");
+            return this.getName() + ": " + lines[0];
+        } catch (NullPointerException e) {
+            throw new NullPointerException("Instance Name or Comment is null");
+        }
+    }
+
+    public Map<Integer, Node> getNodes() {
+        //TODO some instances have nodes saved in a different variable
+        if (this.getEdgeWeightType() == EdgeWeightType.EXPLICIT) {
+            if (this.displayDataType == null) {
+                return new HashMap<>();
+            } else {
+                return this.getDisplayData().getNodes();
+            }
+        } else {
+            return this.getDistanceSection().getNodes();
+        }
     }
 }
