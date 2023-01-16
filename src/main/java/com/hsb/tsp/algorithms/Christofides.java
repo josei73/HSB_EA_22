@@ -7,7 +7,11 @@ import com.hsb.tsp.graph.Edge;
 import java.util.*;
 
 public class Christofides extends Algorithm {
-    public Christofides() {
+    private int[][] distance;
+    private ArrayList<Integer> solver;
+    public Christofides(int [][] distance ) {
+        this.distance=distance;
+        solver = new ArrayList<>();
 
     }
 
@@ -68,7 +72,7 @@ public class Christofides extends Algorithm {
     }
 
     // Computes the eulerian tour on the given graph.
-    private static List<Integer> computeEulerianTour(List<Edge> mst) {
+    private  List<Integer> computeEulerianTour(List<Edge> mst) {
         List<List<Integer>> adj = new ArrayList<>(mst.size());
         for (int i = 0; i < mst.size(); i++) {
             adj.add(new ArrayList<>());
@@ -83,7 +87,7 @@ public class Christofides extends Algorithm {
     }
 
 
-    private static List<Integer> computeHamiltonianCycle(List<Integer> et) {
+    private  List<Integer> computeHamiltonianCycle(List<Integer> et) {
         List<Integer> tour = new ArrayList<>();
         for (Integer integer : et) {
             if (!tour.contains(integer))
@@ -91,13 +95,13 @@ public class Christofides extends Algorithm {
         }
         tour.add(et.get(0));
 
-        List<Integer> solver = new ArrayList<>();
+
         for (Integer integer : tour) solver.add(integer + 1);
         return solver;
     }
 
 
-    public List<Integer> applyChristofides(int[][] adj) {
+    /*public List<Integer> applyChristofides(int[][] adj) {
         // Compute the minimum spanning tree.
         List<Edge> mst = computeMST(adj);
         // Compute the perfect matching.
@@ -109,13 +113,24 @@ public class Christofides extends Algorithm {
         return hc;
     }
 
+     */
+
     @Override
     public ArrayList<Integer> getTour() {
-        return null;
+        return solver;
     }
 
     @Override
     public void solve() {
+        // Compute the minimum spanning tree.
+        List<Edge> mst = computeMST(distance);
+        // Compute the perfect matching.
+        List<Edge> pm = computePerfectMatching(distance,mst);
+        // Compute the eulerian tour.
+        List<Integer> et = computeEulerianTour(pm);
+        // Compute the Hamiltonian cycle.
+        computeHamiltonianCycle(et);
+
 
     }
 }

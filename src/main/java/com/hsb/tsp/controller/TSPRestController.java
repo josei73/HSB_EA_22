@@ -5,6 +5,7 @@ import com.hsb.tsp.algorithms.Algorithm;
 import com.hsb.tsp.graph.Node;
 import com.hsb.tsp.model.TSPInstance;
 import com.hsb.tsp.model.TSPModel;
+import com.hsb.tsp.model.TSPTour;
 import com.hsb.tsp.service.TSPService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -62,9 +63,16 @@ public class TSPRestController {
     }
 
     @GetMapping("api/algorithm/{algoName}/nodes/{nodeName}")
-    public List<Integer> getAlg(@PathVariable String algoName, @PathVariable String nodeName) throws ClassNotFoundException {
+    public TSPModel getAlg(@PathVariable String algoName, @PathVariable String nodeName) throws ClassNotFoundException {
         TSPInstance problem = service.getTSPInstance(nodeName);
         Algorithm solution = service.getAlgo(algoName, problem);
-        return solution.getTour();
+        solution.solve();
+
+        TSPTour tour = new TSPTour();
+        tour.setNodes(solution.getTour());
+        tour.setCost(tour.distance(problem));
+
+        return new TSPModel(problem.getProblemName(), problem.getNodes(), problem.getEdgeWeightType(),tour);
+
     }
 }

@@ -67,13 +67,15 @@
               </select>
             </li>
             <li class="nav-item">
-           <!--   <button type="button"
+              <button type="button"
                       value="Submit"
-                      class="runButton">
-                     th:attr="onclick=|renderGraph('${model}')|">
+                      class="runButton"
+                      onclick="loadSolution(this)">
+
+
                 Run Algorithm
-              </button> -->
-              <button class="runButton" th:attr="onclick=|runAlgorithm('${instance}')|" >Run</button>
+              </button>
+            <!--  <button class="runButton" onclick="loadSolution('${instance}')" >Run</button> -->
             </li>
           </form>
         </ul>
@@ -143,4 +145,7 @@
   </div>
 </div>
 </body>
+<script type="text/javascript">
+  moduleURL = "[[@{/}]]";
+</script>
 </html>

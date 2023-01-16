@@ -11,6 +11,7 @@ import java.util.List;
 
 public class TSPTour {
     private List<Integer> nodes = new ArrayList();
+    private int cost;
 
     public TSPTour() {
     }
@@ -42,11 +43,21 @@ public class TSPTour {
         this.nodes = nodes;
     }
 
-    @Override
-    public String toString() {
-        return nodes.toString();
+    public int getCost() {
+        return cost;
     }
 
+    public void setCost(int cost) {
+        this.cost = cost;
+    }
+
+    @Override
+    public String toString() {
+        return "TSPTour{" +
+                "nodes=" + nodes +
+                ", cost=" + cost +
+                '}';
+    }
 
     /**
      * Calculates and returns the total distance of this tour.  The total
@@ -79,4 +90,6 @@ public class TSPTour {
 
         return result;
     }
+
+
 }

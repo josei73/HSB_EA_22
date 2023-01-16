@@ -7,6 +7,7 @@ import com.hsb.tsp.graph.Node;
 import java.util.HashMap;
 import java.util.Map;
 
+
 public class TSPInstance {
     // fields for simple file parsing
     private String name;
@@ -141,4 +142,6 @@ public class TSPInstance {
             return this.getDistanceSection().getNodes();
         }
     }
+
+
 }
