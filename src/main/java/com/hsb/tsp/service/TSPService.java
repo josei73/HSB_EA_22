@@ -1,6 +1,7 @@
 package com.hsb.tsp.service;
 
 
+import com.hsb.tsp.algorithms.*;
 import com.hsb.tsp.fieldTypesAndFormats.EdgeWeightType;
 import com.hsb.tsp.graph.Node;
 import com.hsb.tsp.model.TSPInstance;
@@ -58,7 +59,7 @@ public class TSPService {
         algorithmNames.add("Nearest Neighbour");
         algorithmNames.add("Christofides");
         algorithmNames.add("Held-Karp");
-        algorithmNames.add("PTAS (Polynomial-Time Approx. Scheme)");
+        algorithmNames.add("Arora");
 
         return algorithmNames;
     }
@@ -73,10 +74,13 @@ public class TSPService {
                 return new GreedyTSP(adjMatrix);
             case "Christofides":
                 return new HeldRek(adjMatrix);
-            case "Random":
+            case "Random Tour":
                 return new RandomTour(adjMatrix.length);
             case "Arora":
-                return new PTAS(adjMatrix);
+                return new Arora(adjMatrix);
+            case "Nearest Neighbour":
+                return new NearestNeighbour(adjMatrix);
+
 
 
             default:

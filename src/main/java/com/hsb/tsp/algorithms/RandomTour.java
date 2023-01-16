@@ -12,7 +12,6 @@ public class RandomTour extends Algorithm {
     private boolean ranSolver = false;
 
     public RandomTour(int size){
-        super("Random Tour");
         this.size=size;
     }
 

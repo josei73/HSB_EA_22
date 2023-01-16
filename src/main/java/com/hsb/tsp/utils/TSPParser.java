@@ -37,15 +37,6 @@ public class TSPParser {
         return instance;
     }
 
-    // TODO how a tour is added to a model should be re-evaluated
-    public void addOptimalTour(String filename) throws IOException {
-        TSPInstance problem = loadInstance(filename);
-        if (problem.getDataType().equals(DataType.TOUR)) {
-            problem.setTours(problem.getTours());
-        } else {
-            throw new IllegalArgumentException("not a tour file");
-        }
-    }
 
     private void parseFileSpecification(TSPInstance instance, String line) {
         if(line.isEmpty()) { return; }

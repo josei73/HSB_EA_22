@@ -3,15 +3,14 @@ package com.hsb.tsp.algorithms;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PTAS extends Algorithm {
+public class Arora extends Algorithm {
     private static final double EPSILON = 0.1; // approximation factor
     ArrayList<Integer> result = new ArrayList<>();
 
     private int [][] distances;
     private boolean ranSolver = false;
 
-    public PTAS(int[][] distances) {
-        super("PTAS (Polynomial-Time Approx. Scheme)");
+    public Arora(int[][] distances) {
         this.distances = distances;
     }
 

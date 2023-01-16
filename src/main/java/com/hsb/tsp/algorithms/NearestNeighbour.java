@@ -3,7 +3,7 @@ package com.hsb.tsp.algorithms;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NearestNeighbour {
+public class NearestNeighbour extends Algorithm {
 
     private int size;
 
@@ -11,17 +11,30 @@ public class NearestNeighbour {
 
     private boolean [] visited ;
 
+    private List<Integer> visitedCities;
+
     public NearestNeighbour(int [][] distances){
         this.distances=distances;
         size=distances.length;
         visited = new boolean[size];
+        visitedCities= new ArrayList<>();
     }
 
 
+    @Override
+    public ArrayList<Integer> getTour() {
+        ArrayList<Integer> tour = new ArrayList<>();
+        for (int i = 0; i < visitedCities.size(); i++) {
+            tour.add(visitedCities.get(i)+1);
+        }
 
-    public List<Integer> solve() {
+        return tour;
+
+    }
+
+    public void solve() {
         // Initialize the list of visited cities with the first city
-        List<Integer> visitedCities = new ArrayList<>();
+
         visitedCities.add(0);
         visited[0]=true;
 
@@ -42,12 +55,7 @@ public class NearestNeighbour {
         }
         visitedCities.add(0);
 
-        List<Integer> tour = new ArrayList<>();
-        for (int i = 0; i < visitedCities.size(); i++) {
-            tour.add(visitedCities.get(i)+1);
-        }
 
-        return tour;
     }
 
 }

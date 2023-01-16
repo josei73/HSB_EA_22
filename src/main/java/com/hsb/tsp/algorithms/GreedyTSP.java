@@ -11,7 +11,6 @@ public class GreedyTSP extends Algorithm {
     }
 
     public GreedyTSP(int startNode, int[][] matrix) {
-        super("Greedy");
         distance = matrix;
         start = startNode;
         visitedNodes = new boolean[matrix.length];

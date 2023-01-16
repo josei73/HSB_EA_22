@@ -1,12 +1,11 @@
 package com.hsb.tsp.utils;
 
 
+import com.hsb.tsp.algorithms.*;
 import com.hsb.tsp.model.TSPInstance;
-import com.hsb.tsp.parser.TSPParser;
-import com.hsb.tsp.parser.TSPTour;
+import com.hsb.tsp.model.TSPTour;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.Locale;
@@ -43,7 +42,8 @@ public class Main {
         System.out.println("===================================================================== Nearest");
         NearestNeighbour neighbour = new NearestNeighbour(matrix);
         long nearestStart = System.nanoTime();
-        List<Integer> list = neighbour.solve();
+         neighbour.solve();
+        List<Integer> list =   neighbour.getTour();
         long nearestEnd = System.nanoTime()-nearestStart;
 
         System.out.println(list);
@@ -91,10 +91,10 @@ public class Main {
 
         System.out.println("===================================================================== PTAS");
 
-        PTAS ptas = new PTAS(matrix);
+        Arora arora = new Arora(matrix);
         TSPTour checkTour = new TSPTour();
         long start5 = System.nanoTime();
-        checkTour.setNodes(ptas.getTour());
+        checkTour.setNodes(arora.getTour());
         long end5 = System.nanoTime() - start5;
         System.out.println("Tour Arora   "+checkTour.getNodes());
         System.out.println(" Cost "+checkTour.distance(problem));

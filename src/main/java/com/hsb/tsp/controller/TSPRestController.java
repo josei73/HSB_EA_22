@@ -1,11 +1,11 @@
 package com.hsb.tsp.controller;
 
 
+import com.hsb.tsp.algorithms.Algorithm;
 import com.hsb.tsp.graph.Node;
 import com.hsb.tsp.model.TSPInstance;
 import com.hsb.tsp.model.TSPModel;
 import com.hsb.tsp.service.TSPService;
-import com.hsb.tsp.utils.Algorithm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -62,7 +62,7 @@ public class TSPRestController {
     }
 
     @GetMapping("api/algorithm/{algoName}/nodes/{nodeName}")
-    public List<Integer> getAlg(@PathVariable String algoName, @PathVariable String nodeName) {
+    public List<Integer> getAlg(@PathVariable String algoName, @PathVariable String nodeName) throws ClassNotFoundException {
         TSPInstance problem = service.getTSPInstance(nodeName);
         Algorithm solution = service.getAlgo(algoName, problem);
         return solution.getTour();

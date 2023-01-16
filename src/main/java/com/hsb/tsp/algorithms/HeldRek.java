@@ -20,7 +20,6 @@ public class HeldRek extends Algorithm {
     }
 
     public HeldRek(int startNode, int[][] distance) {
-        super("Held-Karp");
         this.distance = distance;
         N = distance.length;
         START_NODE = startNode;

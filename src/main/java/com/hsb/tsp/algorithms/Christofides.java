@@ -8,7 +8,7 @@ import java.util.*;
 
 public class Christofides extends Algorithm {
     public Christofides() {
-        super("Christofides");
+
     }
 
     private List<Edge> computeMST(int[][] adj) {
