@@ -73,7 +73,7 @@ public class TSPService {
             case "Greedy":
                 return new GreedyTSP(adjMatrix);
             case "Christofides":
-                return new HeldRek(adjMatrix);
+                return new Christofides(adjMatrix);
             case "Random Tour":
                 return new RandomTour(adjMatrix.length);
             case "Arora":

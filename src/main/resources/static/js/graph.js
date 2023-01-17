@@ -4,7 +4,7 @@ let behaviours = {}
 let attrs = {
     svgWidth: 750,
     svgHeight: 400,
-    transform: { x: 0, y: 0, k: 1 },
+    transform: {x: 0, y: 0, k: 1},
     scaleMin: 0.5,
     scaleMax: 2
 };
@@ -20,7 +20,9 @@ function InitDropdown() {
     const menu = d3.select("#dropProblems").selectAll("options").data(data)
     let menuEnter = menu.enter().append("option")
         .text(d => d.name)
-        .on("click", function (event, d) { renderGraph(d); });
+        .on("click", function (event, d) {
+            renderGraph(d);
+        });
 }
 
 function initGraph() {
@@ -42,7 +44,7 @@ function initGraph() {
     svg.call(behaviours.zoom).on("dblclick.zoom", onZoomReset);
     onZoomReset() // call zoomReset once on initialization;
 
-    renderGraph( {} );
+    renderGraph({});
 }
 
 //TODO render a graph with adjacency matrix
@@ -52,7 +54,8 @@ function renderGraph(selection) {
     let nodes = {}
     let tour = {}
 
-    if(!jQuery.isEmptyObject(selection)) {
+
+    if (!jQuery.isEmptyObject(selection)) {
         let model = data.find(d => d.name === selection);
         nodes = model.nodes;
         tour = model.tour;
@@ -65,16 +68,19 @@ function renderGraph(selection) {
     }
     nodeArray = normalizeNodes(nodeArray);
 
-    if(tour != null) {
-        for (let i = 0; i<tour.length-1; i++) {
+    if (tour != null) {
+        tourNodes = tour.nodes;
+        cost = tour.cost;
+        console.log(cost)
+        for (let i = 0; i < tourNodes.length - 1; i++) {
             linkArray.push({
-                source: nodeArray.find(d => d.id === tour[i]),
-                target: nodeArray.find(d => d.id === tour[i+1])
+                source: nodeArray.find(d => d.id === tourNodes[i]),
+                target: nodeArray.find(d => d.id === tourNodes[i + 1])
             });
         }
         linkArray.push({
-            source: nodeArray.find(d => d.id === tour[nodeArray.length-1]),
-            target: nodeArray.find(d => d.id === tour[0])
+            source: nodeArray.find(d => d.id === tourNodes[nodeArray.length - 1]),
+            target: nodeArray.find(d => d.id === tourNodes[0])
         });
     }
 
@@ -99,7 +105,7 @@ function updateGraph(nodeArray, linkArray) {
 
     nodesEntering.append("text")
         .text(d => d.id)
-        .attr("opacity", nodeArray.length < 100 ? 1:0)
+        .attr("opacity", nodeArray.length < 100 ? 1 : 0)
         .attr("x", d => d.x)
         .attr("y", d => d.y + 5);
 
@@ -124,7 +130,7 @@ function onZoom(event) {
 
 function onZoomReset() {
     svg.transition().duration(500)
-        .call(behaviours.zoom.transform, d3.zoomIdentity.translate(30,15).scale(0.9));
+        .call(behaviours.zoom.transform, d3.zoomIdentity.translate(30, 15).scale(0.9));
 }
 
 /**
@@ -134,7 +140,7 @@ function onZoomReset() {
  * @param nodeArray
  * @returns nodeArray
  */
-function normalizeNodes( nodeArray ) {
+function normalizeNodes(nodeArray) {
     let xMax = d3.max(nodeArray, d => d.x);
     let yMax = d3.max(nodeArray, d => d.y);
     let xMin = d3.min(nodeArray, d => d.x);
@@ -148,12 +154,12 @@ function normalizeNodes( nodeArray ) {
 }
 
 //TODO reiterate rescaling for aesthetic reasons
-function rescaleNodeSize( nodeArray ) {
+function rescaleNodeSize(nodeArray) {
     let radius = 10;
-    if(nodeArray.length > 100) {
+    if (nodeArray.length > 100) {
         radius = 3;
     }
-    if(nodeArray.length > 1000) {
+    if (nodeArray.length > 1000) {
         radius = 1;
     }
     return radius;

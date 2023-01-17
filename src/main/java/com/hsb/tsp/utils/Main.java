@@ -17,7 +17,7 @@ public class Main {
     public static void main(String[] args) {
         TSPParser parser = new TSPParser();
         TSPInstance problem;
-        String filename = "ulysses22.tsp";
+        String filename = "ulysses16.tsp";
 
         try {
             problem = parser.loadInstance(filename);
@@ -55,16 +55,16 @@ public class Main {
         System.out.println("===================================================================== Christofides");
 
         long start3 = System.nanoTime();
-        Christofides christofides = new Christofides();
-        List<Integer> chrisTour = christofides.applyChristofides(matrix);
+        Algorithm christofides = new Christofides(matrix);
+         christofides.solve();
         long end3 = System.nanoTime() - start3;
 
 
         TSPTour tour1 =new TSPTour();
-        tour1.setNodes(chrisTour);
+        tour1.setNodes(christofides.getTour());
 
 
-        System.out.println("Christofides "+chrisTour);
+        System.out.println("Christofides "+christofides.getTour());
         System.out.println("Cost "+tour1.distance(problem));
         System.out.println(
 
