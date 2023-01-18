@@ -33,17 +33,11 @@
               Select Problem
             </a>
           </li>
-<!--            <li class="nav-item">-->
-<!--              <select class="form-control" id="dropProblems"> &lt;!&ndash;th:field="${problems}"&ndash;&gt;-->
-<!--                &lt;!&ndash;<option th:each="problem : ${problems}" th:value="${problem}" th:text="${problem}"></option>&ndash;&gt;-->
-<!--              </select>-->
-<!--            </li>-->
             <li class="nav-item">
               <select class="form-control"
                       th:field="${instances}"
                       id="dropInstances"
                       onchange="renderGraph(this.value)">
-<!--                      th:attr="onchange=|renderGraph('${instance}')|">-->
                 <option th:each="instance : ${instances}"
                         th:value="${instance.getProblemName()}"
                         th:text="${instance.getProblemName()}">
@@ -71,8 +65,6 @@
                       value="Submit"
                       class="runButton"
                       onclick="loadSolution(this)">
-
-
                 Run Algorithm
               </button>
             <!--  <button class="runButton" onclick="loadSolution('${instance}')" >Run</button> -->
@@ -145,4 +137,7 @@
   </div>
 </div>
 </body>
+<script type="text/javascript">
+  moduleURL = "[[@{/}]]";
+</script>
 </html>

@@ -69,9 +69,9 @@ function renderGraph(selection) {
     nodeArray = normalizeNodes(nodeArray);
 
     if (tour != null) {
-        tourNodes = tour.nodes;
-        cost = tour.cost;
-        console.log(cost)
+        let tourNodes = tour.nodes;
+        data.cost = tour.cost;
+        data.time = tour.time;
         for (let i = 0; i < tourNodes.length - 1; i++) {
             linkArray.push({
                 source: nodeArray.find(d => d.id === tourNodes[i]),
@@ -86,6 +86,7 @@ function renderGraph(selection) {
 
     nodesWrapper.selectAll(".node-group").remove();
     linksWrapper.selectAll(".link-group").remove();
+    svg.selectAll(".metric-group").remove();
     updateGraph(nodeArray, linkArray);
 }
 
@@ -102,6 +103,7 @@ function updateGraph(nodeArray, linkArray) {
         .attr("cx", d => d.x)
         .attr("cy", d => d.y)
         .attr("r", radius)
+        .attr("stroke", nodeArray.length < 100 ? "black" : "none")
 
     nodesEntering.append("text")
         .text(d => d.id)
@@ -118,6 +120,19 @@ function updateGraph(nodeArray, linkArray) {
         .attr("y1", d => d.source.y)
         .attr("x2", d => d.target.x)
         .attr("y2", d => d.target.y)
+
+    let metrics = svg.append("g")
+        .attr("class", "metric-group")
+
+    metrics.append("text")
+        .attr("x", 5)
+        .attr("y", 20)
+        .text(() => "cost:\t"+data.cost)
+
+    metrics.append("text")
+        .attr("x", 5)
+        .attr("y", 40)
+        .text(() => "time:\t"+setTime(data.time))
 
     onZoomReset();
 }
@@ -153,6 +168,19 @@ function normalizeNodes(nodeArray) {
     return nodeArray
 }
 
+function setTime(time) {
+    if (time < 1000) {
+        return time + " ns"
+    } else if (time < 1000000) {
+        return time/1000 + " \u03BC"+"s"
+    } else if (time < 1000000000) {
+        return time / 1000000 + " ms"
+    } else {
+        return (time / 1000000000) + " s"
+    }
+
+}
+
 //TODO reiterate rescaling for aesthetic reasons
 function rescaleNodeSize(nodeArray) {
     let radius = 10;
@@ -167,3 +195,24 @@ function rescaleNodeSize(nodeArray) {
 
 loadData();
 initGraph();
+
+async function loadSolution(selection) {
+    selectedInstance = $("#dropInstances option:selected");
+    selectedAlgoNames = $("#dropAlgorithms option:selected")
+    algoName = selectedAlgoNames.val()
+    let model = data.find(d => d.name === selectedInstance.val());
+    url = moduleURL + "api/algorithm/" + algoName + "/nodes/" + model.problemName;
+    console.log(url)
+
+
+    $.get(url, function (responseJson) {
+        console.log(responseJson)
+        console.log("Render")
+        const index = data.findIndex((el) => el.name === responseJson.name)
+        data[index] = responseJson
+        renderGraph(responseJson.name);
+    }).fail(function () {
+        alert("Failed to connect to the server")
+    })
+
+}

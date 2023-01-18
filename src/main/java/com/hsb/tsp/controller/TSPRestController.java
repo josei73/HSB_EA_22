@@ -66,11 +66,14 @@ public class TSPRestController {
     public TSPModel getAlg(@PathVariable String algoName, @PathVariable String nodeName) throws ClassNotFoundException {
         TSPInstance problem = service.getTSPInstance(nodeName);
         Algorithm solution = service.getAlgo(algoName, problem);
+        long solveStart = System.nanoTime();
         solution.solve();
+        long solveEnd = System.nanoTime() - solveStart;
 
         TSPTour tour = new TSPTour();
         tour.setNodes(solution.getTour());
         tour.setCost(tour.distance(problem));
+        tour.setTime(solveEnd);
 
         return new TSPModel(problem.getProblemName(), problem.getNodes(), problem.getEdgeWeightType(),tour);
 

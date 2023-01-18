@@ -1,7 +1,6 @@
 package com.hsb.tsp.model;
 
 import com.hsb.tsp.graph.DistanceSection;
-import com.hsb.tsp.model.TSPInstance;
 import com.hsb.tsp.graph.EdgeWeightMatrix;
 
 import java.io.BufferedReader;
@@ -12,6 +11,7 @@ import java.util.List;
 public class TSPTour {
     private List<Integer> nodes = new ArrayList();
     private int cost;
+    private long time;
 
     public TSPTour() {
     }
@@ -38,7 +38,6 @@ public class TSPTour {
     public List<Integer> getNodes() {
         return nodes;
     }
-
     public void setNodes(List<Integer> nodes) {
         this.nodes = nodes;
     }
@@ -46,9 +45,15 @@ public class TSPTour {
     public int getCost() {
         return cost;
     }
-
     public void setCost(int cost) {
         this.cost = cost;
+    }
+
+    public long getTime() {
+        return time;
+    }
+    public void setTime(long time) {
+        this.time = time;
     }
 
     @Override
@@ -56,9 +61,9 @@ public class TSPTour {
         return "TSPTour{" +
                 "nodes=" + nodes +
                 ", cost=" + cost +
+                ", calcTime=" + time +
                 '}';
     }
-
 
     /**
      * Calculates and returns the total distance of this tour.  The total
