@@ -117,6 +117,18 @@ public class Main {
                 printTime(end));
 
 
+
+        System.out.println("===================================================================== LP Branch And Bound");
+
+        BAndB bandb = new BAndB(matrix);
+        long start6 = System.nanoTime();
+        checkTour.setNodes(bandb.getTour());
+        long end6 = System.nanoTime() - start6;
+        System.out.println("Tour Branch And Bound   "+checkTour.getNodes());
+        System.out.println(" Cost "+bandb.getTourCost());
+        System.out.println(printTime(end6));
+
+
         System.out.println("Check =============================================================");
 
 
