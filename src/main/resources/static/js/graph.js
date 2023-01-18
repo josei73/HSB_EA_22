@@ -57,6 +57,7 @@ function renderGraph(selection) {
     let tour = {}
 
 
+
     if (!jQuery.isEmptyObject(selection)) {
         let model = data.find(d => d.name === selection);
         nodes = model.nodes;
@@ -74,6 +75,9 @@ function renderGraph(selection) {
         tourNodes = tour.nodes;
         cost = tour.cost;
         console.log(cost)
+        costInput = $("#costInput");
+        costInput.val(cost)
+
         for (let i = 0; i < tourNodes.length - 1; i++) {
             linkArray.push({
                 source: nodeArray.find(d => d.id === tourNodes[i]),
@@ -120,6 +124,7 @@ function updateGraph(nodeArray, linkArray) {
         .attr("y1", d => d.source.y)
         .attr("x2", d => d.target.x)
         .attr("y2", d => d.target.y)
+
 
     onZoomReset();
 }
@@ -171,7 +176,7 @@ loadData();
 initGraph();
 
 
-async function loadSolution(selection) {
+async function loadSolution() {
 
 
     selectedInstance = $("#dropInstances option:selected");
@@ -179,99 +184,17 @@ async function loadSolution(selection) {
     algoName = selectedAlgoNames.val()
     let model = data.find(d => d.name === selectedInstance.val());
     url = moduleURL + "api/algorithm/" + algoName + "/nodes/" + model.problemName;
-    console.log(url)
-
 
     $.get(url, function (responseJson) {
-        console.log(responseJson)
-        console.log("Render")
         const index = data.findIndex((el) => el.name === responseJson.name)
         data[index] = responseJson
         renderGraph(responseJson.name);
     }).fail(function () {
         alert("Failed to connect to the server")
+    }).error(function (error){
+        alert(error)
+
     })
 
 }
 
-/*
-For the Solution
-function initGraph({nodes, solution}) {
-    let nodeArray = [];
-    for (let index in nodes) {
-        nodeArray.push(nodes[index]);
-    }
-    let linkArray = [];
-    for (let i = 0; i<solution.length-1; i++) {
-        linkArray.push({
-            source: nodeArray.find(d => d.id === solution[i]),
-            target: nodeArray.find(d => d.id === solution[i+1])
-        });
-    }
-    linkArray.push({
-        source: nodeArray.find(d => d.id === solution[nodeArray.length-1]),
-        target: nodeArray.find(d => d.id === solution[0])
-    });
-    console.log(nodeArray);
-    console.log(linkArray);
-
-    renderGraph(nodeArray, linkArray);
-}
-
-function renderGraph(nodeArray, linkArray) {
-    let behaviours = {};
-
-    svg = d3.select("#tsp_graph").classed("svg-container", true).append("svg")
-        .attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", `0 0 ${attrs.svgWidth} ${attrs.svgHeight}`)
-        .classed("svg-content-responsive", true);
-
-    let svgWrapper = svg.append('g').attr("class", 'svg-wrapper');
-    let linksWrapper = svgWrapper.append('g').attr("class", 'links-wrapper');
-    let nodesWrapper = svgWrapper.append('g').attr("class", 'nodes-wrapper');
-
-    //########################### BEHAVIORS #########################
-    behaviours.zoom = d3.zoom()
-        .scaleExtent([attrs.scaleMin, attrs.scaleMax])
-        .on("zoom", onZoom);
-    svg.call(behaviours.zoom).on("dblclick.zoom", onZoomReset);
-    onZoomReset() // call zoomReset once on initialization;
-
-    //########################### GRAPH #########################
-    let nodes = nodesWrapper.selectAll(".node-group").data(nodeArray);
-    let nodesEntering = nodes.enter().append("g")
-        .attr("class", "node-group")
-
-    nodesEntering.append("circle")
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y)
-        .attr("r", 20)
-
-    nodesEntering.append("text")
-        .text(d => d.id)
-        .attr("x", d => d.x)
-        .attr("y", d => d.y + 5);
-
-    let links = linksWrapper.selectAll(".link-group").data(linkArray);
-    let linksEntering = links.enter().append("g")
-        .attr("class", "link-group")
-
-    linksEntering.append("line")
-        .attr("x1", d => d.source.x)
-        .attr("y1", d => d.source.y)
-        .attr("x2", d => d.target.x)
-        .attr("y2", d => d.target.y)
-
-
-    // ######### ZOOM FUNCTIONS ###########
-    function onZoom(event) {
-        attrs.transform = event.transform;
-        svgWrapper.attr("transform", attrs.transform);
-    }
-
-    function onZoomReset() {
-        svg.transition().duration(500)
-            .call(behaviours.zoom.transform, d3.zoomIdentity.translate(0,0).scale(attrs.scaleMin));
-    }
-}
- */

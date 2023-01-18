@@ -2,6 +2,7 @@ package com.hsb.tsp.utils;
 
 
 import com.hsb.tsp.algorithms.*;
+import com.hsb.tsp.exception.HeldKarpException;
 import com.hsb.tsp.model.TSPInstance;
 import com.hsb.tsp.model.TSPTour;
 
@@ -14,10 +15,10 @@ import java.util.Locale;
 public class Main {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws HeldKarpException {
         TSPParser parser = new TSPParser();
         TSPInstance problem;
-        String filename = "ulysses16.tsp";
+        String filename = "ulysses22.tsp";
 
         try {
             problem = parser.loadInstance(filename);

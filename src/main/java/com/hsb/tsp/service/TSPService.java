@@ -2,6 +2,7 @@ package com.hsb.tsp.service;
 
 
 import com.hsb.tsp.algorithms.*;
+import com.hsb.tsp.exception.HeldKarpException;
 import com.hsb.tsp.fieldTypesAndFormats.EdgeWeightType;
 import com.hsb.tsp.graph.Node;
 import com.hsb.tsp.model.TSPInstance;
@@ -15,42 +16,13 @@ import java.util.*;
 
 @Service
 public class TSPService {
-    TSPParser parser;
+    private TSPParser parser;
 
     public TSPService() {
         this.parser = new TSPParser();
     }
 
-    public List<Integer> genData() {
-        TSPInstance problem = null;
-        try {
-            problem = this.parser.loadInstance("pr76.tsp");
-            //problem.setTours(this.parser.addOptimalTour("./data/tsp/pr76.opt.tour"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
 
-
-        System.out.println(problem.getName());
-        Map<Integer, Node> nodes = problem.getDistanceSection().getNodes();
-        Iterator it = nodes.entrySet().iterator();
-
-        return problem.getTour().getNodes();
-    }
-
-    public Map<Integer, Node> genNodeCoordinates() {
-        TSPInstance problem = null;
-        try {
-            problem = this.parser.loadInstance("pr76.tsp");
-            //problem.setTours(this.parser.addOptimalTour("./data/tsp/pr76.opt.tour"));
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-
-        return problem.getDistanceSection().getNodes();
-
-    }
 
     public Set<String> getAlgorithmNames() {
         Set<String> algorithmNames = new HashSet<>();
@@ -64,7 +36,7 @@ public class TSPService {
         return algorithmNames;
     }
 
-    public Algorithm getAlgo(String name, TSPInstance instance) {
+    public Algorithm getAlgo(String name, TSPInstance instance) throws HeldKarpException {
         int[][] adjMatrix = instance.getDistanceSection().getAdjMatrix(instance);
 
         switch (name) {

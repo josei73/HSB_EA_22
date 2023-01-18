@@ -1,5 +1,6 @@
 svg.svg-content-responsive {
-    background: lightgrey;
+
+    background: url('https://www.google.nl/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png') no-repeat;
 }
 
 g.node-group circle {
@@ -16,5 +17,5 @@ g.node-group text {
 
 g.link-group line {
     stroke: red;
-    stroke-width: 10;
+    stroke-width: 5;
 }

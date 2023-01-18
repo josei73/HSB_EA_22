@@ -1,5 +1,12 @@
 package com.hsb.tsp.graph;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@ToString
 public class Edge {
     private int node1;
     private int node2;
@@ -19,25 +26,6 @@ public class Edge {
 
     public double getDist() {
         return weight;
-    }
-    public void setDist(double nodeWeight) {
-        weight = nodeWeight;
-    }
-
-    public int getNode1() {
-        return this.node1;
-    }
-
-    public void setNode1(int node1) {
-        this.node1 = node1;
-    }
-
-    public int getNode2() {
-        return this.node2;
-    }
-
-    public void setNode2(int node2) {
-        this.node2 = node2;
     }
 
     public boolean hasEndpoint(int id) {
