@@ -7,11 +7,13 @@ import com.hsb.tsp.graph.NodeCoordinates;
 import com.hsb.tsp.model.TSPInstance;
 import com.hsb.tsp.model.TSPTour;
 import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 @NoArgsConstructor
+@Component
 public class TSPParser {
     final String PATH = "data/tsp/";
 

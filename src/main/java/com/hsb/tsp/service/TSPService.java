@@ -8,6 +8,7 @@ import com.hsb.tsp.graph.Node;
 import com.hsb.tsp.model.TSPInstance;
 import com.hsb.tsp.model.TSPModel;
 import com.hsb.tsp.utils.TSPParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
@@ -16,11 +17,10 @@ import java.util.*;
 
 @Service
 public class TSPService {
+    @Autowired
     private TSPParser parser;
 
-    public TSPService() {
-        this.parser = new TSPParser();
-    }
+    public TSPService() {}
 
 
 
