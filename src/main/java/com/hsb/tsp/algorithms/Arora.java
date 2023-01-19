@@ -7,7 +7,7 @@ public class Arora extends Algorithm {
     private static final double EPSILON = 0.1; // approximation factor
     ArrayList<Integer> result = new ArrayList<>();
 
-    private int [][] distances;
+    private int[][] distances;
     private boolean ranSolver = false;
 
     public Arora(int[][] distances) {
@@ -15,11 +15,10 @@ public class Arora extends Algorithm {
     }
 
     public void solve() {
-        // Initialize solution with a greedy algorithm
 
 
         int n = distances.length;
-        double L = 0; // lower bound on the optimal solution
+        double L = 0;
         for (int i = 0; i < n; i++) {
             for (int j = i + 1; j < n; j++) {
                 L += distances[i][j];
@@ -34,7 +33,7 @@ public class Arora extends Algorithm {
             tour.add(greedy.get(i) - 1);
         }
 
-        // Iteratively improve solution
+
         while (true) {
             boolean improved = false;
             for (int i = 1; i < n - 2; i++) {
@@ -44,7 +43,6 @@ public class Arora extends Algorithm {
                     double newDistance = distances[tour.get(i - 1)][tour.get(j)]
                             + distances[tour.get(i)][tour.get(j + 1)];
                     if (newDistance < oldDistance) {
-                        // Swap the cities between i and j
                         tour = getNewTour(n, tour, i, j);
                         improved = true;
                     }
@@ -59,8 +57,8 @@ public class Arora extends Algorithm {
                     optSolution.add(++integer);
 
                 });
-                result=new ArrayList<>(optSolution);
-                ranSolver=true;
+                result = new ArrayList<>(optSolution);
+                ranSolver = true;
                 return;
 
 

@@ -1,5 +1,7 @@
 package com.hsb.tsp.algorithms;
 
+import com.hsb.tsp.exception.HeldKarpException;
+
 import java.util.ArrayList;
 
 public class HeldRek extends Algorithm {
@@ -15,23 +17,23 @@ public class HeldRek extends Algorithm {
     private ArrayList<Integer> tour = new ArrayList<>();
     private boolean ranSolver = false;
 
-    public HeldRek(int[][] distance) {
+    public HeldRek(int[][] distance) throws HeldKarpException {
         this(0, distance);
     }
 
-    public HeldRek(int startNode, int[][] distance) {
+    public HeldRek(int startNode, int[][] distance) throws HeldKarpException {
         this.distance = distance;
         N = distance.length;
         START_NODE = startNode;
 
         // Validate inputs.
-        if (N <= 2) throw new IllegalStateException("TSP on 0, 1 or 2 nodes doesn't make sense.");
+        if (N <= 2) throw new HeldKarpException("TSP on 0, 1 or 2 nodes doesn't make sense.");
         if (N != distance[0].length)
-            throw new IllegalArgumentException("Matrix must be square (N x N)");
+            throw new HeldKarpException("Matrix must be square (N x N)");
         if (START_NODE < 0 || START_NODE >= N)
-            throw new IllegalArgumentException("Starting node must be: 0 <= startNode < N");
-        if (N > 32)
-            throw new IllegalArgumentException(
+            throw new HeldKarpException("Starting node must be: 0 <= startNode < N");
+        if (N > 24)
+            throw new HeldKarpException(
                     "Matrix too large! A matrix that size for the DP TSP problem with a time complexity of"
                             + "O(n^2*2^n) requires way too much computation for any modern home computer to handle");
 

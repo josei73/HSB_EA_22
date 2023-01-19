@@ -2,6 +2,7 @@ package com.hsb.tsp.utils;
 
 
 import com.hsb.tsp.algorithms.*;
+import com.hsb.tsp.exception.HeldKarpException;
 import com.hsb.tsp.model.TSPInstance;
 import com.hsb.tsp.model.TSPTour;
 
@@ -14,7 +15,7 @@ import java.util.Locale;
 public class Main {
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws HeldKarpException {
         TSPParser parser = new TSPParser();
         TSPInstance problem;
         String filename = "ulysses16.tsp";
@@ -115,6 +116,18 @@ public class Main {
         System.out.println(
 
                 printTime(end));
+
+
+
+        System.out.println("===================================================================== LP Branch And Bound");
+
+        BAndB bandb = new BAndB(matrix);
+        long start6 = System.nanoTime();
+        checkTour.setNodes(bandb.getTour());
+        long end6 = System.nanoTime() - start6;
+        System.out.println("Tour Branch And Bound   "+checkTour.getNodes());
+        System.out.println(" Cost "+bandb.getTourCost());
+        System.out.println(printTime(end6));
 
 
         System.out.println("Check =============================================================");
