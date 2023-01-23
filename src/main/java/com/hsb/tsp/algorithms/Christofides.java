@@ -101,19 +101,6 @@ public class Christofides extends Algorithm {
     }
 
 
-    /*public List<Integer> applyChristofides(int[][] adj) {
-        // Compute the minimum spanning tree.
-        List<Edge> mst = computeMST(adj);
-        // Compute the perfect matching.
-        List<Edge> pm = computePerfectMatching(adj,mst);
-        // Compute the eulerian tour.
-        List<Integer> et = computeEulerianTour(pm);
-        // Compute the Hamiltonian cycle.
-        List<Integer> hc = computeHamiltonianCycle(et);
-        return hc;
-    }
-
-     */
 
     @Override
     public ArrayList<Integer> getTour() {

@@ -73,8 +73,8 @@ public class Main {
 
         System.out.println("===================================================================== Held");
         int startNode = 0;
-        HeldRek solverr =
-                new HeldRek(startNode, matrix);
+        HeldKarp solverr =
+                new HeldKarp(startNode, matrix);
 
 
         long start1 = System.nanoTime();

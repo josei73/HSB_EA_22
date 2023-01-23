@@ -66,7 +66,7 @@ public class Arora extends Algorithm {
         }
     }
 
-    private static List<Integer> getNewTour(int n, List<Integer> tour, int i, int j) {
+    private  List<Integer> getNewTour(int n, List<Integer> tour, int i, int j) {
         List<Integer> newTour = new ArrayList<>();
         for (int k = 0; k < i; k++) {
             newTour.add(tour.get(k));
