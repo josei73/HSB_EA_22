@@ -3,23 +3,17 @@ svg.svg-content-responsive {
 }
 
 g.node-group circle {
-    fill: #5D3A9B;
+    fill: cornflowerblue;
 }
 
 g.node-group text {
-    fill: white;
-    font-size: 1em;
+    fill: black;
+    font-size: 0.5em;
     text-anchor: middle;
     pointer-events: none;
 }
 
-g.metric-group text {
-    fill: black;
-    font-size: 1em;
-    pointer-events: none;
-}
-
 g.link-group line {
-    stroke: #E66100;
+    stroke: red;
     stroke-width: 2;
 }

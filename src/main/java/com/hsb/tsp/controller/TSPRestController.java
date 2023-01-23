@@ -2,6 +2,7 @@ package com.hsb.tsp.controller;
 
 
 import com.hsb.tsp.algorithms.Algorithm;
+import com.hsb.tsp.exception.HeldKarpException;
 import com.hsb.tsp.graph.Node;
 import com.hsb.tsp.model.TSPInstance;
 import com.hsb.tsp.model.TSPModel;
@@ -18,20 +19,9 @@ import java.util.Map;
 
 @RestController
 public class TSPRestController {
-
-
     @Autowired
     private TSPService service;
 
-    @GetMapping("/api/tour")
-    public List<Integer> getTour() {
-        return service.genData();
-    }
-
-    @GetMapping("/api/nodes")
-    public Map<Integer, Node> getTSP() {
-        return service.genNodeCoordinates();
-    }
 
     @GetMapping("api/problems")
     public List<TSPInstance> getProblems() { return service.getAllTSPInstances(); }
@@ -63,19 +53,23 @@ public class TSPRestController {
     }
 
     @GetMapping("api/algorithm/{algoName}/nodes/{nodeName}")
-    public TSPModel getAlg(@PathVariable String algoName, @PathVariable String nodeName) throws ClassNotFoundException {
+    public TSPModel getAlg(@PathVariable String algoName, @PathVariable String nodeName) {
         TSPInstance problem = service.getTSPInstance(nodeName);
-        Algorithm solution = service.getAlgo(algoName, problem);
-        long solveStart = System.nanoTime();
-        solution.solve();
-        long solveEnd = System.nanoTime() - solveStart;
 
-        TSPTour tour = new TSPTour();
-        tour.setNodes(solution.getTour());
-        tour.setCost(tour.distance(problem));
-        tour.setTime(solveEnd);
+        try {
+            Algorithm solution = service.getAlgo(algoName, problem);
+            long solveStart = System.nanoTime();
+            solution.solve();
+            long solveEnd = System.nanoTime() - solveStart;
 
-        return new TSPModel(problem.getProblemName(), problem.getNodes(), problem.getEdgeWeightType(),tour);
+            TSPTour tour = new TSPTour();
+            tour.setNodes(solution.getTour());
+            tour.setCost(tour.distance(problem));
+            tour.setTime(solveEnd);
 
+            return new TSPModel(problem.getProblemName(), problem.getNodes(), problem.getEdgeWeightType(),tour);
+        } catch (HeldKarpException  e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

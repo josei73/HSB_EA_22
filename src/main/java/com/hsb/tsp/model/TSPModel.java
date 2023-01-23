@@ -21,7 +21,6 @@ public class TSPModel {
         this.name = name;
         this.problemName = name.split(":")[0];
         this.nodes = nodes;
-        this.tour = tour;
         this.type = type;
     }
 
@@ -30,7 +29,7 @@ public class TSPModel {
         this.name = name;
         this.problemName = name.split(":")[0];
         this.nodes = nodes;
-        this.tour = tour;
         this.type = type;
+        this.tour = tour;
     }
 }

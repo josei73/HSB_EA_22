@@ -1,28 +1,20 @@
-let svg, svgWrapper, linksWrapper, nodesWrapper;
+let svg, svgWrapper, linksWrapper, nodesWrapper, axisWrapper;
+let xAxis, yAxis;
+let xScale, yScale;
 let data = {};
 let behaviours = {}
 let attrs = {
     svgWidth: 750,
     svgHeight: 400,
     transform: {x: 0, y: 0, k: 1},
-    scaleMin: 0.5,
-    scaleMax: 2
+    margin: { bottom: 20, left: 40 },
+    scaleMin: 0.3,
+    scaleMax: 5
 };
 
 const loadData = async () => {
     const url = `http://localhost:8080/tsp/api/problems/models`
     data = await fetch(url).then(response => response.json());
-    //InitDropdown(data);
-}
-
-function InitDropdown() {
-    console.log(data)
-    const menu = d3.select("#dropProblems").selectAll("options").data(data)
-    let menuEnter = menu.enter().append("option")
-        .text(d => d.name)
-        .on("click", function (event, d) {
-            renderGraph(d);
-        });
 }
 
 function initGraph() {
@@ -34,6 +26,7 @@ function initGraph() {
         .classed("svg-content-responsive", true);
 
     svgWrapper = svg.append('g').attr("class", 'svg-wrapper');
+    axisWrapper = svg.append('g').attr("class", 'axis-wrapper');
     linksWrapper = svgWrapper.append('g').attr("class", 'links-wrapper');
     nodesWrapper = svgWrapper.append('g').attr("class", 'nodes-wrapper');
 
@@ -51,9 +44,7 @@ function initGraph() {
 //TODO draw a geo map if an instance has GEO data
 function renderGraph(selection) {
     console.log("renderGraph function called")
-    let nodes = {}
-    let tour = {}
-
+    let nodes, tour;
 
     if (!jQuery.isEmptyObject(selection)) {
         let model = data.find(d => d.name === selection);
@@ -66,12 +57,11 @@ function renderGraph(selection) {
     for (let index in nodes) {
         nodeArray.push(nodes[index]);
     }
-    nodeArray = normalizeNodes(nodeArray);
 
     if (tour != null) {
         let tourNodes = tour.nodes;
-        data.cost = tour.cost;
-        data.time = tour.time;
+        populateMetrics(tour);
+
         for (let i = 0; i < tourNodes.length - 1; i++) {
             linkArray.push({
                 source: nodeArray.find(d => d.id === tourNodes[i]),
@@ -86,13 +76,38 @@ function renderGraph(selection) {
 
     nodesWrapper.selectAll(".node-group").remove();
     linksWrapper.selectAll(".link-group").remove();
-    svg.selectAll(".metric-group").remove();
+    axisWrapper.selectAll("g").remove();
+
     updateGraph(nodeArray, linkArray);
 }
 
 function updateGraph(nodeArray, linkArray) {
-    console.log(nodeArray);
-    console.log(linkArray);
+    //########################### AXIS #########################
+    const xmin = d3.min(nodeArray, d => d.x);
+    const xmax = d3.max(nodeArray, d => d.x);
+
+    const ymin = d3.min(nodeArray, d => d.y);
+    const ymax = d3.max(nodeArray, d => d.y);
+
+    xScale = d3.scaleLinear()
+        .domain([xmin, xmax])
+        .range([attrs.margin.left, attrs.svgWidth-attrs.margin.left]);
+    yScale = d3.scaleLinear()
+        .domain([ymin, ymax])
+        .range([attrs.svgHeight - attrs.margin.bottom,  attrs.margin.bottom]);
+
+    xAxis = d3.axisBottom(xScale)
+    yAxis = d3.axisLeft(yScale)
+
+    axisWrapper.append("g")
+        .attr("class", "x-axis")
+        .attr("transform", `translate(0, ${attrs.svgHeight - attrs.margin.bottom})`)
+        .call(xAxis);
+    axisWrapper.append("g")
+        .attr("class", "y-axis")
+        .attr("transform", `translate(${attrs.margin.left}, 0)`)
+        .call(yAxis);
+
     //########################### GRAPH #########################
     let nodes = nodesWrapper.selectAll(".node-group").data(nodeArray);
     let nodesEntering = nodes.enter().append("g")
@@ -100,39 +115,26 @@ function updateGraph(nodeArray, linkArray) {
 
     let radius = rescaleNodeSize(nodeArray);
     nodesEntering.append("circle")
-        .attr("cx", d => d.x)
-        .attr("cy", d => d.y)
+        .attr("cx", d => xScale(d.x))
+        .attr("cy", d => yScale(d.y))
         .attr("r", radius)
-        .attr("stroke", nodeArray.length < 100 ? "black" : "none")
+        .attr("stroke", nodeArray.length < 1000 ? "black" : "none")
 
     nodesEntering.append("text")
         .text(d => d.id)
         .attr("opacity", nodeArray.length < 100 ? 1 : 0)
-        .attr("x", d => d.x)
-        .attr("y", d => d.y + 5);
+        .attr("x", d => xScale(d.x))
+        .attr("y", d => yScale(d.y) + 3);
 
     let links = linksWrapper.selectAll(".link-group").data(linkArray);
     let linksEntering = links.enter().append("g")
         .attr("class", "link-group")
 
     linksEntering.append("line")
-        .attr("x1", d => d.source.x)
-        .attr("y1", d => d.source.y)
-        .attr("x2", d => d.target.x)
-        .attr("y2", d => d.target.y)
-
-    let metrics = svg.append("g")
-        .attr("class", "metric-group")
-
-    metrics.append("text")
-        .attr("x", 5)
-        .attr("y", 20)
-        .text(() => "cost:\t"+data.cost)
-
-    metrics.append("text")
-        .attr("x", 5)
-        .attr("y", 40)
-        .text(() => "time:\t"+setTime(data.time))
+        .attr("x1", d => xScale(d.source.x))
+        .attr("y1", d => yScale(d.source.y))
+        .attr("x2", d => xScale(d.target.x))
+        .attr("y2", d => yScale(d.target.y))
 
     onZoomReset();
 }
@@ -141,11 +143,16 @@ function updateGraph(nodeArray, linkArray) {
 function onZoom(event) {
     attrs.transform = event.transform;
     svgWrapper.attr("transform", attrs.transform);
+
+    let new_xScale = event.transform.rescaleX(xScale);
+    let new_yScale = event.transform.rescaleY(yScale);
+    d3.select(".x-axis").call(xAxis.scale(new_xScale));
+    d3.select(".y-axis").call(yAxis.scale(new_yScale));
 }
 
 function onZoomReset() {
     svg.transition().duration(500)
-        .call(behaviours.zoom.transform, d3.zoomIdentity.translate(30, 15).scale(0.9));
+        .call(behaviours.zoom.transform, d3.zoomIdentity.translate(attrs.margin.left, attrs.margin.bottom).scale(0.9));
 }
 
 /**
@@ -168,7 +175,13 @@ function normalizeNodes(nodeArray) {
     return nodeArray
 }
 
+function populateMetrics(tour) {
+    $("#costInput").val(tour.cost);
+    $("#timeInput").val(setTime(tour.time));
+}
+
 function setTime(time) {
+    if (time === undefined) return "";
     if (time < 1000) {
         return time + " ns"
     } else if (time < 1000000) {
@@ -178,41 +191,36 @@ function setTime(time) {
     } else {
         return (time / 1000000000) + " s"
     }
-
 }
 
 //TODO reiterate rescaling for aesthetic reasons
 function rescaleNodeSize(nodeArray) {
     let radius = 10;
-    if (nodeArray.length > 100) {
-        radius = 3;
-    }
-    if (nodeArray.length > 1000) {
-        radius = 1;
-    }
+    if (nodeArray.length > 50) radius = 5;
+    if (nodeArray.length > 100) radius = 3;
+    if (nodeArray.length > 500) radius = 2;
+    if (nodeArray.length > 1000) radius = 1;
     return radius;
 }
 
 loadData();
 initGraph();
 
-async function loadSolution(selection) {
+async function loadSolution() {
     selectedInstance = $("#dropInstances option:selected");
     selectedAlgoNames = $("#dropAlgorithms option:selected")
     algoName = selectedAlgoNames.val()
     let model = data.find(d => d.name === selectedInstance.val());
     url = moduleURL + "api/algorithm/" + algoName + "/nodes/" + model.problemName;
-    console.log(url)
-
 
     $.get(url, function (responseJson) {
-        console.log(responseJson)
-        console.log("Render")
         const index = data.findIndex((el) => el.name === responseJson.name)
         data[index] = responseJson
         renderGraph(responseJson.name);
     }).fail(function () {
         alert("Failed to connect to the server")
-    })
+    })/*.error(function (error){
+        alert(error)
+    })*/
 
 }

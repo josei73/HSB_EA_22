@@ -6,19 +6,21 @@ import com.hsb.tsp.graph.EdgeWeightMatrix;
 import com.hsb.tsp.graph.NodeCoordinates;
 import com.hsb.tsp.model.TSPInstance;
 import com.hsb.tsp.model.TSPTour;
+import lombok.NoArgsConstructor;
+import org.springframework.stereotype.Component;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
-
+@NoArgsConstructor
+@Component
 public class TSPParser {
     final String PATH = "data/tsp/";
 
-    private BufferedReader reader;
-    public TSPParser() {}
 
     public TSPInstance loadInstance(String filename) throws IOException {
         TSPInstance instance = new TSPInstance();
+        BufferedReader reader;
         try {
             reader = new BufferedReader(new FileReader(PATH + filename));
         } catch (IOException e) {
@@ -28,7 +30,7 @@ public class TSPParser {
         String line = null;
         while ((line = reader.readLine()) != null && !line.equals("EOF")) {
             line = line.trim();
-            if(line.contains(":")) {
+            if (line.contains(":")) {
                 parseFileSpecification(instance, line);
             } else {
                 parseFileData(instance, line, reader);
