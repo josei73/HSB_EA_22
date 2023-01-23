@@ -74,7 +74,6 @@ function renderGraph(selection) {
     if (tour != null) {
         tourNodes = tour.nodes;
         cost = tour.cost;
-        console.log(cost)
         costInput = $("#costInput");
         costInput.val(cost)
 
@@ -96,8 +95,6 @@ function renderGraph(selection) {
 }
 
 function updateGraph(nodeArray, linkArray) {
-    console.log(nodeArray);
-    console.log(linkArray);
     //########################### GRAPH #########################
     let nodes = nodesWrapper.selectAll(".node-group").data(nodeArray);
     let nodesEntering = nodes.enter().append("g")
@@ -189,12 +186,18 @@ async function loadSolution() {
         const index = data.findIndex((el) => el.name === responseJson.name)
         data[index] = responseJson
         renderGraph(responseJson.name);
-    }).fail(function () {
-        alert("Failed to connect to the server")
-    }).error(function (error){
-        alert(error)
+    }).fail(function (responseError) {
+        showModalDialog("Error", responseError.responseJSON.message);
 
     })
 
+}
+
+function showModalDialog(title, message) {
+    var $modal = $('#modalDialog')
+    console.log($modal)
+    $("#modalTitle").text(title)
+    $("#modalBody").text(message)
+    $("#modalDialog").modal()
 }
 

@@ -55,10 +55,10 @@ public class TSPRestController {
     }
 
     @GetMapping("api/algorithm/{algoName}/nodes/{nodeName}")
-    public TSPModel getAlg(@PathVariable String algoName, @PathVariable String nodeName) {
+    public TSPModel getAlg(@PathVariable String algoName, @PathVariable String nodeName) throws HeldKarpException {
         TSPInstance problem = service.getTSPInstance(nodeName);
 
-        try {
+
             Algorithm solution = service.getAlgo(algoName, problem);
             solution.solve();
 
@@ -67,9 +67,7 @@ public class TSPRestController {
             tour.setCost(tour.distance(problem));
 
             return new TSPModel(problem.getProblemName(), problem.getNodes(), problem.getEdgeWeightType(),tour);
-        } catch (HeldKarpException  e) {
-            throw new RuntimeException(e.getMessage());
-        }
+
 
 
     }
