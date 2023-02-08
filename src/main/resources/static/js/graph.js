@@ -139,6 +139,14 @@ function updateGraph(nodeArray, linkArray) {
     onZoomReset();
     animateTour();
 
+    //########################### DASH LINE ANIMATION #########################
+    let offset = 1;
+    setInterval( function() {
+        linksEntering.selectAll('line')
+            .style('stroke-dashoffset', offset);
+        offset -= 1;
+    }, 50);
+
     function animateTour() {
         let duration = $("#duration").val()
         let size = linkArray.length
