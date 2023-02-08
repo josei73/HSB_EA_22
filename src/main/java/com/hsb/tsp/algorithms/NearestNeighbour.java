@@ -40,14 +40,10 @@ public class NearestNeighbour extends Algorithm {
 
         // Iteratively visit the nearest unvisited city
         while (visitedCities.size() < size) {
-            int currentCity = visitedCities.get(visitedCities.size() - 1);
             int nearestCity = -1;
-            int minDistance = Integer.MAX_VALUE;
             for (int i = 0; i < size; i++) {
-                if (!visited[i] && distances[currentCity][i] < minDistance) {
+                if (!visited[i]) {
                     nearestCity = i;
-                    minDistance = distances[currentCity][i];
-
                 }
             }
             visitedCities.add(nearestCity);

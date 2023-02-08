@@ -41,7 +41,7 @@ public class TSPService {
 
         switch (name) {
             case "Held-Karp":
-                return new HeldRek(adjMatrix);
+                return new HeldKarp(adjMatrix);
             case "Greedy":
                 return new GreedyTSP(adjMatrix);
             case "Christofides":

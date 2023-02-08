@@ -2,6 +2,8 @@ package com.hsb.tsp.algorithms;
 
 
 
+import com.hsb.tsp.exception.HeldKarpException;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -16,18 +18,18 @@ public class HeldKarp extends Algorithm {
     private double minTourCost = Double.POSITIVE_INFINITY;
     private boolean ranSolver = false;
 
-    public HeldKarp(int[][] distance) {
+    public HeldKarp(int[][] distance) throws HeldKarpException {
         this(0, distance);
     }
 
-    public HeldKarp(int start, int[][] distance) {
+    public HeldKarp(int start, int[][] distance) throws HeldKarpException {
         N = distance.length;
 
-        if (N <= 2) throw new IllegalStateException("N <= 2 not yet supported.");
-        if (N != distance[0].length) throw new IllegalStateException("Matrix must be square (n x n)");
-        if (start < 0 || start >= N) throw new IllegalArgumentException("Invalid start node.");
+        if (N <= 2) throw new HeldKarpException("N <= 2 not yet supported.");
+        if (N != distance[0].length) throw new HeldKarpException("Matrix must be square (n x n)");
+        if (start < 0 || start >= N) throw new HeldKarpException("Invalid start node.");
         if (N > 24)
-            throw new IllegalArgumentException(
+            throw new HeldKarpException(
                     "Matrix too large! A matrix that size for the DP TSP problem with a time complexity of"
                             + "O(n^2*2^n) requires way too much computation for any modern home computer to handle");
 

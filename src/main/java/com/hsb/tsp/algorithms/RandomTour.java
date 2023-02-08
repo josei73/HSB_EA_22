@@ -23,12 +23,6 @@ public class RandomTour extends Algorithm {
     }
 
 
-   /* public double getTourCost() {
-        if (!ranSolver) solve();
-        return minTourCost;
-    }
-
-    */
 
     public void solve() {
 

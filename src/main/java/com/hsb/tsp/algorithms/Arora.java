@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Arora extends Algorithm {
-    private static final double EPSILON = 0.1; // approximation factor
+    private static final double EPSILON = 0.01; // approximation factor
     ArrayList<Integer> result = new ArrayList<>();
 
     private int[][] distances;
@@ -26,12 +26,15 @@ public class Arora extends Algorithm {
         }
         L = L / (n - 1);
 
+
         GreedyTSP greedyTSP = new GreedyTSP(distances);
         List<Integer> greedy = greedyTSP.getTour();
         List<Integer> tour = new ArrayList<>();
         for (int i = 0; i < greedy.size(); i++) {
             tour.add(greedy.get(i) - 1);
         }
+
+
 
 
         while (true) {
@@ -65,6 +68,8 @@ public class Arora extends Algorithm {
             }
         }
     }
+
+
 
     private  List<Integer> getNewTour(int n, List<Integer> tour, int i, int j) {
         List<Integer> newTour = new ArrayList<>();
