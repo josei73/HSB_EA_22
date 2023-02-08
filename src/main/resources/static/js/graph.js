@@ -83,17 +83,17 @@ function renderGraph(selection) {
 
 function updateGraph(nodeArray, linkArray) {
     //########################### AXIS #########################
-    const xmin = d3.min(nodeArray, d => d.x);
-    const xmax = d3.max(nodeArray, d => d.x);
+    //const minimum = getMinimum(nodeArray);
+    const maximum = getMaximum(nodeArray);
 
+    const xmin = d3.min(nodeArray, d => d.x);
     const ymin = d3.min(nodeArray, d => d.y);
-    const ymax = d3.max(nodeArray, d => d.y);
 
     xScale = d3.scaleLinear()
-        .domain([xmin, xmax])
+        .domain([xmin, maximum])
         .range([attrs.margin.left, attrs.svgWidth-attrs.margin.left]);
     yScale = d3.scaleLinear()
-        .domain([ymin, ymax])
+        .domain([ymin, maximum])
         .range([attrs.svgHeight - attrs.margin.bottom,  attrs.margin.bottom]);
 
     xAxis = d3.axisBottom(xScale)
@@ -109,11 +109,11 @@ function updateGraph(nodeArray, linkArray) {
         .call(yAxis);
 
     //########################### GRAPH #########################
-    let nodes = nodesWrapper.selectAll(".node-group").data(nodeArray);
-    let nodesEntering = nodes.enter().append("g")
+    const nodes = nodesWrapper.selectAll(".node-group").data(nodeArray);
+    const nodesEntering = nodes.enter().append("g")
         .attr("class", "node-group")
 
-    let radius = rescaleNodeSize(nodeArray);
+    const radius = rescaleNodeSize(nodeArray);
     nodesEntering.append("circle")
         .attr("cx", d => xScale(d.x))
         .attr("cy", d => yScale(d.y))
@@ -126,8 +126,8 @@ function updateGraph(nodeArray, linkArray) {
         .attr("x", d => xScale(d.x))
         .attr("y", d => yScale(d.y) + 3);
 
-    let links = linksWrapper.selectAll(".link-group").data(linkArray);
-    let linksEntering = links.enter().append("g")
+    const links = linksWrapper.selectAll(".link-group").data(linkArray);
+    const linksEntering = links.enter().append("g")
         .attr("class", "link-group")
 
     linksEntering.append("line")
@@ -137,6 +137,31 @@ function updateGraph(nodeArray, linkArray) {
         .attr("y2", d => yScale(d.target.y))
 
     onZoomReset();
+    animateTour();
+
+    function animateTour() {
+        let duration = $("#duration").val()
+        let size = linkArray.length
+        if (size > 0 && duration > 0) {
+            size = 1 / size
+            duration = Math.trunc(normalize(size,0,1) * duration * 500)
+
+            linksWrapper.selectAll("line")
+                .interrupt()
+                .attr("x1", d => xScale(d.source.x))
+                .attr("y1", d => yScale(d.source.y))
+                .attr("x2", d => xScale(d.source.x))
+                .attr("y2", d => yScale(d.source.y))
+                .transition()
+                .delay((d,i) => i * duration)
+                .duration(duration)
+                .ease(d3.easeQuadInOut)
+                .attr("x1", d => xScale(d.source.x))
+                .attr("y1", d => yScale(d.source.y))
+                .attr("x2", d => xScale(d.target.x))
+                .attr("y2", d => yScale(d.target.y))
+        }
+    }
 }
 
 // ######### ZOOM FUNCTIONS ###########
@@ -155,24 +180,30 @@ function onZoomReset() {
         .call(behaviours.zoom.transform, d3.zoomIdentity.translate(attrs.margin.left, attrs.margin.bottom).scale(0.9));
 }
 
-/**
- * find highest x & y values
- * normalize all nodes to [0,1] values
- * rescale to SVG size
- * @param nodeArray
- * @returns nodeArray
- */
-function normalizeNodes(nodeArray) {
-    let xMax = d3.max(nodeArray, d => d.x);
-    let yMax = d3.max(nodeArray, d => d.y);
-    let xMin = d3.min(nodeArray, d => d.x);
-    let yMin = d3.min(nodeArray, d => d.y);
-    nodeArray.forEach(function (d) {
-        d.x = (d.x - xMin) / (xMax - xMin) * attrs.svgWidth;
-        d.y = (d.y - yMin) / (yMax - yMin) * attrs.svgHeight;
-    })
+function normalize(value, min, max) {
+    return (value - min) / (max - min);
+}
 
-    return nodeArray
+function getMinimum(nodeArray) {
+    const xmin = d3.min(nodeArray, d => d.x);
+    const ymin = d3.min(nodeArray, d => d.y);
+
+    if (xmin < ymin) {
+        return xmin;
+    } else {
+        return ymin;
+    }
+}
+
+function getMaximum(nodeArray) {
+    const xmax = d3.max(nodeArray, d => d.x);
+    const ymax = d3.max(nodeArray, d => d.y);
+
+    if (xmax > ymax) {
+        return xmax;
+    } else {
+        return ymax;
+    }
 }
 
 function populateMetrics(tour) {
@@ -193,7 +224,6 @@ function setTime(time) {
     }
 }
 
-//TODO reiterate rescaling for aesthetic reasons
 function rescaleNodeSize(nodeArray) {
     let radius = 10;
     if (nodeArray.length > 50) radius = 5;
@@ -222,5 +252,4 @@ async function loadSolution() {
     })/*.error(function (error){
         alert(error)
     })*/
-
 }
