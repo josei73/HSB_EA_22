@@ -1,4 +1,4 @@
-let svg, svgWrapper, linksWrapper, nodesWrapper, axisWrapper;
+let svg, svgWrapper, linksWrapper, nodesWrapper, axisWrapper, distanceWrapper;
 let xAxis, yAxis;
 let xScale, yScale;
 let data = {};
@@ -8,7 +8,7 @@ let attrs = {
     svgHeight: 400,
     transform: {x: 0, y: 0, k: 1},
     margin: { bottom: 20, left: 40 },
-    scaleMin: 0.3,
+    scaleMin: 0.2,
     scaleMax: 5
 };
 
@@ -17,47 +17,8 @@ const loadData = async () => {
     data = await fetch(url).then(response => response.json());
 }
 
-function initGraph() {
-    console.log("init graph!")
-    //########################### WRAPPERS #########################
-    svg = d3.select("#tsp_graph").classed("svg-container", true).append("svg")
-        .attr("preserveAspectRatio", "xMinYMin meet")
-        .attr("viewBox", `0 0 ${attrs.svgWidth} ${attrs.svgHeight}`)
-        .classed("svg-content-responsive", true);
-
-    svgWrapper = svg.append('g').attr("class", 'svg-wrapper');
-    axisWrapper = svg.append('g').attr("class", 'axis-wrapper');
-    linksWrapper = svgWrapper.append('g').attr("class", 'links-wrapper');
-    nodesWrapper = svgWrapper.append('g').attr("class", 'nodes-wrapper');
-
-    //########################### BEHAVIORS #########################
-    behaviours.zoom = d3.zoom()
-        .scaleExtent([attrs.scaleMin, attrs.scaleMax])
-        .on("zoom", onZoom);
-    svg.call(behaviours.zoom).on("dblclick.zoom", onZoomReset);
-    onZoomReset() // call zoomReset once on initialization;
-
-    renderGraph({});
-}
-
-//TODO render a graph with adjacency matrix
-//TODO draw a geo map if an instance has GEO data
-function renderGraph(selection) {
-    console.log("renderGraph function called")
-    let nodes, tour;
-
-    if (!jQuery.isEmptyObject(selection)) {
-        let model = data.find(d => d.name === selection);
-        nodes = model.nodes;
-        tour = model.tour;
-    }
-
-    let linkArray = [];
-    let nodeArray = [];
-    for (let index in nodes) {
-        nodeArray.push(nodes[index]);
-    }
-
+function addTour(tour, nodeArray) {
+    let linkArray = []
     if (tour != null) {
         let tourNodes = tour.nodes;
         populateMetrics(tour);
@@ -73,19 +34,82 @@ function renderGraph(selection) {
             target: nodeArray.find(d => d.id === tourNodes[0])
         });
     }
+    return linkArray
+}
+
+function initGraph() {
+    console.log("init graph!")
+    //########################### WRAPPERS #########################
+    svg = d3.select("#tsp_graph").classed("svg-container", true).append("svg")
+        .attr("preserveAspectRatio", "xMinYMin meet")
+        .attr("viewBox", `0 0 ${attrs.svgWidth} ${attrs.svgHeight}`)
+        .classed("svg-content-responsive", true);
+
+    svgWrapper = svg.append('g').attr("class", 'svg-wrapper');
+    axisWrapper = svg.append('g').attr("class", 'axis-wrapper');
+    linksWrapper = svgWrapper.append('g').attr("class", 'links-wrapper');
+    distanceWrapper = svgWrapper.append('g').attr("class", 'distance-wrapper');
+    nodesWrapper = svgWrapper.append('g').attr("class", 'nodes-wrapper');
+
+    //########################### BEHAVIORS #########################
+    behaviours.zoom = d3.zoom()
+        .scaleExtent([attrs.scaleMin, attrs.scaleMax])
+        .on("zoom", onZoom);
+    svg.call(behaviours.zoom).on("dblclick.zoom", onZoomReset);
+    onZoomReset() // call zoomReset once on initialization;
+
+    renderGraph({});
+}
+
+//TODO draw a geo map if an instance has GEO data
+function renderGraph(selection) {
+    console.log("renderGraph function called")
+    let nodes, links, numberOfNodes, tour;
+    let nodeArray = [];
+    let linkArray = [];
+    let distanceArray = [];
 
     nodesWrapper.selectAll(".node-group").remove();
     linksWrapper.selectAll(".link-group").remove();
+    distanceWrapper.selectAll(".distance-link-group").remove();
     axisWrapper.selectAll("g").remove();
 
-    updateGraph(nodeArray, linkArray);
+    if (!$.isEmptyObject(selection)) {
+        let model = data.find(d => d.name === selection);
+        nodes = model.nodes;
+        links = model.links;
+        numberOfNodes = model.numberOfNodes;
+        tour = model.tour;
+    }
+
+    if ($.isEmptyObject(nodes) && !$.isEmptyObject(links)) {
+        for (let i=0; i<numberOfNodes; i++) {
+            nodeArray.push({ id: i+1, x:0, y:0 });
+        }
+        distanceArray = links;
+    } else {
+        for (let index in nodes) {
+            nodeArray.push(nodes[index]);
+        }
+    }
+    linkArray = addTour(tour, nodeArray);
+    updateGraph(nodeArray, linkArray, distanceArray);
 }
 
-function updateGraph(nodeArray, linkArray) {
+function updateGraph(nodeArray, linkArray, distanceArray) {
+    //################### INITIALIZE FORCE GRAPH #####################
+    if(distanceArray.length>0) {
+        const simulation = d3.forceSimulation(nodeArray)
+            .force("link", d3.forceLink(distanceArray).id(d => d.id).distance(d => d.distance))
+            .force("charge", d3.forceManyBody().strength(-5))
+            .force("center",  d3.forceCenter(attrs.svgWidth / 2, attrs.svgHeight / 2))
+            .force('collision', d3.forceCollide().radius(5))
+        simulation.restart();
+        simulation.tick(200);
+        simulation.stop();
+    }
     //########################### AXIS #########################
-    //const minimum = getMinimum(nodeArray);
     const maximum = getMaximum(nodeArray);
-
     const xmin = d3.min(nodeArray, d => d.x);
     const ymin = d3.min(nodeArray, d => d.y);
 
@@ -109,6 +133,7 @@ function updateGraph(nodeArray, linkArray) {
         .call(yAxis);
 
     //########################### GRAPH #########################
+    //########################### NODES #########################
     const nodes = nodesWrapper.selectAll(".node-group").data(nodeArray);
     const nodesEntering = nodes.enter().append("g")
         .attr("class", "node-group")
@@ -126,11 +151,23 @@ function updateGraph(nodeArray, linkArray) {
         .attr("x", d => xScale(d.x))
         .attr("y", d => yScale(d.y) + 3);
 
+    //########################### LINKS #########################
     const links = linksWrapper.selectAll(".link-group").data(linkArray);
     const linksEntering = links.enter().append("g")
         .attr("class", "link-group")
 
     linksEntering.append("line")
+        .attr("x1", d => xScale(d.source.x))
+        .attr("y1", d => yScale(d.source.y))
+        .attr("x2", d => xScale(d.target.x))
+        .attr("y2", d => yScale(d.target.y))
+
+    //############## DISTANCE LINKS (FORCE GRAPH ONLY)) ##############
+    const distanceLinks = distanceWrapper.selectAll(".distance-link-group").data(distanceArray);
+    const distanceLinksEntering = distanceLinks.enter().append("g")
+        .attr("class", "distance-link-group")
+
+    distanceLinksEntering.append("line")
         .attr("x1", d => xScale(d.source.x))
         .attr("y1", d => yScale(d.source.y))
         .attr("x2", d => xScale(d.target.x))

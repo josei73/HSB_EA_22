@@ -67,7 +67,10 @@ public class TSPRestController {
             tour.setCost(tour.distance(problem));
             tour.setTime(solveEnd);
 
-            return new TSPModel(problem.getProblemName(), problem.getNodes(), problem.getEdgeWeightType(),tour);
+            TSPModel model = service.getTSPModel(problem);
+            model.setTour(tour);
+
+            return model;
         } catch (HeldKarpException  e) {
             throw new RuntimeException(e.getMessage());
         }
