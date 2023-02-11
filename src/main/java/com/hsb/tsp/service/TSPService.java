@@ -112,7 +112,15 @@ public class TSPService {
     public TSPModel getTSPModel(TSPInstance instance) {
         EdgeWeightType type = instance.getEdgeWeightType();
 
-        return new TSPModel(instance.getProblemName(), instance.getNodes(), type);
+        TSPModel model = new TSPModel(instance.getProblemName(), instance.getNodes(), type);
+        if(model.getNodes().isEmpty()) {
+            model.setLinks(getAdjacencyMatrix(instance));
+            int size = instance.getDistanceSection().getAdjMatrix(instance).length;
+            model.setNumberOfNodes(size);
+        } else {
+            model.setNumberOfNodes(model.getNodes().size());
+        }
+        return model;
     }
 
     /**
@@ -126,5 +134,22 @@ public class TSPService {
             models.add(getTSPModel(instance));
         }
         return models;
+    }
+
+    public List<Map<String, Integer>> getAdjacencyMatrix(TSPInstance instance) {
+        int[][] matrix = instance.getDistanceSection().getAdjMatrix(instance);
+        List<Map<String, Integer>> links = new ArrayList<>();
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[i].length; j++) {
+                if (matrix[i][j] > 0) {
+                    Map<String, Integer> link = new HashMap<>();
+                    link.put("distance", matrix[i][j]);
+                    link.put("source", i+1);
+                    link.put("target", j+1);
+                    links.add(link);
+                }
+            }
+        }
+        return links;
     }
 }

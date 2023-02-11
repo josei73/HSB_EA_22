@@ -41,9 +41,7 @@ public class TSPParser {
 
 
     private void parseFileSpecification(TSPInstance instance, String line) {
-        if (line.isEmpty()) {
-            return;
-        }
+        if(line.isEmpty()) { return; }
         String[] tokens = line.split(":");
         String key = tokens[0].trim();
         String value = tokens[1].trim();
@@ -83,9 +81,7 @@ public class TSPParser {
     }
 
     private void parseFileData(TSPInstance instance, String line, BufferedReader reader) throws IOException {
-        if (line.isEmpty()) {
-            return;
-        }
+        if(line.isEmpty()) { return; }
         switch (line) {
             case "NODE_COORD_SECTION":
                 if (instance.getNodeCoordinateType() == null) {

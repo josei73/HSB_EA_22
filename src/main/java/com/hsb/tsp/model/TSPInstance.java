@@ -56,6 +56,4 @@ public class TSPInstance {
             return this.getDistanceSection().getNodes();
         }
     }
-
-
 }

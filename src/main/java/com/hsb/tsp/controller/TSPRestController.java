@@ -19,21 +19,15 @@ import java.util.Map;
 
 @RestController
 public class TSPRestController {
-
-
     @Autowired
     private TSPService service;
 
 
     @GetMapping("api/problems")
-    public List<TSPInstance> getProblems() {
-        return service.getAllTSPInstances();
-    }
+    public List<TSPInstance> getProblems() { return service.getAllTSPInstances(); }
 
     @GetMapping("api/problems/{name}")
-    public TSPInstance getProblem(@PathVariable String name) {
-        return service.getTSPInstance(name);
-    }
+    public TSPInstance getProblem(@PathVariable String name) { return service.getTSPInstance(name); }
 
     @GetMapping("/api/problems/{name}/nodes")
     public Map<Integer, Node> getTSPNodes(@PathVariable String name) {
@@ -45,21 +39,40 @@ public class TSPRestController {
         return service.getAllTSPModels();
     }
 
+    @GetMapping("api/algorithm")
+    public List<String> populateAlgorithms() {
+        List<String> algorithmName = new ArrayList<>();
+
+        algorithmName.add("Held-Karp");
+        algorithmName.add("Greedy");
+        algorithmName.add("Christofides");
+        algorithmName.add("Arora");
+        algorithmName.add("LP");
+        algorithmName.add("Random");
+        return algorithmName;
+    }
 
     @GetMapping("api/algorithm/{algoName}/nodes/{nodeName}")
-    public TSPModel getAlg(@PathVariable String algoName, @PathVariable String nodeName) throws HeldKarpException {
+    public TSPModel getAlg(@PathVariable String algoName, @PathVariable String nodeName) {
         TSPInstance problem = service.getTSPInstance(nodeName);
 
+        try {
+            Algorithm solution = service.getAlgo(algoName, problem);
+            long solveStart = System.nanoTime();
+            solution.solve();
+            long solveEnd = System.nanoTime() - solveStart;
 
-        Algorithm solution = service.getAlgo(algoName, problem);
-        solution.solve();
+            TSPTour tour = new TSPTour();
+            tour.setNodes(solution.getTour());
+            tour.setCost(tour.distance(problem));
+            tour.setTime(solveEnd);
 
-        TSPTour tour = new TSPTour();
-        tour.setNodes(solution.getTour());
-        tour.setCost(tour.distance(problem));
+            TSPModel model = service.getTSPModel(problem);
+            model.setTour(tour);
 
-        return new TSPModel(problem.getProblemName(), problem.getNodes(), problem.getEdgeWeightType(), tour);
-
-
+            return model;
+        } catch (HeldKarpException  e) {
+            throw new RuntimeException(e.getMessage());
+        }
     }
 }

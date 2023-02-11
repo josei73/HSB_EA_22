@@ -20,7 +20,7 @@ public class Main {
     public static void main(String[] args) throws HeldKarpException {
         TSPParser parser = new TSPParser();
         TSPInstance problem;
-        String filename = "ulysses22.tsp";
+        String filename = "ulysses16.tsp";
 
         try {
             problem = parser.loadInstance(filename);

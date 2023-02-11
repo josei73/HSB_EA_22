@@ -1,7 +1,6 @@
 package com.hsb.tsp.model;
 
 import com.hsb.tsp.graph.DistanceSection;
-import com.hsb.tsp.model.TSPInstance;
 import com.hsb.tsp.graph.EdgeWeightMatrix;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +19,7 @@ import java.util.List;
 public class TSPTour {
     private List<Integer> nodes = new ArrayList();
     private int cost;
-
-
+    private long time;
 
     public void load(BufferedReader reader) throws IOException {
         String line = null;
@@ -39,16 +37,6 @@ public class TSPTour {
                 this.nodes.add(id);
             }
         }
-
-    }
-
-
-    @Override
-    public String toString() {
-        return "TSPTour{" +
-                "nodes=" + nodes +
-                ", cost=" + cost +
-                '}';
     }
 
     /**
@@ -82,6 +70,4 @@ public class TSPTour {
 
         return result;
     }
-
-
 }
