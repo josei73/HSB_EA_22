@@ -292,9 +292,8 @@ async function loadSolution() {
         const index = data.findIndex((el) => el.name === responseJson.name)
         data[index] = responseJson
         renderGraph(responseJson.name);
-    }).fail(function () {
-        alert("Failed to connect to the server")
-    })/*.error(function (error){
-        alert(error)
-    })*/
+    }).fail(function (responseError) {
+        alert(responseError.responseJSON.message)
+    })
+
 }

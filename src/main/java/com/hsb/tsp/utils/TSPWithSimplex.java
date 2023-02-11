@@ -1,6 +1,5 @@
 package com.hsb.tsp.utils;
 
-import org.apache.commons.math3.linear.ArrayRealVector;
 import org.apache.commons.math3.linear.RealVector;
 import org.apache.commons.math3.optim.PointValuePair;
 import org.apache.commons.math3.optim.SimpleBounds;
@@ -13,8 +12,8 @@ import java.util.List;
 
 public class TSPWithSimplex {
 
-    private final int[][] distances;
-    private final int numCities;
+    private  int[][] distances;
+    private  int numCities;
     private double[] x;
     private double[] y;
     private double[] upperBound;
@@ -27,9 +26,13 @@ public class TSPWithSimplex {
         this.y = new double[numCities];
     }
 
+    public  TSPWithSimplex (){
+
+    }
+
     public List<Integer> solve() {
         int numVariables = (numCities * (numCities - 1)) / 2;
-        // numVariables = numCities*numCities;
+       //  numVariables = numCities*numCities;
         int[] path = new int[numCities];
 
         // Define the objective function
@@ -41,15 +44,17 @@ public class TSPWithSimplex {
             }
         }
 
+
         LinearObjectiveFunction f = new LinearObjectiveFunction(costs, 0);
 
 
         // Define the constraints
 
-        List<LinearConstraint> constraints = new ArrayList<LinearConstraint>();
+
+      /*  List<LinearConstraint> constraints = new ArrayList<>();
 
 
-       /* for (int i = 0; i < numCities; i++) {
+        for (int i = 0; i < numCities; i++) {
             double[] constraint = new double[numCities * numCities];
             index = 0;
             for (int j = 0; j < numCities; j++) {
@@ -57,6 +62,9 @@ public class TSPWithSimplex {
             }
             constraints.add(new LinearConstraint(constraint, Relationship.EQ, 1));
         }
+
+
+
         for (int j = 0; j < numCities; j++) {
             double[] constraint = new double[numCities * numCities];
             for (int i = 0; i < numCities; i++) {
@@ -65,9 +73,29 @@ public class TSPWithSimplex {
             constraints.add(new LinearConstraint(constraint, Relationship.EQ, 1));
         }
 
-        */
+       constraints.forEach(linearConstraint ->{
+            double[] doubles = linearConstraint.getCoefficients().toArray();
+            for (int i = 0; i < doubles.length; i++) {
+                System.out.print(doubles[i]+" ");
+            }
+            System.out.println();
+        } );
 
 
+
+
+
+
+        System.out.println(" Anderer Part ==============================================================");
+        System.out.println("Old Size  "+numVariables);
+
+
+        numVariables = (numCities * (numCities - 1)) / 2;
+        System.out.println(numVariables+" Neee Size ");
+
+       */
+        List<LinearConstraint> constraints = new ArrayList<>();
+        // Ensure that exactly one edge leaves each city
         int constraintIndex = 0;
         for (int i = 0; i < numCities; i++) {
             double[] constraint = new double[numVariables];
@@ -80,9 +108,71 @@ public class TSPWithSimplex {
         }
 
 
+
+        System.out.println( "=================================================== part 21");
+
+
+
+
+
+
+        constraintIndex = 0;
+        // Ensure that exactly one edge enters each city
         for (int j = 0; j < numCities; j++) {
             double[] constraint = new double[numVariables];
-            constraintIndex = 0;
+
+            for (int i = 0; i < numVariables; i++) {
+                if (i == j) {
+                    System.out.println(i+" <- i j -> "+j);
+                    constraint[constraintIndex] = 1;
+                    constraintIndex++;
+                    continue;
+                }
+
+
+            }
+            System.out.println(constraintIndex+" i "+j);
+
+            constraints.add(new LinearConstraint(constraint, Relationship.EQ, 1));
+        }
+
+
+      //  constraintsOrg.addAll(getSubtourEliminationConstraints());
+
+        constraints.forEach(linearConstraint ->{
+            double[] doubles = linearConstraint.getCoefficients().toArray();
+            for (int i = 0; i < doubles.length; i++) {
+                System.out.print(doubles[i]+" ");
+            }
+            System.out.println();
+        } );
+
+
+
+        System.out.println( "===================================================");
+
+
+
+
+
+      /*  // constraints for each city having exactly one outgoing edge
+        for (int i = 0; i < numCities; i++) {
+            double[] constraint = new double[numVariables];
+            int constraintIndex = 0;
+            for (int j = 0; j < numCities; j++) {
+                if (i == j) {
+                    continue;
+                }
+                constraint[constraintIndex] = 1;
+                constraintIndex++;
+            }
+            constraints.add(new LinearConstraint(constraint, Relationship.EQ, 1));
+        }
+
+// constraints for each city having exactly one incoming edge
+        for (int j = 0; j < numCities; j++) {
+            double[] constraint = new double[numVariables];
+            int constraintIndex = 0;
             for (int i = 0; i < numCities; i++) {
                 if (i == j) {
                     continue;
@@ -92,6 +182,21 @@ public class TSPWithSimplex {
             }
             constraints.add(new LinearConstraint(constraint, Relationship.EQ, 1));
         }
+        constraints.forEach(linearConstraint ->{
+            double[] doubles = linearConstraint.getCoefficients().toArray();
+            for (int i = 0; i < doubles.length; i++) {
+                System.out.print(doubles[i]+" ");
+            }
+            System.out.println();
+        } );
+
+// constraints for ensuring that each variable is binary
+     /*   for (int i = 0; i < numVariables; i++) {
+            constraints.add(new LinearConstraint(new double[]{1}, Relationship.GEQ, 0));
+            constraints.add(new LinearConstraint(new double[]{1}, Relationship.LEQ, 1));
+        }
+
+      */
 
 
         //  constraints.addAll(getSubtourEliminationConstraints());
@@ -107,16 +212,17 @@ public class TSPWithSimplex {
 
         // Extract the solution
         double[] values = optSolution.getPoint();
-        for (int i = 0; i < values.length; i++) {
-            System.out.println(" Values " + values[i]);
-        }
-        for (int i = 0; i < numCities; i++) {
+
+      /*  for (int i = 0; i < numCities; i++) {
             for (int j = 0; j < numCities; j++) {
                 if (values[i * numCities + j] > 0.5) {
                     path[i] = j;
                 }
             }
         }
+
+       */
+
 
 
       /*  for (int i = 0; i < numCities; i++) {
@@ -132,6 +238,9 @@ public class TSPWithSimplex {
         // add the integer constraint
 
         double[] point = optSolution.getPoint();
+        for (int i = 0; i < point.length; i++) {
+            System.out.print(point[i]+" ");
+        }
         double bestTour = optSolution.getValue();
         for (int i = 0; i < numCities; i++) {
             upperBound[i] = Math.ceil(point[i]);
@@ -143,15 +252,11 @@ public class TSPWithSimplex {
                 RealVector coefficients = constraints.get(i).getCoefficients();
                 double[] doubles = coefficients.toArray();
                 doubles[i] = upperBound[i];
-                System.out.println(doubles.length + " Läe " + upperBound.length);
                 constraints.set(i, new LinearConstraint(doubles, Relationship.EQ, 1));
             }
-            System.out.println(" While");
             optSolution = solver.optimize(f, new LinearConstraintSet(constraints), GoalType.MINIMIZE, new SimpleBounds(point, upperBound));
             point = optSolution.getPoint();
-            for (int i = 0; i < point.length; i++) {
-                System.out.println(" JJJ P " + point[i]);
-            }
+
             for (int i = 0; i < numCities; i++) {
                 if (point[i] > 0 && point[i] < 1) {
                     upperBound[i] = Math.ceil(point[i]);
@@ -163,13 +268,12 @@ public class TSPWithSimplex {
             }
         }
 
-        for (int i = 0; i < point.length; i++) {
-            System.out.println(point[i] + " Point");
-        }
+
 
         // print the solution
 
-        for (int i = 0; i < numCities; i++) {
+
+      /*  for (int i = 0; i < numCities; i++) {
             for (int j = 0; j < numCities; j++) {
                 if (point[i * numCities + j] > 0.5) {
                     path[i] = j;
@@ -177,6 +281,8 @@ public class TSPWithSimplex {
                 }
             }
         }
+
+       */
         ArrayList<Integer> sol = new ArrayList<>();
         sol.add(path[0] + 1);
         for (int i = 1; i < path.length; i++) {
@@ -191,7 +297,10 @@ public class TSPWithSimplex {
     }
 
 
-    private List<LinearConstraint> getSubtourEliminationConstraints() {
+
+
+
+  /*  private List<LinearConstraint> getSubtourEliminationConstraints() {
         List<LinearConstraint> constraints = new ArrayList<>();
 
         for (int s = 1; s < numCities; s++) {
@@ -214,6 +323,44 @@ public class TSPWithSimplex {
 
         return constraints;
     }
+
+   */
+
+   /* private List<LinearConstraint> getSubtourEliminationConstraints() {
+        List<LinearConstraint> subtourConstraints = new ArrayList<>();
+        for (int i = 0; i < numCities; i++) {
+            for (int j = 0; j < numCities; j++) {
+                if (i == j) {
+                    continue;
+                }
+                for (int k = 0; k < numCities; k++) {
+                    if (i == k || j == k) {
+                        continue;
+                    }
+                    double[] constraint = new double[numCities * numCities];
+                    int constraintIndex = 0;
+                    for (int a = 0; a < numCities; a++) {
+                        for (int b = 0; b < numCities; b++) {
+                            if (a == i && b == j) {
+                                constraint[constraintIndex] = 1;
+                            } else if (a == j && b == k) {
+                                constraint[constraintIndex] = -1;
+                            }
+                            constraintIndex++;
+                        }
+                    }
+                    subtourConstraints.add(new LinearConstraint(constraint, Relationship.LEQ, 0));
+                }
+            }
+        }
+        return subtourConstraints;
+    }
+
+    */
+
+
+
+
 
 
 }
