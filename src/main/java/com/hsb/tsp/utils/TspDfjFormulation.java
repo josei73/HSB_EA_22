@@ -46,6 +46,9 @@ public class TspDfjFormulation {
 
         // Extract the solution
         double[] values = solution.getPoint();
+        for (int i = 0; i < values.length; i++) {
+            System.out.println(" Valu "+values[i]);
+        }
         int index = 0;
         System.out.println("Ausgabe ");
         for (int i = 0; i < numCities; i++) {

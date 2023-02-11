@@ -6,8 +6,6 @@ import java.util.Collections;
 import java.util.List;
 
 public class Hierholzer {
-    private static final int UNVISITED = 0;
-    private static final int VISITED = 1;
 
     // adjacency list representation of the graph
     private List<List<Integer>> adj;

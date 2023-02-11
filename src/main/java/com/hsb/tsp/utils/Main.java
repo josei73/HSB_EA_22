@@ -7,7 +7,6 @@ import com.hsb.tsp.exception.HeldKarpException;
 import com.hsb.tsp.model.TSPInstance;
 import com.hsb.tsp.model.TSPTour;
 
-
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,7 +20,7 @@ public class Main {
     public static void main(String[] args) throws HeldKarpException {
         TSPParser parser = new TSPParser();
         TSPInstance problem;
-        String filename = "burma14.tsp";
+        String filename = "ulysses22.tsp";
 
         try {
             problem = parser.loadInstance(filename);
@@ -34,24 +33,30 @@ public class Main {
 
         double[][] simplex = copyToDouble(matrix);
 
-        GreedyTSP greedyTSP = new GreedyTSP(matrix);
-        List<Integer> greedy = greedyTSP.getTour();
-        List<Integer> tour = new ArrayList<>();
-        for (int i = 0; i < greedy.size(); i++) {
-            tour.add(greedy.get(i) - 1);
-        }
 
 
         int n = matrix.length;
         int m = (n * (n - 1)) / 2;
         double[][] A = new double[n][m]; // coefficient matrix for the constraints
-        for (double[] row : A)
-            Arrays.fill(row, 0.0);
-        for (int i = 0; i < tour.size() - 1; ++i) {
-           // A[tour.get(i)][tour.get(i + 1)] = 1;
-            A[i][i] = 1;
-            // testSimplex[tour.get(i+1)][tour.get(i)] = 1;
 
+
+        for (int k = 0; k < n; k++) {
+            double[] coefficients = new double[m];
+          int  index = 0;
+            for (int i = 0; i < n; i++) {
+                for (int j = i + 1; j < n; j++) {
+                    if (i == k) {
+                        coefficients[index] = 1;
+                    } else if (j == k) {
+                        coefficients[index] = -1;
+                    } else {
+                        coefficients[index] = 0;
+                    }
+                    index++;
+                }
+            }
+            A[k]=coefficients;
+          //  constraints.add(new LinearConstraint(coefficients, Relationship.EQ, 2));
         }
 
 
@@ -64,7 +69,7 @@ public class Main {
         System.out.println(c.length);
         System.out.println(b.length);
         for (int i = 0; i < n; i++) {
-            b[i] = 2;
+            b[i] = 1;
             sense[i] = '=';
         }
         int z = 0;
@@ -76,102 +81,22 @@ public class Main {
             }
         }
 
+       // TspDfjFormulation formulation = new TspDfjFormulation(matrix.length,simplex);
+       // formulation.solve();
         TSPWithSimplex tsp = new TSPWithSimplex(matrix);
 
-       List<Integer> sol = tsp.solve();
+        List<Integer> sol = tsp.solve();
 
-       TSPTour tspTour = new TSPTour();
-       tspTour.setNodes(sol);
+        TSPTour tspTour = new TSPTour();
+        tspTour.setNodes(sol);
         System.out.println(sol);
         System.out.println(tspTour.distance(problem));
-        TspDfjFormulation formulation = new TspDfjFormulation(matrix.length,simplex);
-
-        formulation.solve();
-        test1();
-
-        com.hsb.tsp.utils.Simplex.primalSimplex(A,b,c);
-
-      /*  for (int i = 0; i < A.length; i++) {
-            for (int j = 0; j < A[i].length; j++) {
-                System.out.print(A[i][j] + " ");
-            }
-            System.out.println();
-        }
-
-        /*
-
-
-        for (int i = 0; i < n; i++) {
-            b[i] = 2;
-        }
-
-
-
-        int z = 0;
-
-        List<Double> cities = new ArrayList<>();
-        for (int i = 0; i < matrix.length; i++) {
-            for (int j = i + 1; j < matrix.length; j++) {
-                c[z++] = simplex[i][j]; // cost of traveling from city i to city j
-                cities.add(simplex[i][j]);
-            }
-        }
-        System.out.println(cities.size());
-        System.out.println(cities);
-        for (int i = 0; i < c.length; i++) {
-            System.out.print(c[i]+" ");
-        }
-        System.out.println();
-
-        double[] rhs = new double[matrix.length];
-        for (int i = 0; i < matrix.length; i++) {
-            rhs[i] = simplex[0][i]; // cost of visiting city i
-        }
-
-    /*
-        int n = matrix.length;
-        int m = number of edges;
-        double[][] A = new double[n][m]; // coefficient matrix for the constraints
-        double[] b = new double[n]; // right-hand side vector for the constraints
-        double[] c = new double[m]; // coefficient vector for the objective function
-        char[] sense = new char[n]; // sense of the constraints (e.g. '=' for equality constraints)
-        for (int i = 0; i < n; i++) {
-            b[i] = 2;
-            sense[i] = '=';
-            for (int j = 0; j < m; j++) {
-                if (edge (i, j) exists) {
-                    A[i][j] = 1;
-                } else {
-                    A[i][j] = 0;
-                }
-            }
-        }
-        for (int j = 0; j < m; j++) {
-            c[j] = cost of edge j;
-        }
-
-        /*
 
 
 
 
 
-
-        double[] objCoeffs = new double[matrix.length];
-        int k = 0;
-        for (int i = 0; i < tour.size()-1; i++) {
-            objCoeffs[k++]=simplex[tour.get(i)][tour.get(i+1)];
-           // ++k;
-        }
-      /*  for (int i = 0; i <  matrix.length; i++) {
-            for (int j = i + 1; j <  matrix.length; j++) {
-                objCoeffs[k++] = simplex[i][j]; // cost of traveling from city i to city j
-            }
-        }
-
-       */
-
-        //  generateTSPConstraints(n, simplex,problem);
+          //generateTSPConstraints(n, simplex,problem);
         //     generateConstraints(n,simplex,new double[n],c);
 
 
@@ -249,7 +174,6 @@ public class Main {
 
      //   TwoPhaseSimplex twoPhaseSimplex = new TwoPhaseSimplex(A,b,c);
 
-        TwoPhaseSimplex.test(A,b,c);
 
 
 
@@ -380,22 +304,7 @@ public class Main {
 
     }
 
-    public static void test1() {
 
-            double[] c = {  13.0,  23.0 };
-            double[] b = { 480.0, 160.0, 1190.0 };
-            double[][] A = {
-                    {  5.0, 15.0 },
-                    {  4.0,  4.0 },
-                    { 35.0, 20.0 },
-            };
-        System.out.println(A.length);
-        System.out.println(A[0].length);
-        System.out.println(c.length);
-        System.out.println(b.length);
-        com.hsb.tsp.utils.Simplex.primalSimplex(A,b,c);
-
-    }
 
     public static String printTime(long end) {
         String msg = "(in ";
@@ -499,8 +408,7 @@ public class Main {
             }
         }
 
-        TspSimplex tspSimplex = new TspSimplex(A, b, c, A.length, A[0].length);
-        tspSimplex.solve();
+
 
       /*Simplex simplex3 = new Simplex();
         System.out.println(c.length+" "+b.length);
@@ -578,21 +486,7 @@ public class Main {
         }
 
 
-        //  generateTour(A,numCities);
 
-        Simplex simplex = new Simplex(A, b, c);
-       /*double arr [] = simplex.gen();
-        for (int i = 0; i < arr.length; i++) {
-            System.out.println(arr[i]);
-        }
-        for (int i = 0; i < A.length; i++) {
-            for (int j = 0; j <A[i].length; j++) {
-                System.out.print(A[i][j] + " ");
-            }
-            System.out.println();
-        }
-
-        */
 
 
     }

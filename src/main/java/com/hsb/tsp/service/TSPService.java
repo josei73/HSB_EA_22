@@ -32,6 +32,7 @@ public class TSPService {
         algorithmNames.add("Christofides");
         algorithmNames.add("Held-Karp");
         algorithmNames.add("Arora");
+        algorithmNames.add("Simplex");
 
         return algorithmNames;
     }
@@ -52,6 +53,8 @@ public class TSPService {
                 return new Arora(adjMatrix);
             case "Nearest Neighbour":
                 return new NearestNeighbour(adjMatrix);
+            case "Simplex":
+                return new Simplex(adjMatrix);
 
 
 

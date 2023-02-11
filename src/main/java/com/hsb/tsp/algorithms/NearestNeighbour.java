@@ -7,17 +7,18 @@ public class NearestNeighbour extends Algorithm {
 
     private int size;
 
-    private int distances [][];
+    private int distances[][];
 
-    private boolean [] visited ;
+    private boolean[] visited;
 
     private List<Integer> visitedCities;
 
-    public NearestNeighbour(int [][] distances){
-        this.distances=distances;
-        size=distances.length;
+
+    public NearestNeighbour(int[][] distances) {
+        this.distances = distances;
+        size = distances.length;
         visited = new boolean[size];
-        visitedCities= new ArrayList<>();
+        visitedCities = new ArrayList<>();
     }
 
 
@@ -25,7 +26,7 @@ public class NearestNeighbour extends Algorithm {
     public ArrayList<Integer> getTour() {
         ArrayList<Integer> tour = new ArrayList<>();
         for (int i = 0; i < visitedCities.size(); i++) {
-            tour.add(visitedCities.get(i)+1);
+            tour.add(visitedCities.get(i) + 1);
         }
 
         return tour;
@@ -35,21 +36,31 @@ public class NearestNeighbour extends Algorithm {
     public void solve() {
         // Initialize the list of visited cities with the first city
 
-        visitedCities.add(0);
-        visited[0]=true;
+        for (int i = 0; i < size; i++) {
+            visited[i] = false;
+        }
+        int startNode = 0;
+        visited[startNode] = true;
+        visitedCities.add(startNode);
 
-        // Iteratively visit the nearest unvisited city
-        while (visitedCities.size() < size) {
-            int nearestCity = -1;
-            for (int i = 0; i < size; i++) {
-                if (!visited[i]) {
-                    nearestCity = i;
+        int nodeIndex = startNode;
+        for (int i = 0; i < size - 1; i++) {
+            double minDistance = Double.MAX_VALUE;
+            int nearestNeighborIndex = -1;
+            for (int j = 0; j < size; j++) {
+                if (!visited[j]) {
+                    double distance = distances[nodeIndex][j];
+                    if (distance < minDistance) {
+                        minDistance = distance;
+                        nearestNeighborIndex = j;
+                    }
                 }
             }
-            visitedCities.add(nearestCity);
-            visited[nearestCity]=true;
+            nodeIndex = nearestNeighborIndex;
+            visited[nodeIndex] = true;
+            visitedCities.add(nodeIndex);
         }
-        visitedCities.add(0);
+        visitedCities.add(startNode);
 
 
     }
