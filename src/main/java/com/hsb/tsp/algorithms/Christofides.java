@@ -51,6 +51,16 @@ public class Christofides extends Algorithm {
                 vertices.add(value);
             visit.put(value, true);
         }
+
+
+
+        Iterator<Integer> namesIterator = vertices.iterator();
+        System.out.println( " ODDS");
+        while(namesIterator.hasNext()) {
+            System.out.print(namesIterator.next()+" ");
+        }
+
+
         while (!vertices.isEmpty()) {
             Integer integer = vertices.iterator().next();
             int length = Integer.MAX_VALUE;
@@ -62,6 +72,8 @@ public class Christofides extends Algorithm {
                     node2 = node;
                 }
             }
+
+            System.out.println(" Edge ");
             mst.add(new Edge(integer, node2, length));
             vertices.remove(node2);
         }

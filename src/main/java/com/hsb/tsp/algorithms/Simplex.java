@@ -33,41 +33,51 @@ public class Simplex extends Algorithm {
     public void solve() {
 
 
+        int numVariables = (numCities * (numCities - 1));
         int[] path = new int[numCities];
+
         // Define the objective function
         int index = 0;
-        double[] costs = new double[numCities * numCities];
-        for (int i = 0; i < numCities; i++) {
-            for (int j = i + 1; j < numCities; j++) {
-                costs[index++] = distances[i][j];
+        double[] costs = new double[numVariables];
+        for (int i = 0; i < distances.length; i++) {
+            for (int j = 0; j < distances[i].length; j++) {
+                if (i != j)
+                    costs[index++] = distances[i][j];
             }
         }
 
         LinearObjectiveFunction f = new LinearObjectiveFunction(costs, 0);
 
-
         // Define the constraints
-
-        List<LinearConstraint> constraints = new ArrayList<LinearConstraint>();
+        List<LinearConstraint> constraints = new ArrayList<>();
         for (int i = 0; i < numCities; i++) {
-            double[] constraint = new double[numCities * numCities];
-            index = 0;
-            for (int j = 0; j < numCities; j++) {
-                constraint[i * numCities + j] = 1;
+            double[] constraint = new double[numVariables];
+            for (int j = i * (numCities - 1); j < (i + 1) * (numCities - 1); j++) {
+                constraint[j] = 1;
+
             }
             constraints.add(new LinearConstraint(constraint, Relationship.EQ, 1));
         }
+
+
         for (int j = 0; j < numCities; j++) {
-            double[] constraint = new double[numCities * numCities];
+            double[] constraint = new double[numVariables];
+
             for (int i = 0; i < numCities; i++) {
-                constraint[i * numCities + j] = 1;
+                if (i != j)
+                    if (i < j) {
+                        constraint[i * (numCities - 1) + (j - 1)] = 1;
+                    } else {
+                        constraint[i * (numCities - 1) + j] = 1;
+                    }
             }
             constraints.add(new LinearConstraint(constraint, Relationship.EQ, 1));
         }
 
-        //  constraints.addAll(getSubtourEliminationConstraints());
 
 
+
+        System.out.println(" Simplex Anfang ");
         SimplexSolver solver = new SimplexSolver();
         PointValuePair optSolution = solver.optimize(f, new
                         LinearConstraintSet(constraints),
@@ -77,15 +87,21 @@ public class Simplex extends Algorithm {
 
         // Extract the solution
         double[] values = optSolution.getPoint();
+
         for (int i = 0; i < numCities; i++) {
             for (int j = 0; j < numCities; j++) {
-                if (values[i * numCities + j] > 0.5) {
-                    path[i] = j;
-                }
+                if (i != j)
+                    if (i < j) {
+                        if (values[i * (numCities - 1) + (j - 1)] > 0.5) {
+                            path[i] = j;
+                        }
+                    } else {
+                        if (values[i * (numCities - 1) + j] > 0.5) {
+                            path[i] = j;
+                        }
+                    }
             }
         }
-
-
 
         sol.add(path[0] + 1);
         for (int i = 1; i < path.length; i++) {

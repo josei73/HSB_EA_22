@@ -43,19 +43,6 @@ public class TSPRestController {
         return service.getAllTSPModels();
     }
 
-    @GetMapping("api/algorithm")
-    public List<String> populateAlgorithms() {
-        List<String> algorithmName = new ArrayList<>();
-
-        algorithmName.add("Held-Karp");
-        algorithmName.add("Greedy");
-        algorithmName.add("Christofides");
-        algorithmName.add("Arora");
-        algorithmName.add("LP");
-        algorithmName.add("Random");
-        return algorithmName;
-    }
-
     @GetMapping("api/algorithm/{algoName}/nodes/{nodeName}")
     public TSPModel getAlg(@PathVariable String algoName, @PathVariable String nodeName) throws HeldKarpException {
         TSPInstance problem = service.getTSPInstance(nodeName);

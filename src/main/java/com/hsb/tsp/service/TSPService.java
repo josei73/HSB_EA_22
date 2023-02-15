@@ -31,7 +31,7 @@ public class TSPService {
         algorithmNames.add("Nearest Neighbour");
         algorithmNames.add("Christofides");
         algorithmNames.add("Held-Karp");
-        algorithmNames.add("Arora");
+        algorithmNames.add("K-OPT");
         algorithmNames.add("Simplex");
 
         return algorithmNames;
@@ -49,8 +49,8 @@ public class TSPService {
                 return new Christofides(adjMatrix);
             case "Random Tour":
                 return new RandomTour(adjMatrix.length);
-            case "Arora":
-                return new Arora(adjMatrix);
+            case "K-OPT":
+                return new OPT(adjMatrix);
             case "Nearest Neighbour":
                 return new NearestNeighbour(adjMatrix);
             case "Simplex":

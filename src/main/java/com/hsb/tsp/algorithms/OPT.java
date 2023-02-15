@@ -3,14 +3,14 @@ package com.hsb.tsp.algorithms;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Arora extends Algorithm {
+public class OPT extends Algorithm {
     private static final double EPSILON = 0.01; // approximation factor
     ArrayList<Integer> result = new ArrayList<>();
 
     private int[][] distances;
     private boolean ranSolver = false;
 
-    public Arora(int[][] distances) {
+    public OPT(int[][] distances) {
         this.distances = distances;
     }
 
