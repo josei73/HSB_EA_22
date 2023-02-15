@@ -212,6 +212,7 @@ function updateGraph(nodeArray, linkArray, distanceArray) {
 // ######### ZOOM FUNCTIONS ###########
 function onZoom(event) {
     attrs.transform = event.transform;
+    svg.style("background-size", `${attrs.transform.k * 20}%`);
     svgWrapper.attr("transform", attrs.transform);
 
     let new_xScale = event.transform.rescaleX(xScale);

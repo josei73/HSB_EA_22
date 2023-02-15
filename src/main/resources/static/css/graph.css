@@ -1,9 +1,12 @@
 svg.svg-content-responsive {
-    background: lightgrey;
+    background-image: url("../svg/arcwave.svg");
+    background-color: #6495ed;
+    background-repeat:repeat;
+    background-position: center;
 }
 
 g.node-group circle {
-    fill: cornflowerblue;
+    fill: #FF740E;
 }
 
 g.node-group text {
