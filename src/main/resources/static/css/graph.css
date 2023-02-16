@@ -2,11 +2,15 @@ svg.svg-content-responsive {
     background-image: url("../svg/arcwave.svg");
     background-color: #6495ed;
     background-repeat:repeat;
-    background-position: center;
+}
+
+g.hull-wrapper polygon {
+    fill: #f1ccb1;
 }
 
 g.node-group circle {
-    fill: #FF740E;
+    fill: white;
+    stroke: black;
 }
 
 g.node-group text {
@@ -18,7 +22,6 @@ g.node-group text {
 
 g.link-group line {
     stroke: red;
-    stroke-width: 2;
-    opacity: 0.5;
+    opacity: 0.8;
     stroke-dasharray: 10, 4;
 }
