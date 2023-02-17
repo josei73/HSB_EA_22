@@ -135,14 +135,7 @@ function updateGraph(nodeArray, linkArray, distanceArray) {
 
     // ########################### ISLAND ##########################
     const hull = hullWrapper.append("polygon")
-        .attr("points", polygonString(convexHull(nodeArray)))
-
-    // d3.xml("./svg/topography.svg").then(function(xml) {
-    //     let pattern = d3.select(xml).select("pattern#topography");
-    //     console.log(xml)
-    //     console.log(pattern)
-    //     hull.attr("fill", "url(#" + pattern.attr("id") + ")");
-    // });
+        .attr("points", polygonString(convexHull(nodeArray)));
 
     //########################### GRAPH #########################
     //########################### NODES #########################
