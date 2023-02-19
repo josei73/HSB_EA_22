@@ -73,11 +73,6 @@ public class Simplex extends Algorithm {
             }
             constraints.add(new LinearConstraint(constraint, Relationship.EQ, 1));
         }
-
-
-
-
-        System.out.println(" Simplex Anfang ");
         SimplexSolver solver = new SimplexSolver();
         PointValuePair optSolution = solver.optimize(f, new
                         LinearConstraintSet(constraints),

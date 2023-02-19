@@ -54,11 +54,7 @@ public class Christofides extends Algorithm {
 
 
 
-        Iterator<Integer> namesIterator = vertices.iterator();
-        System.out.println( " ODDS");
-        while(namesIterator.hasNext()) {
-            System.out.print(namesIterator.next()+" ");
-        }
+
 
 
         while (!vertices.isEmpty()) {
@@ -72,8 +68,6 @@ public class Christofides extends Algorithm {
                     node2 = node;
                 }
             }
-
-            System.out.println(" Edge ");
             mst.add(new Edge(integer, node2, length));
             vertices.remove(node2);
         }
